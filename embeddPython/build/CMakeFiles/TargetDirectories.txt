@@ -1,0 +1,3 @@
+/home/erdog1/embeddPython/build/CMakeFiles/rebuild_cache.dir
+/home/erdog1/embeddPython/build/CMakeFiles/edit_cache.dir
+/home/erdog1/embeddPython/build/CMakeFiles/PyEmbedd.dir
