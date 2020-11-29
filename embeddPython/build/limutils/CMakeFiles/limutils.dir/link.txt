@@ -1,0 +1,2 @@
+/usr/bin/ar qc liblimutils.a  CMakeFiles/limutils.dir/passhandler.cpp.o
+/usr/bin/ranlib liblimutils.a

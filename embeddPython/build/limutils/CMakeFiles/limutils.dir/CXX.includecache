@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/erdog1/LimdropMainWebSource/embeddPython/limutils/blowfish.h
+
+/home/erdog1/LimdropMainWebSource/embeddPython/limutils/passhandler.cpp
+iostream
+-
+passhandler.h
+/home/erdog1/LimdropMainWebSource/embeddPython/limutils/passhandler.h
+blowfish.h
+/home/erdog1/LimdropMainWebSource/embeddPython/limutils/blowfish.h
+
+/home/erdog1/LimdropMainWebSource/embeddPython/limutils/passhandler.h
+string
+-
+utility
+-
+

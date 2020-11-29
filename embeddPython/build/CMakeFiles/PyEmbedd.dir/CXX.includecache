@@ -6,11 +6,25 @@
 
 #IncludeRegexTransform: 
 
-/home/erdog1/embeddPython/controllers/testsys.cc
-testsys.h
-/home/erdog1/embeddPython/controllers/testsys.h
-
-/home/erdog1/embeddPython/controllers/testsys.h
-drogon/HttpSimpleController.h
+/home/erdog1/LimdropMainWebSource/embeddPython/limutils/PatternFiller.cpp
+iostream
 -
+fstream
+-
+PatternFiller.h
+/home/erdog1/LimdropMainWebSource/embeddPython/limutils/PatternFiller.h
+
+/home/erdog1/LimdropMainWebSource/embeddPython/limutils/PatternFiller.h
+string
+-
+vector
+-
+stdarg.h
+-
+
+/home/erdog1/LimdropMainWebSource/embeddPython/limutils/blowfish.cpp
+blowfish.h
+/home/erdog1/LimdropMainWebSource/embeddPython/limutils/blowfish.h
+
+/home/erdog1/LimdropMainWebSource/embeddPython/limutils/blowfish.h
 
