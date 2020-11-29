@@ -6,25 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/erdog1/LimdropMainWebSource/embeddPython/limutils/PatternFiller.cpp
-iostream
--
-fstream
--
-PatternFiller.h
-/home/erdog1/LimdropMainWebSource/embeddPython/limutils/PatternFiller.h
+/home/erdog1/LimdropMainWebSource/LimdropMain/filters/checktraffic.cc
+checktraffic.h
+/home/erdog1/LimdropMainWebSource/LimdropMain/filters/checktraffic.h
 
-/home/erdog1/LimdropMainWebSource/embeddPython/limutils/PatternFiller.h
-string
--
-vector
--
-stdarg.h
+/home/erdog1/LimdropMainWebSource/LimdropMain/filters/checktraffic.h
+drogon/HttpFilter.h
 -
 
-/home/erdog1/LimdropMainWebSource/embeddPython/limutils/blowfish.cpp
-blowfish.h
-/home/erdog1/LimdropMainWebSource/embeddPython/limutils/blowfish.h
-
-/home/erdog1/LimdropMainWebSource/embeddPython/limutils/blowfish.h
+/home/erdog1/LimdropMainWebSource/LimdropMain/main.cpp
+drogon/drogon.h
+-
 

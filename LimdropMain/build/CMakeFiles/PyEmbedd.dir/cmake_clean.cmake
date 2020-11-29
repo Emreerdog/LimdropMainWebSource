@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/PyEmbedd.dir/controllers/my.cc.o"
   "CMakeFiles/PyEmbedd.dir/controllers/testsys.cc.o"
+  "CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o"
   "CMakeFiles/PyEmbedd.dir/limutils/PatternFiller.cpp.o"
   "CMakeFiles/PyEmbedd.dir/limutils/blowfish.cpp.o"
   "CMakeFiles/PyEmbedd.dir/limutils/passhandler.cpp.o"

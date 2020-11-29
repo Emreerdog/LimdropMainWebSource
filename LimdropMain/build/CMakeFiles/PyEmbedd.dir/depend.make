@@ -95,6 +95,9 @@ CMakeFiles/PyEmbedd.dir/controllers/testsys.cc.o: ../limutils/passhandler.h
 CMakeFiles/PyEmbedd.dir/controllers/testsys.cc.o: ../controllers/testsys.cc
 CMakeFiles/PyEmbedd.dir/controllers/testsys.cc.o: ../controllers/testsys.h
 
+CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o: ../filters/checktraffic.cc
+CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o: ../filters/checktraffic.h
+
 CMakeFiles/PyEmbedd.dir/limutils/PatternFiller.cpp.o: ../limutils/PatternFiller.cpp
 CMakeFiles/PyEmbedd.dir/limutils/PatternFiller.cpp.o: ../limutils/PatternFiller.h
 

@@ -7,7 +7,7 @@ class testsys:public drogon::HttpSimpleController<testsys>
     virtual void asyncHandleHttpRequest(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback) override;
     PATH_LIST_BEGIN
     
-	    PATH_ADD("/testsystem", Get);
+	    PATH_ADD("/testsystem", Get, "checktraffic");
     
     PATH_LIST_END
 };

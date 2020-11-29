@@ -6,17 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/home/erdog1/LimdropMainWebSource/embeddPython/limutils/blowfish.h
+/home/erdog1/LimdropMainWebSource/LimdropMain/limutils/blowfish.h
 
-/home/erdog1/LimdropMainWebSource/embeddPython/limutils/passhandler.cpp
+/home/erdog1/LimdropMainWebSource/LimdropMain/limutils/passhandler.cpp
 iostream
 -
 passhandler.h
-/home/erdog1/LimdropMainWebSource/embeddPython/limutils/passhandler.h
+/home/erdog1/LimdropMainWebSource/LimdropMain/limutils/passhandler.h
 blowfish.h
-/home/erdog1/LimdropMainWebSource/embeddPython/limutils/blowfish.h
+/home/erdog1/LimdropMainWebSource/LimdropMain/limutils/blowfish.h
 
-/home/erdog1/LimdropMainWebSource/embeddPython/limutils/passhandler.h
+/home/erdog1/LimdropMainWebSource/LimdropMain/limutils/passhandler.h
 string
 -
 utility
