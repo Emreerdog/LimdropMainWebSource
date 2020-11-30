@@ -5,6 +5,7 @@
  */
 
 #include "checktraffic.h"
+#include <limutils/inputregex.h>
 
 using namespace drogon;
 
@@ -12,7 +13,10 @@ void checktraffic::doFilter(const HttpRequestPtr &req, FilterCallback &&fcb, Fil
 {
     	std::string lastVisited = req->getPath();
     	auto sessionPtr = req->session();
-
+	std::string sampleInput = "ananke";
+	if(checkUsernameRegex(sampleInput)){
+		std::cout << "Input is valid" << std::endl;
+	}
   	if(sessionPtr->find("lastVisit")){
 		//TODO right the last visited site to database
 		//

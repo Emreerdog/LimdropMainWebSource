@@ -15,7 +15,7 @@ void login::doFilter(const HttpRequestPtr &req,
     // Already logged in 
     // Redirect to last page
     // If there is no last page, redirect to main page
-    auto *sessionPtr = req->session();
+    auto sessionPtr = req->session();
     if (sessionPtr->find("isLoggedIn"))
     {
 	if(sessionPtr->find("lastVisit")){
@@ -42,7 +42,7 @@ void login::doFilter(const HttpRequestPtr &req,
 		    fccb();
 		    return;
 	    }
-	    std::string redirLoc = "https://192.168.1.23/"
+	    std::string redirLoc = "https://192.168.1.23/";
 
 	    auto res = HttpResponse::newRedirectionResponse(redirLoc);
 	    fcb(res);

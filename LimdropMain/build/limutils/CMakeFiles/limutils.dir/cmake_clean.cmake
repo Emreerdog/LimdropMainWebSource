@@ -1,4 +1,7 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/limutils.dir/PatternFiller.cpp.o"
+  "CMakeFiles/limutils.dir/blowfish.cpp.o"
+  "CMakeFiles/limutils.dir/inputregex.cpp.o"
   "CMakeFiles/limutils.dir/passhandler.cpp.o"
   "liblimutils.a"
   "liblimutils.pdb"

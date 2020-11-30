@@ -13,7 +13,7 @@ void createaccount::doFilter(const HttpRequestPtr &req,
                          FilterChainCallback &&fccb)
 {
     
-    auto *sessionPtr = req->session();
+    auto sessionPtr = req->session();
    
     if (sessionPtr->find("isLoggedIn")){	    
 	if(sessionPtr->find("lastVisit")){
@@ -41,7 +41,7 @@ void createaccount::doFilter(const HttpRequestPtr &req,
 		// Check if the username, password and email is valid
 		// Then redirect to profile
 	 }
-	 std::string redirLoc = "https://192.168.1.23/account/create"
+	 std::string redirLoc = "https://192.168.1.23/account/create";
 	 sessionPtr->insert("status", false);
 	 sessionPtr->insert("statusText", "Bos alan birakmamalisin");
 

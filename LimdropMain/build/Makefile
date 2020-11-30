@@ -217,6 +217,60 @@ filters/checktraffic.cc.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.s
 .PHONY : filters/checktraffic.cc.s
 
+filters/createaccount.o: filters/createaccount.cc.o
+
+.PHONY : filters/createaccount.o
+
+# target to build an object file
+filters/createaccount.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/createaccount.cc.o
+.PHONY : filters/createaccount.cc.o
+
+filters/createaccount.i: filters/createaccount.cc.i
+
+.PHONY : filters/createaccount.i
+
+# target to preprocess a source file
+filters/createaccount.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/createaccount.cc.i
+.PHONY : filters/createaccount.cc.i
+
+filters/createaccount.s: filters/createaccount.cc.s
+
+.PHONY : filters/createaccount.s
+
+# target to generate assembly for a file
+filters/createaccount.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/createaccount.cc.s
+.PHONY : filters/createaccount.cc.s
+
+filters/login.o: filters/login.cc.o
+
+.PHONY : filters/login.o
+
+# target to build an object file
+filters/login.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/login.cc.o
+.PHONY : filters/login.cc.o
+
+filters/login.i: filters/login.cc.i
+
+.PHONY : filters/login.i
+
+# target to preprocess a source file
+filters/login.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/login.cc.i
+.PHONY : filters/login.cc.i
+
+filters/login.s: filters/login.cc.s
+
+.PHONY : filters/login.s
+
+# target to generate assembly for a file
+filters/login.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/login.cc.s
+.PHONY : filters/login.cc.s
+
 limutils/PatternFiller.o: limutils/PatternFiller.cpp.o
 
 .PHONY : limutils/PatternFiller.o
@@ -270,6 +324,33 @@ limutils/blowfish.s: limutils/blowfish.cpp.s
 limutils/blowfish.cpp.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/limutils/blowfish.cpp.s
 .PHONY : limutils/blowfish.cpp.s
+
+limutils/inputregex.o: limutils/inputregex.cpp.o
+
+.PHONY : limutils/inputregex.o
+
+# target to build an object file
+limutils/inputregex.cpp.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/limutils/inputregex.cpp.o
+.PHONY : limutils/inputregex.cpp.o
+
+limutils/inputregex.i: limutils/inputregex.cpp.i
+
+.PHONY : limutils/inputregex.i
+
+# target to preprocess a source file
+limutils/inputregex.cpp.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/limutils/inputregex.cpp.i
+.PHONY : limutils/inputregex.cpp.i
+
+limutils/inputregex.s: limutils/inputregex.cpp.s
+
+.PHONY : limutils/inputregex.s
+
+# target to generate assembly for a file
+limutils/inputregex.cpp.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/limutils/inputregex.cpp.s
+.PHONY : limutils/inputregex.cpp.s
 
 limutils/passhandler.o: limutils/passhandler.cpp.o
 
@@ -344,12 +425,21 @@ help:
 	@echo "... filters/checktraffic.o"
 	@echo "... filters/checktraffic.i"
 	@echo "... filters/checktraffic.s"
+	@echo "... filters/createaccount.o"
+	@echo "... filters/createaccount.i"
+	@echo "... filters/createaccount.s"
+	@echo "... filters/login.o"
+	@echo "... filters/login.i"
+	@echo "... filters/login.s"
 	@echo "... limutils/PatternFiller.o"
 	@echo "... limutils/PatternFiller.i"
 	@echo "... limutils/PatternFiller.s"
 	@echo "... limutils/blowfish.o"
 	@echo "... limutils/blowfish.i"
 	@echo "... limutils/blowfish.s"
+	@echo "... limutils/inputregex.o"
+	@echo "... limutils/inputregex.i"
+	@echo "... limutils/inputregex.s"
 	@echo "... limutils/passhandler.o"
 	@echo "... limutils/passhandler.i"
 	@echo "... limutils/passhandler.s"

@@ -125,6 +125,87 @@ limutils/fast:
 	cd /home/erdog1/LimdropMainWebSource/LimdropMain/build && $(MAKE) -f limutils/CMakeFiles/limutils.dir/build.make limutils/CMakeFiles/limutils.dir/build
 .PHONY : limutils/fast
 
+PatternFiller.o: PatternFiller.cpp.o
+
+.PHONY : PatternFiller.o
+
+# target to build an object file
+PatternFiller.cpp.o:
+	cd /home/erdog1/LimdropMainWebSource/LimdropMain/build && $(MAKE) -f limutils/CMakeFiles/limutils.dir/build.make limutils/CMakeFiles/limutils.dir/PatternFiller.cpp.o
+.PHONY : PatternFiller.cpp.o
+
+PatternFiller.i: PatternFiller.cpp.i
+
+.PHONY : PatternFiller.i
+
+# target to preprocess a source file
+PatternFiller.cpp.i:
+	cd /home/erdog1/LimdropMainWebSource/LimdropMain/build && $(MAKE) -f limutils/CMakeFiles/limutils.dir/build.make limutils/CMakeFiles/limutils.dir/PatternFiller.cpp.i
+.PHONY : PatternFiller.cpp.i
+
+PatternFiller.s: PatternFiller.cpp.s
+
+.PHONY : PatternFiller.s
+
+# target to generate assembly for a file
+PatternFiller.cpp.s:
+	cd /home/erdog1/LimdropMainWebSource/LimdropMain/build && $(MAKE) -f limutils/CMakeFiles/limutils.dir/build.make limutils/CMakeFiles/limutils.dir/PatternFiller.cpp.s
+.PHONY : PatternFiller.cpp.s
+
+blowfish.o: blowfish.cpp.o
+
+.PHONY : blowfish.o
+
+# target to build an object file
+blowfish.cpp.o:
+	cd /home/erdog1/LimdropMainWebSource/LimdropMain/build && $(MAKE) -f limutils/CMakeFiles/limutils.dir/build.make limutils/CMakeFiles/limutils.dir/blowfish.cpp.o
+.PHONY : blowfish.cpp.o
+
+blowfish.i: blowfish.cpp.i
+
+.PHONY : blowfish.i
+
+# target to preprocess a source file
+blowfish.cpp.i:
+	cd /home/erdog1/LimdropMainWebSource/LimdropMain/build && $(MAKE) -f limutils/CMakeFiles/limutils.dir/build.make limutils/CMakeFiles/limutils.dir/blowfish.cpp.i
+.PHONY : blowfish.cpp.i
+
+blowfish.s: blowfish.cpp.s
+
+.PHONY : blowfish.s
+
+# target to generate assembly for a file
+blowfish.cpp.s:
+	cd /home/erdog1/LimdropMainWebSource/LimdropMain/build && $(MAKE) -f limutils/CMakeFiles/limutils.dir/build.make limutils/CMakeFiles/limutils.dir/blowfish.cpp.s
+.PHONY : blowfish.cpp.s
+
+inputregex.o: inputregex.cpp.o
+
+.PHONY : inputregex.o
+
+# target to build an object file
+inputregex.cpp.o:
+	cd /home/erdog1/LimdropMainWebSource/LimdropMain/build && $(MAKE) -f limutils/CMakeFiles/limutils.dir/build.make limutils/CMakeFiles/limutils.dir/inputregex.cpp.o
+.PHONY : inputregex.cpp.o
+
+inputregex.i: inputregex.cpp.i
+
+.PHONY : inputregex.i
+
+# target to preprocess a source file
+inputregex.cpp.i:
+	cd /home/erdog1/LimdropMainWebSource/LimdropMain/build && $(MAKE) -f limutils/CMakeFiles/limutils.dir/build.make limutils/CMakeFiles/limutils.dir/inputregex.cpp.i
+.PHONY : inputregex.cpp.i
+
+inputregex.s: inputregex.cpp.s
+
+.PHONY : inputregex.s
+
+# target to generate assembly for a file
+inputregex.cpp.s:
+	cd /home/erdog1/LimdropMainWebSource/LimdropMain/build && $(MAKE) -f limutils/CMakeFiles/limutils.dir/build.make limutils/CMakeFiles/limutils.dir/inputregex.cpp.s
+.PHONY : inputregex.cpp.s
+
 passhandler.o: passhandler.cpp.o
 
 .PHONY : passhandler.o
@@ -161,6 +242,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... limutils"
+	@echo "... PatternFiller.o"
+	@echo "... PatternFiller.i"
+	@echo "... PatternFiller.s"
+	@echo "... blowfish.o"
+	@echo "... blowfish.i"
+	@echo "... blowfish.s"
+	@echo "... inputregex.o"
+	@echo "... inputregex.i"
+	@echo "... inputregex.s"
 	@echo "... passhandler.o"
 	@echo "... passhandler.i"
 	@echo "... passhandler.s"

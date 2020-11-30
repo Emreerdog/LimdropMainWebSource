@@ -6,15 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/erdog1/LimdropMainWebSource/LimdropMain/filters/checktraffic.cc
-checktraffic.h
-/home/erdog1/LimdropMainWebSource/LimdropMain/filters/checktraffic.h
+/home/erdog1/LimdropMainWebSource/LimdropMain/filters/login.cc
+login.h
+/home/erdog1/LimdropMainWebSource/LimdropMain/filters/login.h
 
-/home/erdog1/LimdropMainWebSource/LimdropMain/filters/checktraffic.h
+/home/erdog1/LimdropMainWebSource/LimdropMain/filters/login.h
 drogon/HttpFilter.h
--
-
-/home/erdog1/LimdropMainWebSource/LimdropMain/main.cpp
-drogon/drogon.h
 -
 
