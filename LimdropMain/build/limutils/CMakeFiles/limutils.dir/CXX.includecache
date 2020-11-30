@@ -6,37 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/erdog1/LimdropMainWebSource/LimdropMain/limutils/PatternFiller.cpp
-iostream
--
-fstream
--
-PatternFiller.h
-/home/erdog1/LimdropMainWebSource/LimdropMain/limutils/PatternFiller.h
-
-/home/erdog1/LimdropMainWebSource/LimdropMain/limutils/PatternFiller.h
-string
--
-vector
--
-stdarg.h
--
-
-/home/erdog1/LimdropMainWebSource/LimdropMain/limutils/blowfish.cpp
-blowfish.h
 /home/erdog1/LimdropMainWebSource/LimdropMain/limutils/blowfish.h
-
-/home/erdog1/LimdropMainWebSource/LimdropMain/limutils/blowfish.h
-
-/home/erdog1/LimdropMainWebSource/LimdropMain/limutils/inputregex.cpp
-inputregex.h
-/home/erdog1/LimdropMainWebSource/LimdropMain/limutils/inputregex.h
-regex
--
-
-/home/erdog1/LimdropMainWebSource/LimdropMain/limutils/inputregex.h
-string
--
 
 /home/erdog1/LimdropMainWebSource/LimdropMain/limutils/passhandler.cpp
 iostream

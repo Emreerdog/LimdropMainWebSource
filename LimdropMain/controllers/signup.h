@@ -7,6 +7,6 @@ class signup:public drogon::HttpSimpleController<signup>
     virtual void asyncHandleHttpRequest(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback) override;
     PATH_LIST_BEGIN
     //list path definitions here;
-    PATH_ADD("/account/create", Get, "checktraffic");
+    PATH_ADD("/accounts/create", Get, "checktraffic");
     PATH_LIST_END
 };

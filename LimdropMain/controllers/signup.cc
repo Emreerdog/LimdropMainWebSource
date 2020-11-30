@@ -7,15 +7,13 @@ void signup::asyncHandleHttpRequest(const HttpRequestPtr& req, std::function<voi
 	std::string fileContent = "";
 
 	auto sessionPtr = req->session();
-	if(sessionPtr->find("status")){
+	if(sessionPtr->find("status")){	
 			std::string status = sessionPtr->get<std::string>("status");
-			std::string statusText = sessionPtr->get<std::string>("statusText");
-			
+			std::string statusText = sessionPtr->get<std::string>("statusText");			
+			fileContent = MPF.fillPatterns("account.html", status.c_str(), statusText.c_str());
 			// Free the status vars
 			sessionPtr->erase("status");
 			sessionPtr->erase("statusText");
-
-			fileContent = MPF.fillPatterns("account.html", status, statusText);
 	}
 	else{
 		fileContent = MPF.fillPatterns("account.html", "", "");

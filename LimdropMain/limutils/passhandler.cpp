@@ -21,10 +21,8 @@ void PasswordHandler::EncryptPass(){
 		if(IsPassValid()){
 			
 			BLOWFISH_CTX ctx;
-			std::cout << LRPair.first << " " << LRPair.second  << std::endl;
 			Blowfish_Init(&ctx, (unsigned char*)_pass.c_str(), _pass.size());
 			Blowfish_Encrypt(&ctx, &LRPair.first, &LRPair.second);
-			std::cout << LRPair.first << " " << LRPair.second  << std::endl;
 			
 		}
 	}
@@ -41,13 +39,10 @@ bool PasswordHandler::CheckDecryptValidity(unsigned long L, unsigned long R, uns
 		Blowfish_Init(&ctx, (unsigned char*)_pass.c_str(), _pass.size());
 		Blowfish_Decrypt(&ctx, &L, &R);
 		
-		std::cout << L << " " << R << " " << _L << " " << _R << std::endl;
 		if(L == _L && R == _R){
-			std::cout << "There you go" << std::endl;
 			return true;
 		}
 		else {
-			std::cout << "fuck" << std::endl;
 			return false;
 		}
 

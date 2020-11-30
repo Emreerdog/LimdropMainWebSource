@@ -13,7 +13,8 @@ void checktraffic::doFilter(const HttpRequestPtr &req, FilterCallback &&fcb, Fil
     	std::string lastVisited = req->getPath();
     	auto sessionPtr = req->session();
 
-  	if(sessionPtr->find("lastVisit")){
+  	if(sessionPtr->find("lastVisit"))
+	{
 		//TODO right the last visited site to database
 		//
 		// Last data should be erased. Otherwise value of the key won't be change

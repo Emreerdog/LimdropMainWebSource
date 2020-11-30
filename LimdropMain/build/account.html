@@ -4,11 +4,14 @@
 
 <h2>Text input fields</h2>
 
-<form>
-  <label for="fname">#$status:</label><br>
-  <input type="text" id="fname" name="fname" value="John"><br>
-  <label for="lname">#$statusText:</label><br>
-  <input type="text" id="lname" name="lname" value="Doe">
+<form action="https://192.168.1.23/accounts/signup", method=POST>
+  <label for="uname">#$status:</label><br>
+  <input type="text" id="uname" name=ufname" value="John"><br>
+  <label for="pass">#$statusText:</label><br>
+  <input type="text" id="pass" name="pass" value="Doe"><br>
+  <label for="email">#$statusText:</label><br>
+  <input type="text" id="email" name="email" value="Doe">
+  <input type="submit" value="Submit">
 </form>
 
 <p>Note that the form itself is not visible.</p>
