@@ -6,11 +6,3 @@
 
 #IncludeRegexTransform: 
 
-/home/erdog1/LimdropMainWebSource/LimdropMain/filters/login.cc
-login.h
-/home/erdog1/LimdropMainWebSource/LimdropMain/filters/login.h
-
-/home/erdog1/LimdropMainWebSource/LimdropMain/filters/login.h
-drogon/HttpFilter.h
--
-

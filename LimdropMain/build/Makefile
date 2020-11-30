@@ -136,59 +136,32 @@ limutils/fast:
 	$(MAKE) -f limutils/CMakeFiles/limutils.dir/build.make limutils/CMakeFiles/limutils.dir/build
 .PHONY : limutils/fast
 
-controllers/my.o: controllers/my.cc.o
+controllers/signup.o: controllers/signup.cc.o
 
-.PHONY : controllers/my.o
-
-# target to build an object file
-controllers/my.cc.o:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/my.cc.o
-.PHONY : controllers/my.cc.o
-
-controllers/my.i: controllers/my.cc.i
-
-.PHONY : controllers/my.i
-
-# target to preprocess a source file
-controllers/my.cc.i:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/my.cc.i
-.PHONY : controllers/my.cc.i
-
-controllers/my.s: controllers/my.cc.s
-
-.PHONY : controllers/my.s
-
-# target to generate assembly for a file
-controllers/my.cc.s:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/my.cc.s
-.PHONY : controllers/my.cc.s
-
-controllers/testsys.o: controllers/testsys.cc.o
-
-.PHONY : controllers/testsys.o
+.PHONY : controllers/signup.o
 
 # target to build an object file
-controllers/testsys.cc.o:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/testsys.cc.o
-.PHONY : controllers/testsys.cc.o
+controllers/signup.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o
+.PHONY : controllers/signup.cc.o
 
-controllers/testsys.i: controllers/testsys.cc.i
+controllers/signup.i: controllers/signup.cc.i
 
-.PHONY : controllers/testsys.i
+.PHONY : controllers/signup.i
 
 # target to preprocess a source file
-controllers/testsys.cc.i:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/testsys.cc.i
-.PHONY : controllers/testsys.cc.i
+controllers/signup.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/signup.cc.i
+.PHONY : controllers/signup.cc.i
 
-controllers/testsys.s: controllers/testsys.cc.s
+controllers/signup.s: controllers/signup.cc.s
 
-.PHONY : controllers/testsys.s
+.PHONY : controllers/signup.s
 
 # target to generate assembly for a file
-controllers/testsys.cc.s:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/testsys.cc.s
-.PHONY : controllers/testsys.cc.s
+controllers/signup.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/signup.cc.s
+.PHONY : controllers/signup.cc.s
 
 filters/checktraffic.o: filters/checktraffic.cc.o
 
@@ -416,12 +389,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... PyEmbedd"
 	@echo "... limutils"
-	@echo "... controllers/my.o"
-	@echo "... controllers/my.i"
-	@echo "... controllers/my.s"
-	@echo "... controllers/testsys.o"
-	@echo "... controllers/testsys.i"
-	@echo "... controllers/testsys.s"
+	@echo "... controllers/signup.o"
+	@echo "... controllers/signup.i"
+	@echo "... controllers/signup.s"
 	@echo "... filters/checktraffic.o"
 	@echo "... filters/checktraffic.i"
 	@echo "... filters/checktraffic.s"
