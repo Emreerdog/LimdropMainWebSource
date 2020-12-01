@@ -6,7 +6,7 @@ class accounts:public drogon::HttpController<accounts>
   public:
     METHOD_LIST_BEGIN
 		METHOD_ADD(accounts::createAccount, "/signup?uname={1}&pass={2}&email={3}", Post, "createaccount");
-		METHOD_ADD(accounts::loginAccount, "/login?uname={1}&pass{2}", Post, "login");
+		METHOD_ADD(accounts::loginAccount, "/login?uname={1}&pass={2}", Post);
 		METHOD_ADD(accounts::loginPage, "/", Get);
     //use METHOD_ADD to add your custom processing function here;
     //METHOD_ADD(accounts::get,"/{2}/{1}",Get);//path is /accounts/{arg2}/{arg1}

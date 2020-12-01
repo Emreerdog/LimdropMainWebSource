@@ -2,10 +2,6 @@
 #include "passhandler.h"
 #include "blowfish.h"
 
-void helloguys(){
-	std::cout << "Hello guys" << std::endl;
-}
-
 PasswordHandler::PasswordHandler(std::string pass, Mode PS_MODE) {
     this->_pass = pass;
     this->_PS_MODE = PS_MODE;
@@ -33,27 +29,10 @@ void PasswordHandler::EncryptPass(){
 }
 
 //WARNING Password needs to be valid
-bool PasswordHandler::CheckDecryptValidity(unsigned long L, unsigned long R, unsigned long _L, unsigned long _R){
-	if(_PS_MODE == Mode::PS_DECRYPT){
-		BLOWFISH_CTX ctx;
-		Blowfish_Init(&ctx, (unsigned char*)_pass.c_str(), _pass.size());
-		Blowfish_Decrypt(&ctx, &L, &R);
-		
-		if(L == _L && R == _R){
-			return true;
-		}
-		else {
-			return false;
-		}
-
-	}
-	return false;
-}
-
-void PasswordHandler::MakeLRpair(){
-	srand(time(0));
-	unsigned long L = rand() % 10 + 5;
-	unsigned long R = rand() % 10 + 5;
+void PasswordHandler::MakeLRpair(unsigned long L, unsigned long R){
+	// srand(time(0));
+	// unsigned long L = rand() % 10 + 5;
+	// unsigned long R = rand() % 10 + 5;
 	LRPair = std::make_pair(L, R);
 }
 

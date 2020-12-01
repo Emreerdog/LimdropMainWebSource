@@ -6,7 +6,10 @@
 
 void accounts::createAccount(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback, std::string uname, std::string pass, std::string email){
 	PasswordHandler passHandler(pass, Mode::PS_ENCRYPT);
-	passHandler.MakeLRpair();
+
+	srand(time(0));
+	
+	passHandler.MakeLRpair(rand() % 10 + 5, rand() % 10 + 5);
 	std::pair <unsigned long, unsigned long> LRPair = passHandler.GetLRpair();
 
 	// Convert not encrypted lr pair to string
@@ -29,16 +32,58 @@ void accounts::createAccount(const HttpRequestPtr& req, std::function<void (cons
 	std::string queryStart = "INSERT INTO accounts(username, L, R, P1, P2, email, accountCreateDate, accountCreateTime) VALUES";
 	std::string queryEnd = "('" + uname + "'," + L + "," + R + ",'" + LE + "','" + RE +"','" + email + "','" + createDate + "','" + createTime+ "')";
       	std::string totalQuery = queryStart + queryEnd;	
-	auto f = clientPtr->execSqlAsyncFuture(totalQuery);
-	std::cout << totalQuery << std::endl;
+	clientPtr->execSqlAsyncFuture(totalQuery);
 
-	auto res = HttpResponse::newNotFoundResponse();
+	auto res = HttpResponse::newRedirectionResponse("https://192.168.1.23/accounts/");
 	callback(res);
 }
 
 
 void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback, std::string uname, std::string pass){
+	
+	// TODO 
+	// Get L and R value from database
+	// Encrypt the password using L and R value
+	// Then,
+	// Check the validity by comparing new L and R values
+	auto clientPtr = drogon::app().getDbClient();
+	std::string queryStart = "SELECT L, R, P1, P2 FROM accounts WHERE ";
+	std::string queryEnd = "username = '" + uname + "'";
+	std::string totalQuery = queryStart + queryEnd;
 
+	auto f = clientPtr->execSqlAsyncFuture(totalQuery);
+	auto result = f.get();
+	if(result.size() == 0){
+		// TODO
+		// Redirect to login page
+		auto resp = HttpResponse::newRedirectionResponse("https://192.168.1.23/accounts/");
+		callback(resp);
+		return;
+	}
+	else{
+		unsigned long L = 0;
+		unsigned long R = 0;
+		unsigned long P1 = 0;
+		unsigned long P2 = 0;
+		for(auto row : result){
+			L = row["L"].as<unsigned long>();
+			R = row["R"].as<unsigned long>();
+			P1 = row["P1"].as<unsigned long>();
+			P2 = row["P2"].as<unsigned long>();
+		}
+		PasswordHandler passHandler(pass, Mode::PS_ENCRYPT);
+		passHandler.MakeLRpair(L, R);
+		passHandler.EncryptPass();
+		std::pair <unsigned long, unsigned long> LRpair = passHandler.GetLRpair();
+		if(LRpair.first == P1 && LRpair.second == P2){
+			std::cout << LRpair.first << " " << LRpair.second << std::endl;
+			auto resp = HttpResponse::newNotFoundResponse();
+			callback(resp);
+			return;
+		}
+	}
+	auto resp = HttpResponse::newNotFoundResponse();
+	callback(resp);	
 }
 
 
