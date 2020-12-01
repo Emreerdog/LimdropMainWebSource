@@ -1,5 +1,6 @@
 #include "accounts.h"
 #include <limutils/passhandler.h>
+#include <limutils/PatternFiller.h>
 //add definition of your processing function here
 
 
@@ -22,7 +23,7 @@ void accounts::createAccount(const HttpRequestPtr& req, std::function<void (cons
 	auto date = trantor::Date::now();
 
 	auto clientPtr = drogon::app().getDbClient();
-	std::string createDate = date.toCustomedFormattedString("%m-%d-%Y");
+	std::string createDate = date.toCustomedFormattedString("%d-%m-%Y");
 	std::string createTime = date.toCustomedFormattedString("%H:%M:%S");
 
 	std::string queryStart = "INSERT INTO accounts(username, L, R, P1, P2, email, accountCreateDate, accountCreateTime) VALUES";
@@ -37,5 +38,24 @@ void accounts::createAccount(const HttpRequestPtr& req, std::function<void (cons
 
 
 void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback, std::string uname, std::string pass){
+
+}
+
+
+void accounts::loginPage(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
+	auto sessionPtr = req->session();
+	if(sessionPtr->find("isLoggedIn")){
+		auto resp = HttpResponse::newRedirectionResponse("https://192.168.1.23/");
+		callback(resp);
+		return;
+	}
+	
+	ManualPatternFiller MPF(2, "status", "statusText");
+	std::string fileContent = "";
+	std::string result = MPF.fillPatterns("login.html", "testStat", "testtext");
+	
+	auto resp = HttpResponse::newHttpResponse();
+	resp->setBody(result);
+	callback(resp);
 
 }
