@@ -15,7 +15,7 @@ void checktraffic::doFilter(const HttpRequestPtr &req, FilterCallback &&fcb, Fil
 
   	if(sessionPtr->find("lastVisit"))
 	{
-		//TODO right the last visited site to database
+		// TODO right the last visited site to database
 		//
 		// Last data should be erased. Otherwise value of the key won't be change
 		sessionPtr->erase("lastVisit");

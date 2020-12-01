@@ -14,7 +14,7 @@ void createaccount::doFilter(const HttpRequestPtr &req,
                          FilterChainCallback &&fccb)
 {
     
-    auto sessionPtr = req->session();
+        auto sessionPtr = req->session();
 	sessionPtr->erase("status");
 	sessionPtr->erase("statusText");
 
@@ -50,7 +50,7 @@ void createaccount::doFilter(const HttpRequestPtr &req,
 				}
 			}
 			else if(firstVal == "email"){
-				if(!checkUsernameRegex(secondVal)){
+				if(!checkEmailRegex(secondVal)){
 					std::string redirLoc = "https://192.168.1.23/accounts/create";
                         		
 					std::string status = "false";
