@@ -10,6 +10,9 @@ CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o
  ../limutils/PatternFiller.h
  /home/erdog1/LimdropMainWebSource/LimdropMain/controllers/signup.cc
  /home/erdog1/LimdropMainWebSource/LimdropMain/controllers/signup.h
+CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o
+ /home/erdog1/LimdropMainWebSource/LimdropMain/controllers/trjson.cc
+ /home/erdog1/LimdropMainWebSource/LimdropMain/controllers/trjson.h
 CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o
  /home/erdog1/LimdropMainWebSource/LimdropMain/filters/checktraffic.cc
  /home/erdog1/LimdropMainWebSource/LimdropMain/filters/checktraffic.h

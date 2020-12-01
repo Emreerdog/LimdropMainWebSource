@@ -6,29 +6,11 @@
 
 #IncludeRegexTransform: 
 
-../limutils/PatternFiller.h
-string
--
-vector
--
-stdarg.h
--
+/home/erdog1/LimdropMainWebSource/LimdropMain/controllers/trjson.cc
+trjson.h
+/home/erdog1/LimdropMainWebSource/LimdropMain/controllers/trjson.h
 
-../limutils/passhandler.h
-string
--
-utility
--
-
-/home/erdog1/LimdropMainWebSource/LimdropMain/controllers/accounts.cc
-accounts.h
-/home/erdog1/LimdropMainWebSource/LimdropMain/controllers/accounts.h
-limutils/passhandler.h
--
-limutils/PatternFiller.h
--
-
-/home/erdog1/LimdropMainWebSource/LimdropMain/controllers/accounts.h
-drogon/HttpController.h
+/home/erdog1/LimdropMainWebSource/LimdropMain/controllers/trjson.h
+drogon/HttpSimpleController.h
 -
 
