@@ -10,8 +10,12 @@ CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o: ../limutils/PatternFiller.h
 CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o: ../controllers/signup.cc
 CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o: ../controllers/signup.h
 
+CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o: ../limutils/PatternFiller.h
 CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o: ../controllers/trjson.cc
 CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o: ../controllers/trjson.h
+
+CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o: ../controllers/uploads.cc
+CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o: ../controllers/uploads.h
 
 CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o: ../filters/checktraffic.cc
 CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o: ../filters/checktraffic.h

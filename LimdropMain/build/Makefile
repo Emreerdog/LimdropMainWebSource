@@ -217,6 +217,33 @@ controllers/trjson.cc.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.s
 .PHONY : controllers/trjson.cc.s
 
+controllers/uploads.o: controllers/uploads.cc.o
+
+.PHONY : controllers/uploads.o
+
+# target to build an object file
+controllers/uploads.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o
+.PHONY : controllers/uploads.cc.o
+
+controllers/uploads.i: controllers/uploads.cc.i
+
+.PHONY : controllers/uploads.i
+
+# target to preprocess a source file
+controllers/uploads.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.i
+.PHONY : controllers/uploads.cc.i
+
+controllers/uploads.s: controllers/uploads.cc.s
+
+.PHONY : controllers/uploads.s
+
+# target to generate assembly for a file
+controllers/uploads.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.s
+.PHONY : controllers/uploads.cc.s
+
 filters/checktraffic.o: filters/checktraffic.cc.o
 
 .PHONY : filters/checktraffic.o
@@ -452,6 +479,9 @@ help:
 	@echo "... controllers/trjson.o"
 	@echo "... controllers/trjson.i"
 	@echo "... controllers/trjson.s"
+	@echo "... controllers/uploads.o"
+	@echo "... controllers/uploads.i"
+	@echo "... controllers/uploads.s"
 	@echo "... filters/checktraffic.o"
 	@echo "... filters/checktraffic.i"
 	@echo "... filters/checktraffic.s"

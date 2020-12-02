@@ -1,13 +1,13 @@
 #include "trjson.h"
+#include <limutils/PatternFiller.h>
 void trjson::asyncHandleHttpRequest(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback)
 {
-	Json::Value root;
-	std::string a = "val1";
-	std::string b = "val2";
-	root["vals"][a];
-	root["vals"][b];
 
+    ManualPatternFiller MPF(2, "bum", "bam");
+    std::string content = MPF.fillPatterns("sendfile.html", "", "");
 
-    auto resp = HttpResponse::newHttpJsonResponse(root);
+    auto resp = HttpResponse::newHttpResponse();
+
+    resp->setBody(content);
     callback(resp);
 }

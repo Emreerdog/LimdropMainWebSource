@@ -21,6 +21,7 @@ aux_source_directory(controllers CTL_SRC)
 aux_source_directory(filters FILTER_SRC)
 aux_source_directory(plugins PLUGIN_SRC)
 aux_source_directory(models MODEL_SRC)
+aux_source_directory(views VIEW_SRC)
 aux_source_directory(limutils LIMUTIL_SRC)
 
 
@@ -34,6 +35,7 @@ target_sources(${PROJECT_NAME}
                ${CTL_SRC}
                ${FILTER_SRC}
                ${PLUGIN_SRC}
+	       ${VIEW_SRC}
                ${MODEL_SRC}
 	       ${LIMUTIL_SRC}
                )
