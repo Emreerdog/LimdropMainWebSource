@@ -7,6 +7,8 @@ void signup::asyncHandleHttpRequest(const HttpRequestPtr& req, std::function<voi
 	ManualPatternFiller MPF(2, "status", "statusText");
 	std::string fileContent = "";
 
+	std::cout << "Hello world" << std::endl;
+
 	auto sessionPtr = req->session();
 	if(sessionPtr->find("status")){	
 			std::string status = sessionPtr->get<std::string>("status");

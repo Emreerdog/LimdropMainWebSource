@@ -34,13 +34,24 @@ void accounts::createAccount(const HttpRequestPtr& req, std::function<void (cons
       	std::string totalQuery = queryStart + queryEnd;	
 	clientPtr->execSqlAsyncFuture(totalQuery);
 
-	auto res = HttpResponse::newRedirectionResponse("https://192.168.1.23/accounts/");
+	auto res = HttpResponse::newRedirectionResponse("/accounts/");
 	callback(res);
 }
 
 
-void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback, std::string uname, std::string pass){
-	
+void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback, std::string uname, std::string pass, int num){
+
+		
+	std::unordered_map<std::string, std::string> tempParam = req->parameters();
+	for(const auto& n : tempParam){
+		// TODO 
+		// Read the name and password from the database
+		// Password should be decrypted using blowfish 
+		if(n.second == "3"){
+			std::cout << n.second << std::endl;
+		}
+		
+	}
 	// TODO 
 	// Get L and R value from database
 	// Encrypt the password using L and R value
@@ -56,7 +67,7 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 	if(result.size() == 0){
 		// TODO
 		// Redirect to login page
-		auto resp = HttpResponse::newRedirectionResponse("https://192.168.1.23/accounts/");
+		auto resp = HttpResponse::newRedirectionResponse("/accounts/");
 		callback(resp);
 		return;
 	}
@@ -90,7 +101,7 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 void accounts::loginPage(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	auto sessionPtr = req->session();
 	if(sessionPtr->find("isLoggedIn")){
-		auto resp = HttpResponse::newRedirectionResponse("https://192.168.1.23/");
+		auto resp = HttpResponse::newRedirectionResponse("/");
 		callback(resp);
 		return;
 	}
