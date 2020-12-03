@@ -14,18 +14,6 @@ vector
 stdarg.h
 -
 
-/home/erdog1/LimdropMainWebSource/LimdropMain/controllers/signup.cc
-signup.h
-/home/erdog1/LimdropMainWebSource/LimdropMain/controllers/signup.h
-trantor/utils/Date.h
--
-limutils/PatternFiller.h
--
-
-/home/erdog1/LimdropMainWebSource/LimdropMain/controllers/signup.h
-drogon/HttpSimpleController.h
--
-
 /home/erdog1/LimdropMainWebSource/LimdropMain/controllers/uploads.cc
 uploads.h
 /home/erdog1/LimdropMainWebSource/LimdropMain/controllers/uploads.h

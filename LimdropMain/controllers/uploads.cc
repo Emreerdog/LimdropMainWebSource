@@ -31,4 +31,28 @@ void uploads::upload_form(const HttpRequestPtr& req,std::function<void (const Ht
 	resp->setBody(content);
 	callback(resp);
 }
+
+
+void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
+
+}
+
+
+void uploads::files_page(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
+	std::unordered_map<std::string, std::string> tempParam = req->parameters();
+	ManualPatternFiller MPF(1, "mark");
+	std::string tempContent = MPF.fillPatterns("addimage.html", "");
+	std::vector<std::string> text;
+	
+	for(const auto& n : tempParam){
+		text.push_back(n.second);
+	}
+
+	SequentialPatternFiller SPF;
+	std::string content = SPF.fillOnString(tempContent, "#$ozan", text, "form", true, true, "/uploads/upload-file", "", "post");
+	auto resp = HttpResponse::newHttpResponse();
+	resp->setBody(content);
+	callback(resp);
+
+}
 //add definition of your processing function here

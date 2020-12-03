@@ -56,7 +56,7 @@ std::string SequentialPatternFiller::fillOnFile(std::string file, std::string ou
     return result;
 }
 
-std::string SequentialPatternFiller::fillOnString(std::string str, std::string outterKey, std::vector<std::string> text, std::string element, bool containsAttribute, std::string classname, std::string id)
+std::string SequentialPatternFiller::fillOnString(std::string str, std::string outterKey, std::vector<std::string> text, std::string element, bool isForm, bool containsAttribute, std::string classname, std::string id, std::string method)
 {
     const char* marker = "#$";
     std::string verifiedPattern = "";
@@ -72,7 +72,13 @@ std::string SequentialPatternFiller::fillOnString(std::string str, std::string o
     }
 
     if (containsAttribute) {
-        outterPart = "<" + element + " class='" + classname + "' " + "id='" + id + "'>";
+	    if(isForm){
+	    	outterPart = "<" + element + " action='" + classname + "' " + "method='" + method + "'>"; 
+	    }
+	    else{
+	   	 
+        	outterPart = "<" + element + " class='" + classname + "' " + "id='" + id + "'>";
+	    }
     }
 
     else {

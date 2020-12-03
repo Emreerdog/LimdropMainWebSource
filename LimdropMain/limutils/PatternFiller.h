@@ -5,7 +5,7 @@
 class SequentialPatternFiller {
 public:
     std::string fillOnFile(std::string file, std::string outterKey, std::vector<std::string> text, std::string element, bool containsAttribute=false, std::string classname="", std::string id="");
-    std::string fillOnString(std::string str, std::string outterKey, std::vector<std::string> text, std::string element, bool containsAttribute=false, std::string classname="", std::string id="");
+    std::string fillOnString(std::string str, std::string outterKey, std::vector<std::string> text, std::string element, bool isForm=false, bool containsAttribute=false, std::string classname="", std::string id="", std::string method="");
 };
 
 class ManualPatternFiller {
