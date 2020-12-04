@@ -6,6 +6,13 @@ CMakeFiles/PyEmbedd.dir/controllers/accounts.cc.o
  ../limutils/passhandler.h
  /home/erdog1/LimdropMainWebSource/LimdropMain/controllers/accounts.cc
  /home/erdog1/LimdropMainWebSource/LimdropMain/controllers/accounts.h
+CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o
+ /home/erdog1/LimdropMainWebSource/LimdropMain/controllers/basket.cc
+ /home/erdog1/LimdropMainWebSource/LimdropMain/controllers/basket.h
+CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o
+ ../limutils/PatternFiller.h
+ /home/erdog1/LimdropMainWebSource/LimdropMain/controllers/profile.cc
+ /home/erdog1/LimdropMainWebSource/LimdropMain/controllers/profile.h
 CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o
  ../limutils/PatternFiller.h
  /home/erdog1/LimdropMainWebSource/LimdropMain/controllers/signup.cc

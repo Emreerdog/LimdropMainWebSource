@@ -163,6 +163,60 @@ controllers/accounts.cc.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/accounts.cc.s
 .PHONY : controllers/accounts.cc.s
 
+controllers/basket.o: controllers/basket.cc.o
+
+.PHONY : controllers/basket.o
+
+# target to build an object file
+controllers/basket.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o
+.PHONY : controllers/basket.cc.o
+
+controllers/basket.i: controllers/basket.cc.i
+
+.PHONY : controllers/basket.i
+
+# target to preprocess a source file
+controllers/basket.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/basket.cc.i
+.PHONY : controllers/basket.cc.i
+
+controllers/basket.s: controllers/basket.cc.s
+
+.PHONY : controllers/basket.s
+
+# target to generate assembly for a file
+controllers/basket.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/basket.cc.s
+.PHONY : controllers/basket.cc.s
+
+controllers/profile.o: controllers/profile.cc.o
+
+.PHONY : controllers/profile.o
+
+# target to build an object file
+controllers/profile.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o
+.PHONY : controllers/profile.cc.o
+
+controllers/profile.i: controllers/profile.cc.i
+
+.PHONY : controllers/profile.i
+
+# target to preprocess a source file
+controllers/profile.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/profile.cc.i
+.PHONY : controllers/profile.cc.i
+
+controllers/profile.s: controllers/profile.cc.s
+
+.PHONY : controllers/profile.s
+
+# target to generate assembly for a file
+controllers/profile.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/profile.cc.s
+.PHONY : controllers/profile.cc.s
+
 controllers/signup.o: controllers/signup.cc.o
 
 .PHONY : controllers/signup.o
@@ -473,6 +527,12 @@ help:
 	@echo "... controllers/accounts.o"
 	@echo "... controllers/accounts.i"
 	@echo "... controllers/accounts.s"
+	@echo "... controllers/basket.o"
+	@echo "... controllers/basket.i"
+	@echo "... controllers/basket.s"
+	@echo "... controllers/profile.o"
+	@echo "... controllers/profile.i"
+	@echo "... controllers/profile.s"
 	@echo "... controllers/signup.o"
 	@echo "... controllers/signup.i"
 	@echo "... controllers/signup.s"

@@ -6,6 +6,13 @@ CMakeFiles/PyEmbedd.dir/controllers/accounts.cc.o: ../limutils/passhandler.h
 CMakeFiles/PyEmbedd.dir/controllers/accounts.cc.o: ../controllers/accounts.cc
 CMakeFiles/PyEmbedd.dir/controllers/accounts.cc.o: ../controllers/accounts.h
 
+CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o: ../controllers/basket.cc
+CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o: ../controllers/basket.h
+
+CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o: ../limutils/PatternFiller.h
+CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o: ../controllers/profile.cc
+CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o: ../controllers/profile.h
+
 CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o: ../limutils/PatternFiller.h
 CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o: ../controllers/signup.cc
 CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o: ../controllers/signup.h

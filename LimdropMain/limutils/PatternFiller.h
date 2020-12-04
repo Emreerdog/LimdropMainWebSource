@@ -12,6 +12,7 @@ class ManualPatternFiller {
 public:
     ManualPatternFiller(int PatternCount, ...);
     std::string fillPatterns(std::string fname, ...); // Returns the pattern filled string
+    std::string fillPatternsOnString(std::string str, ...);
 
 private:
     std::vector<std::string> keywords;

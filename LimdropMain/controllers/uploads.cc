@@ -36,14 +36,11 @@ void uploads::upload_form(const HttpRequestPtr& req,std::function<void (const Ht
 void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	drogon::MultiPartParser mpp;
 	mpp.parse(req);
-	const std::vector<drogon::HttpFile> f = mpp.getFiles();
-	std::cout << f[1].getFileName() << std::endl;
-	std::cout << f[2].getFileName() << std::endl;
-	std::cout << f[3].getFileName() << std::endl;
-	std::cout << f[4].getFileName() << std::endl;
-
-	
-
+	std::vector<drogon::HttpFile> files = mpp.getFiles();
+	std::vector<drogon::HttpFile>::iterator It;
+	for(It = files.begin(); It != files.end(); It++){
+		std::cout << It->getFileName() << std::endl;
+	}
 }
 
 
@@ -64,7 +61,7 @@ void uploads::files_page(const HttpRequestPtr& req,std::function<void (const Htt
 		unchangable.push_back(inputs);
 	}
 	for(int i = 0; i < imageCount; i++){
-		std::string formElement = "<input type='file' name='" + drogon::utils::genRandomString(8) + "'>";
+		std::string formElement = "<input type='file' name='" + drogon::utils::genRandomString(5) + "'>";
 		fileInputs.push_back(formElement);
 	}
 

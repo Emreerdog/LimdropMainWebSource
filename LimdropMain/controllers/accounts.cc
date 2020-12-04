@@ -5,6 +5,8 @@
 
 
 void accounts::createAccount(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback, std::string uname, std::string pass, std::string email){
+
+	auto sessionPtr = req->session();
 	PasswordHandler passHandler(pass, Mode::PS_ENCRYPT);
 
 	srand(time(0));
@@ -28,28 +30,41 @@ void accounts::createAccount(const HttpRequestPtr& req, std::function<void (cons
 	auto clientPtr = drogon::app().getDbClient();
 	std::string createDate = date.toCustomedFormattedString("%d-%m-%Y");
 	std::string createTime = date.toCustomedFormattedString("%H:%M:%S");
+	std::string preQuery = "SELECT id FROM accounts WHERE uname='"+ uname + "'";
+	auto f = clientPtr->execSqlAsyncFuture(preQuery);
+	if(f.get().size() == 0){
+		sessionPtr->insert("display", "block");
+		sessionPtr->insert("status", "red");
+		sessionPtr->insert("statusText", "Username already exists");
+		auto res = HttpResponse::newRedirectionResponse("/accounts/create");
+		callback(res);
+		return;
+	}
 
 	std::string queryStart = "INSERT INTO accounts(username, L, R, P1, P2, email, accountCreateDate, accountCreateTime) VALUES";
 	std::string queryEnd = "('" + uname + "'," + L + "," + R + ",'" + LE + "','" + RE +"','" + email + "','" + createDate + "','" + createTime+ "')";
       	std::string totalQuery = queryStart + queryEnd;	
 	clientPtr->execSqlAsyncFuture(totalQuery);
+	
+	sessionPtr->insert("display", "block");
+	sessionPtr->insert("status", "green");
+	sessionPtr->insert("statusText", "Account created sucessfully.<br>Verify your email to login to your account.");
+	
 
 	auto res = HttpResponse::newRedirectionResponse("/accounts/");
 	callback(res);
 }
 
 
-void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback, std::string uname, std::string pass, int num){
+void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback, std::string uname, std::string pass){
 
-		
+	auto sessionPtr = req->session();	
+
 	std::unordered_map<std::string, std::string> tempParam = req->parameters();
 	for(const auto& n : tempParam){
 		// TODO 
 		// Read the name and password from the database
 		// Password should be decrypted using blowfish 
-		if(n.second == "3"){
-			std::cout << n.second << std::endl;
-		}
 		
 	}
 	// TODO 
@@ -67,6 +82,9 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 	if(result.size() == 0){
 		// TODO
 		// Redirect to login page
+		sessionPtr->insert("display", "block");
+		sessionPtr->insert("status", "red");
+		sessionPtr->insert("statusText", "Username is not valid");
 		auto resp = HttpResponse::newRedirectionResponse("/accounts/");
 		callback(resp);
 		return;
@@ -86,8 +104,9 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 		passHandler.MakeLRpair(L, R);
 		passHandler.EncryptPass();
 		std::pair <unsigned long, unsigned long> LRpair = passHandler.GetLRpair();
+		// Decrypt password
 		if(LRpair.first == P1 && LRpair.second == P2){
-			std::cout << LRpair.first << " " << LRpair.second << std::endl;
+			
 			auto resp = HttpResponse::newNotFoundResponse();
 			callback(resp);
 			return;
@@ -100,16 +119,25 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 
 void accounts::loginPage(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	auto sessionPtr = req->session();
+	std::string _display = "hidden";
 	if(sessionPtr->find("isLoggedIn")){
 		auto resp = HttpResponse::newRedirectionResponse("/");
 		callback(resp);
 		return;
 	}
-	
-	ManualPatternFiller MPF(2, "status", "statusText");
-	std::string fileContent = "";
-	std::string result = MPF.fillPatterns("login.html", "testStat", "testtext");
-	
+	if(sessionPtr->find("display")){
+		_display = sessionPtr->get<std::string>("display");
+	}
+
+	std::string _status = sessionPtr->get<std::string>("status");
+	std::string _statusText = sessionPtr->get<std::string>("statusText");
+
+	ManualPatternFiller MPF(3, "display", "status", "statusText");
+	std::string result = MPF.fillPatterns("login.html", _display.c_str(), _status.c_str(), _statusText.c_str());
+	sessionPtr->erase("display");
+	sessionPtr->erase("status");
+	sessionPtr->erase("statusText");
+
 	auto resp = HttpResponse::newHttpResponse();
 	resp->setBody(result);
 	callback(resp);

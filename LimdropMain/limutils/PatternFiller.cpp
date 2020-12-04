@@ -52,6 +52,7 @@ std::string SequentialPatternFiller::fillOnFile(std::string file, std::string ou
     outterPart += lastPart;
     size_t patternLoc = fileContent.find(verifiedPattern);
     std::string result = fileContent.replace(patternLoc, verifiedPattern.length(), outterPart);
+    text.clear();
 
     return result;
 }
@@ -99,6 +100,7 @@ std::string SequentialPatternFiller::fillOnString(std::string str, std::string o
     outterPart += lastPart;
     size_t patternLoc = str.find(verifiedPattern);
     std::string result = str.replace(patternLoc, verifiedPattern.length(), outterPart);
+    text.clear();
 
     return result;
 }
@@ -162,4 +164,28 @@ std::string ManualPatternFiller::fillPatterns(std::string fname, ...)
     keywords.clear();
     return fileContent;
 
+}
+
+
+std::string ManualPatternFiller::fillPatternsOnString(std::string str, ...){
+
+    va_list patterns;
+    va_start(patterns, str);
+
+    std::string tempStr = str;
+    for (int i = 0; i < _PatternCount; i++) {
+        size_t checknpos = tempStr.find(keywords[i]);
+        if (checknpos != std::string::npos) {
+            const char* replaced = va_arg(patterns, const char*);
+            tempStr.replace(checknpos, keywords[i].length(), replaced);
+        }
+        else {
+            std::cout << "Pattern " << keywords[i] << " couldn't found on file operation terminated." << std::endl;
+            keywords.clear();
+            return std::string("Patter couldn't found");
+        }
+    }
+
+    keywords.clear();
+    return tempStr;
 }
