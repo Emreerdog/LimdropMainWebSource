@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/PyEmbedd.dir/controllers/accounts.cc.o"
   "CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o"
+  "CMakeFiles/PyEmbedd.dir/controllers/checkweb.cc.o"
   "CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o"
   "CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o"
   "CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o"

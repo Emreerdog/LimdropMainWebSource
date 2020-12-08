@@ -1,4 +1,4 @@
-# Install script for directory: /home/erdog1/LimdropMainWebSource/LimdropMain
+# Install script for directory: /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/erdog1/LimdropMainWebSource/LimdropMain/build/limutils/cmake_install.cmake")
+  include("/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/limutils/cmake_install.cmake")
 
 endif()
 
@@ -51,5 +51,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/erdog1/LimdropMainWebSource/LimdropMain/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -36,20 +36,33 @@ void uploads::upload_form(const HttpRequestPtr& req,std::function<void (const Ht
 void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	drogon::MultiPartParser mpp;
 	mpp.parse(req);
+
+	auto sessionPtr = req->session();
 	std::vector<drogon::HttpFile> files = mpp.getFiles();
 	std::vector<drogon::HttpFile>::iterator It;
 	for(It = files.begin(); It != files.end(); It++){
-		std::cout << It->getFileName() << std::endl;
+		std::string fileName = drogon::utils::genRandomString(16);
+		It->saveAs(fileName);
 	}
+	std::vector<std::string> passedVars = sessionPtr->get<std::vector<std::string>>("passedVars");
+	std::vector<std::string>::iterator strIt;
+	for(strIt = passedVars.begin(); strIt != passedVars.end(); strIt++){
+		std::cout << *strIt << std::endl;
+	}
+	sessionPtr->erase("passedVars");
 }
 
 
 void uploads::files_page(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
+	auto sessionPtr = req->session();
+	sessionPtr->erase("passedVars");
+
 	std::unordered_map<std::string, std::string> tempParam = req->parameters();
 	ManualPatternFiller MPF(1, "mark");
 	std::string tempContent = MPF.fillPatterns("addimage.html", "");
 	std::vector<std::string> unchangable;
 	std::vector<std::string> fileInputs;
+	std::vector<std::string> passedVars;
 	unsigned short imageCount = 0;
 
 	for(const auto& n : tempParam){
@@ -58,15 +71,20 @@ void uploads::files_page(const HttpRequestPtr& req,std::function<void (const Htt
 		}
 		std::string inputs = "<p>";
 		inputs += n.first + ": <br>" + n.second + "<br><p><br>";
+		passedVars.push_back(n.second);
 		unchangable.push_back(inputs);
 	}
+
 	for(int i = 0; i < imageCount; i++){
-		std::string formElement = "<input type='file' name='" + drogon::utils::genRandomString(5) + "'>";
+		std::string formElement = "<input type='file' name='" + drogon::utils::genRandomString(5) + "'><br>";
 		fileInputs.push_back(formElement);
 	}
 
+	std::reverse(passedVars.begin(), passedVars.end());
 	std::reverse(unchangable.begin(), unchangable.end());
-	fileInputs.push_back("<input type='submit' value='Upload image'>");
+
+	sessionPtr->insert("passedVars", passedVars);
+	fileInputs.push_back("<input type='submit' value='Upload files'>");
 	unchangable.insert(unchangable.end(), fileInputs.begin(), fileInputs.end());
 
 	SequentialPatternFiller SPF;

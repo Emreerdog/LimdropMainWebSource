@@ -19,16 +19,6 @@ void signup::asyncHandleHttpRequest(const HttpRequestPtr& req, std::function<voi
 	else{
 		fileContent = MPF.fillPatterns("account.html", "mustafa", "ozan");
 	}
-	Json::Value jval;
-	jval[0][0] = "boy";
-	jval[1][0] = "girl";
-	jval[2][0] = "fella";
-	std::string _jval = jval.toStyledString();
-	for(int i = 0; i < jval.size(); ++i){
-		std::cout << jval[i][0].asString() << std::endl;
-	}
-
-	std::cout << jval.isArray() << std::endl;
 
 	auto resp = HttpResponse::newHttpResponse();
 	resp->setBody(fileContent);

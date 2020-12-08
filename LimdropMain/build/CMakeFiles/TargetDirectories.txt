@@ -1,6 +1,6 @@
-/home/erdog1/LimdropMainWebSource/LimdropMain/build/CMakeFiles/rebuild_cache.dir
-/home/erdog1/LimdropMainWebSource/LimdropMain/build/CMakeFiles/edit_cache.dir
-/home/erdog1/LimdropMainWebSource/LimdropMain/build/CMakeFiles/PyEmbedd.dir
-/home/erdog1/LimdropMainWebSource/LimdropMain/build/limutils/CMakeFiles/rebuild_cache.dir
-/home/erdog1/LimdropMainWebSource/LimdropMain/build/limutils/CMakeFiles/edit_cache.dir
-/home/erdog1/LimdropMainWebSource/LimdropMain/build/limutils/CMakeFiles/limutils.dir
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/rebuild_cache.dir
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/edit_cache.dir
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/PyEmbedd.dir
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/limutils/CMakeFiles/rebuild_cache.dir
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/limutils/CMakeFiles/edit_cache.dir
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/limutils/CMakeFiles/limutils.dir

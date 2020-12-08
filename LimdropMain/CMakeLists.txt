@@ -15,7 +15,7 @@ add_subdirectory(limutils)
 
 
 find_package(Drogon CONFIG REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE Drogon::Drogon limutils ${Python_LIBRARIES} -lpython3.8)
+target_link_libraries(${PROJECT_NAME} PRIVATE Drogon::Drogon limutils ${Python_LIBRARIES} -lpython3.9)
 
 aux_source_directory(controllers CTL_SRC)
 aux_source_directory(filters FILTER_SRC)
@@ -27,7 +27,7 @@ aux_source_directory(limutils LIMUTIL_SRC)
 
 #target_link_libraries(PyEmbedd ${Python_LIBRARIES} -lpython3.8)
 
-target_include_directories(PyEmbedd PUBLIC "${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/PyLib/python3.8/" "${PROJECT_SOURCE_DIR}")
+target_include_directories(PyEmbedd PUBLIC "${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/PyLib/python3.9/" "${PROJECT_SOURCE_DIR}")
 
 target_sources(${PROJECT_NAME}
                PRIVATE

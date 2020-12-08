@@ -30,9 +30,9 @@ void accounts::createAccount(const HttpRequestPtr& req, std::function<void (cons
 	auto clientPtr = drogon::app().getDbClient();
 	std::string createDate = date.toCustomedFormattedString("%d-%m-%Y");
 	std::string createTime = date.toCustomedFormattedString("%H:%M:%S");
-	std::string preQuery = "SELECT id FROM accounts WHERE uname='"+ uname + "'";
+	std::string preQuery = "SELECT id FROM accounts WHERE username='"+ uname + "'";
 	auto f = clientPtr->execSqlAsyncFuture(preQuery);
-	if(f.get().size() == 0){
+	if(f.get().size() > 0){
 		sessionPtr->insert("display", "block");
 		sessionPtr->insert("status", "red");
 		sessionPtr->insert("statusText", "Username already exists");
@@ -40,17 +40,18 @@ void accounts::createAccount(const HttpRequestPtr& req, std::function<void (cons
 		callback(res);
 		return;
 	}
+	
 
 	std::string queryStart = "INSERT INTO accounts(username, L, R, P1, P2, email, accountCreateDate, accountCreateTime) VALUES";
 	std::string queryEnd = "('" + uname + "'," + L + "," + R + ",'" + LE + "','" + RE +"','" + email + "','" + createDate + "','" + createTime+ "')";
       	std::string totalQuery = queryStart + queryEnd;	
+	std::cout << totalQuery << std::endl;
 	clientPtr->execSqlAsyncFuture(totalQuery);
 	
 	sessionPtr->insert("display", "block");
 	sessionPtr->insert("status", "green");
 	sessionPtr->insert("statusText", "Account created sucessfully.<br>Verify your email to login to your account.");
 	
-
 	auto res = HttpResponse::newRedirectionResponse("/accounts/");
 	callback(res);
 }
@@ -59,6 +60,9 @@ void accounts::createAccount(const HttpRequestPtr& req, std::function<void (cons
 void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback, std::string uname, std::string pass){
 
 	auto sessionPtr = req->session();	
+	sessionPtr->erase("display");
+	sessionPtr->erase("status");
+	sessionPtr->erase("statusText");
 
 	std::unordered_map<std::string, std::string> tempParam = req->parameters();
 	for(const auto& n : tempParam){
@@ -106,14 +110,20 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 		std::pair <unsigned long, unsigned long> LRpair = passHandler.GetLRpair();
 		// Decrypt password
 		if(LRpair.first == P1 && LRpair.second == P2){
-			
+			std::cout << uname << " Logged in" << std::endl;
 			auto resp = HttpResponse::newNotFoundResponse();
 			callback(resp);
 			return;
 		}
 	}
-	auto resp = HttpResponse::newNotFoundResponse();
-	callback(resp);	
+
+	sessionPtr->insert("display", "block");
+	sessionPtr->insert("status", "red");
+	sessionPtr->insert("statusText", "Username is not valid");
+	std::cout << "password is incorrect for username: " << uname << std::endl;
+	auto resp = HttpResponse::newRedirectionResponse("/accounts/");
+	callback(resp);
+	return;
 }
 
 
@@ -128,6 +138,7 @@ void accounts::loginPage(const HttpRequestPtr& req,std::function<void (const Htt
 	if(sessionPtr->find("display")){
 		_display = sessionPtr->get<std::string>("display");
 	}
+
 
 	std::string _status = sessionPtr->get<std::string>("status");
 	std::string _statusText = sessionPtr->get<std::string>("statusText");
