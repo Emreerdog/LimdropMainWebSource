@@ -23,7 +23,9 @@ void uploads::upload_product(const HttpRequestPtr& req,std::function<void (const
 
 
 void uploads::upload_form(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
-	
+	auto sessionPtr = req->session();
+	sessionPtr->erase("passedVars");
+
 	ManualPatternFiller MPF(1, "mark");
 	std::string content = MPF.fillPatterns("addproduct.html", "");
 
@@ -36,18 +38,18 @@ void uploads::upload_form(const HttpRequestPtr& req,std::function<void (const Ht
 void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	drogon::MultiPartParser mpp;
 	mpp.parse(req);
-
+	std::cout << "-------" << std::endl;
 	auto sessionPtr = req->session();
 	std::vector<drogon::HttpFile> files = mpp.getFiles();
 	std::vector<drogon::HttpFile>::iterator It;
 	for(It = files.begin(); It != files.end(); It++){
-		std::string fileName = drogon::utils::genRandomString(16);
-		It->saveAs(fileName);
+		//std::string fileName = drogon::utils::genRandomString(16);
+		//std::cout << It->getMd5() << std::endl;
 	}
-	std::vector<std::string> passedVars = sessionPtr->get<std::vector<std::string>>("passedVars");
-	std::vector<std::string>::iterator strIt;
-	for(strIt = passedVars.begin(); strIt != passedVars.end(); strIt++){
-		std::cout << *strIt << std::endl;
+	int i = 0;
+	std::unordered_map<std::string, std::string> passedVars = sessionPtr->get<std::unordered_map<std::string, std::string>>("passedVars");
+	for(const auto& n : passedVars){
+		std::cout << drogon::utils::getMd5(n.second) << std::endl;
 	}
 	sessionPtr->erase("passedVars");
 }
@@ -66,6 +68,7 @@ void uploads::files_page(const HttpRequestPtr& req,std::function<void (const Htt
 	unsigned short imageCount = 0;
 
 	for(const auto& n : tempParam){
+		std::cout << n.first << std::endl;
 		if(n.first == "imgCount"){
 			imageCount = std::stoi(n.second);
 		}
@@ -75,7 +78,7 @@ void uploads::files_page(const HttpRequestPtr& req,std::function<void (const Htt
 		unchangable.push_back(inputs);
 	}
 
-	for(int i = 0; i < imageCount; i++){
+	for(int i = 0; i < imageCount + 1; i++){
 		std::string formElement = "<input type='file' name='" + drogon::utils::genRandomString(5) + "'><br>";
 		fileInputs.push_back(formElement);
 	}
@@ -83,7 +86,7 @@ void uploads::files_page(const HttpRequestPtr& req,std::function<void (const Htt
 	std::reverse(passedVars.begin(), passedVars.end());
 	std::reverse(unchangable.begin(), unchangable.end());
 
-	sessionPtr->insert("passedVars", passedVars);
+	sessionPtr->insert("passedVars", tempParam);
 	fileInputs.push_back("<input type='submit' value='Upload files'>");
 	unchangable.insert(unchangable.end(), fileInputs.begin(), fileInputs.end());
 

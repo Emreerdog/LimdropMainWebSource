@@ -1,0 +1,66 @@
+/* Big tablets to 1200px*/
+@media only screen and (max-width: 1200px) {
+  .hero-text-box{
+        width: 100%;
+        padding: 0 2%;
+    }
+    
+    .row { padding: 0 2%;}
+
+}
+
+
+/* Small tablets to big tablets from 768 to 1023px */
+@media only screen (max-width: 1023px) {
+    body{ font-size: 18px ;}
+    section{ padding 60px 0;}
+    
+    .long-copy {
+        line-height: 145%;
+        width: 70%;
+        margin-left: 15%;
+}
+    .steps-box { margin-top: 10px;}
+    .works-steps { margin-bottom: 40px;}
+    .app-screen {width: 50%;}
+}
+
+
+/* Small phones to small tablets 481 to 767px */
+@media only screen (max-width: 767px) {
+    body{font-size: 16px;}
+    section{padding: 30px 0;}
+    
+    .row;
+    .hero-text-box {padding: 0 4%;}
+    .steps-box:first-child {text-align: center;}
+    h1 { font-size: 180%;}
+    h2 { font-size: 150%;}
+    .long-copy {
+    width: 100%;
+    margin-left: 0%;    
+    }
+    .works-step div {
+        height: 40px;
+        width: 40px;
+        margin-right: 15px;
+        padding: 4px;
+        font-size: 120%;
+    }
+    .col{ 
+    width 100%;
+    margin 0 04% 0;
+    }
+    .main-nav { display: none;}
+    .app-screen{width: 40%;}
+    .steps-box:first-child{text-align: center;}
+}
+.works-steps{margin-bottom: 20px;}
+.works-steps:last-of-type{max-width: 20px;}
+
+
+/* Small phones from 0 to 480px*/
+@media only screen (max-width: 480px) {
+    section{ padding: 25px 0;} 
+    
+}

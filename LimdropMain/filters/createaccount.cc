@@ -73,7 +73,7 @@ void createaccount::doFilter(const HttpRequestPtr &req,
 	 } 
 	 std::string display = "hidden";
 	 std::string status = "green";
-	 std::string statusText = "";
+	 std::string statusText = "hehe";
 	 sessionPtr->insert("status", status);
 	 sessionPtr->insert("statusText", statusText);	
 	 sessionPtr->insert("display", display);

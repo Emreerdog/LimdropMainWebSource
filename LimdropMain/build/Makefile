@@ -163,6 +163,33 @@ controllers/accounts.cc.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/accounts.cc.s
 .PHONY : controllers/accounts.cc.s
 
+controllers/activation.o: controllers/activation.cc.o
+
+.PHONY : controllers/activation.o
+
+# target to build an object file
+controllers/activation.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/activation.cc.o
+.PHONY : controllers/activation.cc.o
+
+controllers/activation.i: controllers/activation.cc.i
+
+.PHONY : controllers/activation.i
+
+# target to preprocess a source file
+controllers/activation.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/activation.cc.i
+.PHONY : controllers/activation.cc.i
+
+controllers/activation.s: controllers/activation.cc.s
+
+.PHONY : controllers/activation.s
+
+# target to generate assembly for a file
+controllers/activation.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/activation.cc.s
+.PHONY : controllers/activation.cc.s
+
 controllers/basket.o: controllers/basket.cc.o
 
 .PHONY : controllers/basket.o
@@ -190,32 +217,32 @@ controllers/basket.cc.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/basket.cc.s
 .PHONY : controllers/basket.cc.s
 
-controllers/checkweb.o: controllers/checkweb.cc.o
+controllers/limjson.o: controllers/limjson.cpp.o
 
-.PHONY : controllers/checkweb.o
+.PHONY : controllers/limjson.o
 
 # target to build an object file
-controllers/checkweb.cc.o:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/checkweb.cc.o
-.PHONY : controllers/checkweb.cc.o
+controllers/limjson.cpp.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.o
+.PHONY : controllers/limjson.cpp.o
 
-controllers/checkweb.i: controllers/checkweb.cc.i
+controllers/limjson.i: controllers/limjson.cpp.i
 
-.PHONY : controllers/checkweb.i
+.PHONY : controllers/limjson.i
 
 # target to preprocess a source file
-controllers/checkweb.cc.i:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/checkweb.cc.i
-.PHONY : controllers/checkweb.cc.i
+controllers/limjson.cpp.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.i
+.PHONY : controllers/limjson.cpp.i
 
-controllers/checkweb.s: controllers/checkweb.cc.s
+controllers/limjson.s: controllers/limjson.cpp.s
 
-.PHONY : controllers/checkweb.s
+.PHONY : controllers/limjson.s
 
 # target to generate assembly for a file
-controllers/checkweb.cc.s:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/checkweb.cc.s
-.PHONY : controllers/checkweb.cc.s
+controllers/limjson.cpp.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.s
+.PHONY : controllers/limjson.cpp.s
 
 controllers/profile.o: controllers/profile.cc.o
 
@@ -554,12 +581,15 @@ help:
 	@echo "... controllers/accounts.o"
 	@echo "... controllers/accounts.i"
 	@echo "... controllers/accounts.s"
+	@echo "... controllers/activation.o"
+	@echo "... controllers/activation.i"
+	@echo "... controllers/activation.s"
 	@echo "... controllers/basket.o"
 	@echo "... controllers/basket.i"
 	@echo "... controllers/basket.s"
-	@echo "... controllers/checkweb.o"
-	@echo "... controllers/checkweb.i"
-	@echo "... controllers/checkweb.s"
+	@echo "... controllers/limjson.o"
+	@echo "... controllers/limjson.i"
+	@echo "... controllers/limjson.s"
 	@echo "... controllers/profile.o"
 	@echo "... controllers/profile.i"
 	@echo "... controllers/profile.s"

@@ -17,6 +17,7 @@ void basket::showBasket(const HttpRequestPtr& req,std::function<void (const Http
 void basket::addBasketItem(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string itemId){
 	auto sessionPtr = req->session();
 	Json::Value item;
+	Json::Value secondItem;
 	// TODO
 	// Check if item exists
 	item["basket_items"][0][0] = itemId;
@@ -31,7 +32,7 @@ void basket::addBasketItem(const HttpRequestPtr& req,std::function<void (const H
 	POBJECT imports = LIM_PIMPORT("ex2");
 	POBJECT funcAttr = LIM_PGET_ATTR(imports, "baban");
 	POBJECT funResult = LIM_PFUNC_ONEARG(funcAttr, pyString);
-
+	secondItem = PC_TILL::toString(funResult);
 	Py_CLEAR(pyString);
 	Py_CLEAR(imports);
 	Py_CLEAR(funcAttr);

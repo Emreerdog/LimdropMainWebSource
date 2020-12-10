@@ -3,9 +3,11 @@
 int
 main(int argc, char *argv[])
 {
+    const char* uploadPath = "../../../../rootDrop/";
 
     drogon::app().addListener("192.168.2.38", 443, true, "/etc/ssl/certs/drogon-selfsigned.crt", "/etc/ssl/private/drogon-selfsigned.key");
-    drogon::app().setDocumentRoot("../../../rootDrop/");
+    drogon::app().setDocumentRoot(uploadPath);
+    drogon::app().setUploadPath(uploadPath);
     //drogon::app().addListener("192.168.2.38", 80);
     drogon::app().createDbClient("postgresql", "192.168.2.38", 5432, "limdrop", "anil", "mt98mxb9r2");
     drogon::app().enableSession();

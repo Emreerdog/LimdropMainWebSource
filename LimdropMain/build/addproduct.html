@@ -15,10 +15,11 @@
   <input type="text" id="type" name="type" value=""><br>
   <label for="brand">Brand:</label><br>
   <input type="text" id="brand" name="brand" value=""><br>
-  <label for="descriptionFile">Description File:</label><br>
-  <input type="text" id="descriptionFile" name="descriptionFile" value=""><br>
   <label for="offCount">Off count: </label><br>
-  <input type="text" id="offCount" name="offCount" value=""><br>
+  <input type="text" id="offCount" name="offCount" value="" onblur="addOffValue()"><br>
+  <div id="offCounts">
+
+  </div>
   <label for="productCount">Product Count:</label><br>
   <input type="text" id="productCount" name="productCount" value=""><br>
   <label for="imgCount">Image count</label><br>
@@ -26,6 +27,39 @@
 
   <input type="submit" value="Upload">
 </form>
+<script>
+    function addOffValue(){
+        var countdiv = document.getElementById("offCounts");
+        countdiv.style.paddingTop = "10px";
+        var number = document.getElementById("offCount").value;
+        var i;
+        
+        while(countdiv.firstChild){
+            countdiv.removeChild(countdiv.firstChild);
+        }
 
+        for(i = 0; i < number; i++){
+            
+            var space = document.createElement("br");
+            var newElemLabel = document.createElement("label");
+            var newElem = document.createElement("input");
+
+            newElemLabel.innerHTML = "Value:" + i;
+            newElem.name = "offValue" + i;
+            newElem.id = "offValue" + i;
+            newElem.value = "";
+            newElem.innerHTML = "Vals";
+            newElem.style.marginTop = "5px";
+            newElem.style.marginBottom = "5px";
+            newElemLabel.style.paddingRight = "5px";
+
+            countdiv.appendChild(newElemLabel);
+            countdiv.appendChild(space);
+            countdiv.appendChild(newElem);
+            countdiv.appendChild(space);
+        }
+
+    }
+</script>
 </body>
 </html>

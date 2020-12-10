@@ -8,7 +8,12 @@ void signup::asyncHandleHttpRequest(const HttpRequestPtr& req, std::function<voi
 	std::string fileContent = "";
 
 	auto sessionPtr = req->session();
+	if(sessionPtr->find("isloggedin")){
+		std::cout << "Nice look" << std::endl;
+	}
+
 	if(sessionPtr->find("status")){	
+
 			std::string status = sessionPtr->get<std::string>("status");
 			std::string statusText = sessionPtr->get<std::string>("statusText");			
 			fileContent = MPF.fillPatterns("account.html", status.c_str(), statusText.c_str());

@@ -1,10 +1,15 @@
 #include "trjson.h"
 #include <limutils/PatternFiller.h>
-#include <Python.h>
 
 void trjson::asyncHandleHttpRequest(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback)
 {
-    
-    auto resp = HttpResponse::newNotFoundResponse();
-    callback(resp);
+	auto sessionPtr = req->session();
+	std::string x = "var";
+	sessionPtr->insert("isloggedin", x);
+	ManualPatternFiller MPF(1, "mark");
+	std::string result = MPF.fillPatterns("index.html", "Ozan, Anıl, Mustafa");
+
+    	auto resp = HttpResponse::newHttpResponse();
+	resp->setBody(result);
+    	callback(resp);
 }

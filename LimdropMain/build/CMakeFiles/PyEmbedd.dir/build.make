@@ -83,9 +83,22 @@ CMakeFiles/PyEmbedd.dir/controllers/accounts.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PyEmbedd.dir/controllers/accounts.cc.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/accounts.cc -o CMakeFiles/PyEmbedd.dir/controllers/accounts.cc.s
 
+CMakeFiles/PyEmbedd.dir/controllers/activation.cc.o: CMakeFiles/PyEmbedd.dir/flags.make
+CMakeFiles/PyEmbedd.dir/controllers/activation.cc.o: ../controllers/activation.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/PyEmbedd.dir/controllers/activation.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PyEmbedd.dir/controllers/activation.cc.o -c /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/activation.cc
+
+CMakeFiles/PyEmbedd.dir/controllers/activation.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PyEmbedd.dir/controllers/activation.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/activation.cc > CMakeFiles/PyEmbedd.dir/controllers/activation.cc.i
+
+CMakeFiles/PyEmbedd.dir/controllers/activation.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PyEmbedd.dir/controllers/activation.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/activation.cc -o CMakeFiles/PyEmbedd.dir/controllers/activation.cc.s
+
 CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o: CMakeFiles/PyEmbedd.dir/flags.make
 CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o: ../controllers/basket.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o -c /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/basket.cc
 
 CMakeFiles/PyEmbedd.dir/controllers/basket.cc.i: cmake_force
@@ -96,22 +109,22 @@ CMakeFiles/PyEmbedd.dir/controllers/basket.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PyEmbedd.dir/controllers/basket.cc.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/basket.cc -o CMakeFiles/PyEmbedd.dir/controllers/basket.cc.s
 
-CMakeFiles/PyEmbedd.dir/controllers/checkweb.cc.o: CMakeFiles/PyEmbedd.dir/flags.make
-CMakeFiles/PyEmbedd.dir/controllers/checkweb.cc.o: ../controllers/checkweb.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/PyEmbedd.dir/controllers/checkweb.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PyEmbedd.dir/controllers/checkweb.cc.o -c /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/checkweb.cc
+CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.o: CMakeFiles/PyEmbedd.dir/flags.make
+CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.o: ../controllers/limjson.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.o -c /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/limjson.cpp
 
-CMakeFiles/PyEmbedd.dir/controllers/checkweb.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PyEmbedd.dir/controllers/checkweb.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/checkweb.cc > CMakeFiles/PyEmbedd.dir/controllers/checkweb.cc.i
+CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/limjson.cpp > CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.i
 
-CMakeFiles/PyEmbedd.dir/controllers/checkweb.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PyEmbedd.dir/controllers/checkweb.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/checkweb.cc -o CMakeFiles/PyEmbedd.dir/controllers/checkweb.cc.s
+CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/limjson.cpp -o CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.s
 
 CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o: CMakeFiles/PyEmbedd.dir/flags.make
 CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o: ../controllers/profile.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o -c /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/profile.cc
 
 CMakeFiles/PyEmbedd.dir/controllers/profile.cc.i: cmake_force
@@ -124,7 +137,7 @@ CMakeFiles/PyEmbedd.dir/controllers/profile.cc.s: cmake_force
 
 CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o: CMakeFiles/PyEmbedd.dir/flags.make
 CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o: ../controllers/signup.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o -c /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/signup.cc
 
 CMakeFiles/PyEmbedd.dir/controllers/signup.cc.i: cmake_force
@@ -137,7 +150,7 @@ CMakeFiles/PyEmbedd.dir/controllers/signup.cc.s: cmake_force
 
 CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o: CMakeFiles/PyEmbedd.dir/flags.make
 CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o: ../controllers/trjson.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o -c /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/trjson.cc
 
 CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.i: cmake_force
@@ -150,7 +163,7 @@ CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.s: cmake_force
 
 CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o: CMakeFiles/PyEmbedd.dir/flags.make
 CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o: ../controllers/uploads.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o -c /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/uploads.cc
 
 CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.i: cmake_force
@@ -163,7 +176,7 @@ CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.s: cmake_force
 
 CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o: CMakeFiles/PyEmbedd.dir/flags.make
 CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o: ../filters/checktraffic.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o -c /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/filters/checktraffic.cc
 
 CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.i: cmake_force
@@ -176,7 +189,7 @@ CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.s: cmake_force
 
 CMakeFiles/PyEmbedd.dir/filters/createaccount.cc.o: CMakeFiles/PyEmbedd.dir/flags.make
 CMakeFiles/PyEmbedd.dir/filters/createaccount.cc.o: ../filters/createaccount.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/PyEmbedd.dir/filters/createaccount.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/PyEmbedd.dir/filters/createaccount.cc.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PyEmbedd.dir/filters/createaccount.cc.o -c /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/filters/createaccount.cc
 
 CMakeFiles/PyEmbedd.dir/filters/createaccount.cc.i: cmake_force
@@ -189,7 +202,7 @@ CMakeFiles/PyEmbedd.dir/filters/createaccount.cc.s: cmake_force
 
 CMakeFiles/PyEmbedd.dir/filters/login.cc.o: CMakeFiles/PyEmbedd.dir/flags.make
 CMakeFiles/PyEmbedd.dir/filters/login.cc.o: ../filters/login.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/PyEmbedd.dir/filters/login.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/PyEmbedd.dir/filters/login.cc.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PyEmbedd.dir/filters/login.cc.o -c /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/filters/login.cc
 
 CMakeFiles/PyEmbedd.dir/filters/login.cc.i: cmake_force
@@ -202,7 +215,7 @@ CMakeFiles/PyEmbedd.dir/filters/login.cc.s: cmake_force
 
 CMakeFiles/PyEmbedd.dir/limutils/PatternFiller.cpp.o: CMakeFiles/PyEmbedd.dir/flags.make
 CMakeFiles/PyEmbedd.dir/limutils/PatternFiller.cpp.o: ../limutils/PatternFiller.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/PyEmbedd.dir/limutils/PatternFiller.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/PyEmbedd.dir/limutils/PatternFiller.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PyEmbedd.dir/limutils/PatternFiller.cpp.o -c /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/limutils/PatternFiller.cpp
 
 CMakeFiles/PyEmbedd.dir/limutils/PatternFiller.cpp.i: cmake_force
@@ -215,7 +228,7 @@ CMakeFiles/PyEmbedd.dir/limutils/PatternFiller.cpp.s: cmake_force
 
 CMakeFiles/PyEmbedd.dir/limutils/blowfish.cpp.o: CMakeFiles/PyEmbedd.dir/flags.make
 CMakeFiles/PyEmbedd.dir/limutils/blowfish.cpp.o: ../limutils/blowfish.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/PyEmbedd.dir/limutils/blowfish.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/PyEmbedd.dir/limutils/blowfish.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PyEmbedd.dir/limutils/blowfish.cpp.o -c /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/limutils/blowfish.cpp
 
 CMakeFiles/PyEmbedd.dir/limutils/blowfish.cpp.i: cmake_force
@@ -228,7 +241,7 @@ CMakeFiles/PyEmbedd.dir/limutils/blowfish.cpp.s: cmake_force
 
 CMakeFiles/PyEmbedd.dir/limutils/inputregex.cpp.o: CMakeFiles/PyEmbedd.dir/flags.make
 CMakeFiles/PyEmbedd.dir/limutils/inputregex.cpp.o: ../limutils/inputregex.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/PyEmbedd.dir/limutils/inputregex.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/PyEmbedd.dir/limutils/inputregex.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PyEmbedd.dir/limutils/inputregex.cpp.o -c /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/limutils/inputregex.cpp
 
 CMakeFiles/PyEmbedd.dir/limutils/inputregex.cpp.i: cmake_force
@@ -241,7 +254,7 @@ CMakeFiles/PyEmbedd.dir/limutils/inputregex.cpp.s: cmake_force
 
 CMakeFiles/PyEmbedd.dir/limutils/passhandler.cpp.o: CMakeFiles/PyEmbedd.dir/flags.make
 CMakeFiles/PyEmbedd.dir/limutils/passhandler.cpp.o: ../limutils/passhandler.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/PyEmbedd.dir/limutils/passhandler.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/PyEmbedd.dir/limutils/passhandler.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/PyEmbedd.dir/limutils/passhandler.cpp.o -c /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/limutils/passhandler.cpp
 
 CMakeFiles/PyEmbedd.dir/limutils/passhandler.cpp.i: cmake_force
@@ -256,8 +269,9 @@ CMakeFiles/PyEmbedd.dir/limutils/passhandler.cpp.s: cmake_force
 PyEmbedd_OBJECTS = \
 "CMakeFiles/PyEmbedd.dir/main.cpp.o" \
 "CMakeFiles/PyEmbedd.dir/controllers/accounts.cc.o" \
+"CMakeFiles/PyEmbedd.dir/controllers/activation.cc.o" \
 "CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o" \
-"CMakeFiles/PyEmbedd.dir/controllers/checkweb.cc.o" \
+"CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.o" \
 "CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o" \
 "CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o" \
 "CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o" \
@@ -275,8 +289,9 @@ PyEmbedd_EXTERNAL_OBJECTS =
 
 PyEmbedd: CMakeFiles/PyEmbedd.dir/main.cpp.o
 PyEmbedd: CMakeFiles/PyEmbedd.dir/controllers/accounts.cc.o
+PyEmbedd: CMakeFiles/PyEmbedd.dir/controllers/activation.cc.o
 PyEmbedd: CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o
-PyEmbedd: CMakeFiles/PyEmbedd.dir/controllers/checkweb.cc.o
+PyEmbedd: CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.o
 PyEmbedd: CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o
 PyEmbedd: CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o
 PyEmbedd: CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o
@@ -300,7 +315,7 @@ PyEmbedd: /usr/lib/x86_64-linux-gnu/libz.so
 PyEmbedd: /usr/lib/x86_64-linux-gnu/libssl.so
 PyEmbedd: /usr/lib/x86_64-linux-gnu/libcrypto.so
 PyEmbedd: CMakeFiles/PyEmbedd.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking CXX executable PyEmbedd"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Linking CXX executable PyEmbedd"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/PyEmbedd.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
