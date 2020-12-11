@@ -1,5 +1,7 @@
 #include "uploads.h"
+#include "limjson.h"
 #include <limutils/PatternFiller.h>
+#include <algorithm>
 
 void uploads::upload_product(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	//This is file parser
@@ -12,8 +14,7 @@ void uploads::upload_product(const HttpRequestPtr& req,std::function<void (const
 
 	std::unordered_map<std::string, std::string> tempParam = req->parameters();
 	for(const auto& n : tempParam){
-		// TODO 
-		// Get the off value count 
+		 
 		ourProduct[n.first] = n.second;
 	}
 	auto resp = HttpResponse::newHttpJsonResponse(ourProduct);
@@ -38,20 +39,73 @@ void uploads::upload_form(const HttpRequestPtr& req,std::function<void (const Ht
 void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	drogon::MultiPartParser mpp;
 	mpp.parse(req);
-	std::cout << "-------" << std::endl;
 	auto sessionPtr = req->session();
+	Json::Value productJSON;
+
 	std::vector<drogon::HttpFile> files = mpp.getFiles();
 	std::vector<drogon::HttpFile>::iterator It;
+	
 	for(It = files.begin(); It != files.end(); It++){
 		//std::string fileName = drogon::utils::genRandomString(16);
 		//std::cout << It->getMd5() << std::endl;
 	}
-	int i = 0;
+	std::string title;
+	std::string featuredText;
+	std::string featuredHeader;
+	std::string outOfDate;
+	std::string type;
+	std::string brand;
+	std::string offCount;
+	std::string productCount;
+
+	unsigned int i = 0;
+	std::vector<unsigned int> values;
 	std::unordered_map<std::string, std::string> passedVars = sessionPtr->get<std::unordered_map<std::string, std::string>>("passedVars");
 	for(const auto& n : passedVars){
-		std::cout << drogon::utils::getMd5(n.second) << std::endl;
+		std::string firstVal = n.first;
+		std::string secondVal = n.second;
+
+		// We are doing this because somehow values in vector array
+		// are mixed inside
+		if(firstVal == "title"){ title = secondVal; }
+		if(firstVal == "featuredText"){ featuredText = secondVal; }
+		if(firstVal == "featuredHeader"){ featuredHeader = secondVal; }
+		if(firstVal == "outOfDate"){ outOfDate = secondVal; }	
+		if(firstVal == "type"){ type = secondVal; }
+		if(firstVal == "brand"){  brand = secondVal; }
+		if(firstVal == "productCount"){ productCount = secondVal; }
+
+		size_t found = firstVal.find("offValue");
+		if(found != std::string::npos){
+			values.push_back(std::stoi(secondVal));
+		}
+		else{	
+			productJSON["product"][firstVal] = secondVal;
+		}
 	}
+	std::string checkIfExists = "SELECT title FROM product WHERE title='" + title + "'";
+	
+	auto date = trantor::Date::now();
+
+	auto clientPtr = drogon::app().getDbClient();
+	std::string uuid = drogon::utils::getUuid();
+	std::string createDate = date.toCustomedFormattedString("%d-%m-%Y");
+	std::string preQuery = "INSERT INTO products(title, text, featuredheader,outofdatetime, enrolleddate, maximumproductcount, isbuyable, customercount, type, brand, price, isfeatured, isverified, uuid) ";
+	std::string lastQuery = "VALUES('" + title + "', '" + featuredText + "', '" + featuredHeader + "', '" + outOfDate + "', '" + createDate + "', '" + productCount + "', FALSE, 0, '" + type + "', '"
+		+ brand + "', 100, FALSE, FALSE, '" + uuid + "')";
+	std::string totalQuery = preQuery + lastQuery;
+	auto f1 = clientPtr->execSqlAsyncFuture(totalQuery);
+
+	std::sort(values.begin(), values.end(), std::greater<int>());
+	for(auto a : values){
+		productJSON["product"]["offValues"][i] = a;
+		i++;
+	}
+	std::cout << uuid << std::endl;
 	sessionPtr->erase("passedVars");
+
+	auto resp = HttpResponse::newNotFoundResponse();
+	callback(resp);
 }
 
 
@@ -68,13 +122,14 @@ void uploads::files_page(const HttpRequestPtr& req,std::function<void (const Htt
 	unsigned short imageCount = 0;
 
 	for(const auto& n : tempParam){
-		std::cout << n.first << std::endl;
-		if(n.first == "imgCount"){
-			imageCount = std::stoi(n.second);
+		std::string firstParam = n.first;
+		std::string secondParam = n.second;
+		if(firstParam == "imgCount"){
+			imageCount = std::stoi(secondParam);
 		}
 		std::string inputs = "<p>";
-		inputs += n.first + ": <br>" + n.second + "<br><p><br>";
-		passedVars.push_back(n.second);
+		inputs += firstParam + ": <br>" + secondParam + "<br><p><br>";
+		passedVars.push_back(secondParam);
 		unchangable.push_back(inputs);
 	}
 

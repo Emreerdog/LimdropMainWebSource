@@ -14,6 +14,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/PyEmbedd.dir/limutils/blowfish.cpp.o"
   "CMakeFiles/PyEmbedd.dir/limutils/inputregex.cpp.o"
   "CMakeFiles/PyEmbedd.dir/limutils/passhandler.cpp.o"
+  "CMakeFiles/PyEmbedd.dir/limutils/pyutils.cpp.o"
   "CMakeFiles/PyEmbedd.dir/main.cpp.o"
   "PyEmbedd"
   "PyEmbedd.pdb"

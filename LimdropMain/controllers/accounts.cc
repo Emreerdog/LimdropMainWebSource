@@ -117,7 +117,15 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 		std::pair <unsigned long, unsigned long> LRpair = passHandler.GetLRpair();
 		// Decrypt password
 		if(LRpair.first == P1 && LRpair.second == P2){
-			std::cout << uname << " Logged in" << std::endl;
+			sessionPtr->erase("isLoggedIn");
+			sessionPtr->erase("username");
+			sessionPtr->erase("balance");
+
+			bool isLoggedIn = true;
+			float balance = 0;
+			sessionPtr->insert("isLoggedIn", isLoggedIn);
+			sessionPtr->insert("username", uname);
+			sessionPtr->insert("balance", balance);
 			auto resp = HttpResponse::newNotFoundResponse();
 			callback(resp);
 			return;
@@ -139,11 +147,6 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 void accounts::loginPage(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	auto sessionPtr = req->session();
 	std::string _display = "hidden";
-	if(sessionPtr->find("isLoggedIn")){
-		auto resp = HttpResponse::newRedirectionResponse("/");
-		callback(resp);
-		return;
-	}
 	if(sessionPtr->find("display")){
 		_display = sessionPtr->get<std::string>("display");
 	}
@@ -151,7 +154,6 @@ void accounts::loginPage(const HttpRequestPtr& req,std::function<void (const Htt
 
 	std::string _status = sessionPtr->get<std::string>("status");
 	std::string _statusText = sessionPtr->get<std::string>("statusText");
-	std::cout << _statusText << std::endl;
 
 	ManualPatternFiller MPF(3, "display", "status", "statusText");
 	std::string result = MPF.fillPatterns("login.html", _display.c_str(), _status.c_str(), _statusText.c_str());

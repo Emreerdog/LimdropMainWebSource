@@ -9,14 +9,11 @@ void activation::profileActivation(const HttpRequestPtr& req,std::function<void 
 	
 	auto f = clientPtr->execSqlAsyncFuture(Query);	
 	if(f.get().size() == 0){
-		std::cout << "Hello guys" << std::endl;
 		auto resp = HttpResponse::newRedirectionResponse("/bum");
 		callback(resp);
 		return;
 	}
 	else{
-
-		std::cout << "Hello girls" << std::endl;
 		std::string _Query = "UPDATE accounts SET isverified = TRUE WHERE uuid = '" + activationCode + "'";
 		auto _f = clientPtr->execSqlAsyncFuture(_Query);
 
@@ -30,9 +27,25 @@ void activation::profileActivation(const HttpRequestPtr& req,std::function<void 
 } 
 
 void activation::productActivation(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string activationCode){
-	std::cout << drogon::utils::getUuid() << std::endl;
-	auto resp = HttpResponse::newNotFoundResponse();
-	callback(resp);
+	
+	auto clientPtr = drogon::app().getDbClient();
+	std::string Query = "SELECT id FROM products WHERE uuid = '" + activationCode + "'";
+
+	auto f = clientPtr->execSqlAsyncFuture(Query);
+	if(f.get().size() == 0){
+		auto resp = HttpResponse::newRedirectionResponse("/bum");
+		callback(resp);
+		return;	
+	}
+	else{
+		std::string _Query = "UPDATE products SET isverified = TRUE WHERE uuid = '" + activationCode + "'";
+		auto _f = clientPtr->execSqlAsyncFuture(_Query);
+		std::cout << "Product is verified" << std::endl;
+
+		auto resp = HttpResponse::newNotFoundResponse();
+		callback(resp);
+		return;
+	}
 } 
 
 //add definition of your processing function here

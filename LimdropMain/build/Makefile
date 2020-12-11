@@ -541,6 +541,33 @@ limutils/passhandler.cpp.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/limutils/passhandler.cpp.s
 .PHONY : limutils/passhandler.cpp.s
 
+limutils/pyutils.o: limutils/pyutils.cpp.o
+
+.PHONY : limutils/pyutils.o
+
+# target to build an object file
+limutils/pyutils.cpp.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/limutils/pyutils.cpp.o
+.PHONY : limutils/pyutils.cpp.o
+
+limutils/pyutils.i: limutils/pyutils.cpp.i
+
+.PHONY : limutils/pyutils.i
+
+# target to preprocess a source file
+limutils/pyutils.cpp.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/limutils/pyutils.cpp.i
+.PHONY : limutils/pyutils.cpp.i
+
+limutils/pyutils.s: limutils/pyutils.cpp.s
+
+.PHONY : limutils/pyutils.s
+
+# target to generate assembly for a file
+limutils/pyutils.cpp.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/limutils/pyutils.cpp.s
+.PHONY : limutils/pyutils.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -623,6 +650,9 @@ help:
 	@echo "... limutils/passhandler.o"
 	@echo "... limutils/passhandler.i"
 	@echo "... limutils/passhandler.s"
+	@echo "... limutils/pyutils.o"
+	@echo "... limutils/pyutils.i"
+	@echo "... limutils/pyutils.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
