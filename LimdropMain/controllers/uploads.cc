@@ -1,5 +1,6 @@
 #include "uploads.h"
 #include "limjson.h"
+#include <sstream>
 #include <limutils/PatternFiller.h>
 #include <algorithm>
 
@@ -44,11 +45,43 @@ void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const H
 
 	std::vector<drogon::HttpFile> files = mpp.getFiles();
 	std::vector<drogon::HttpFile>::iterator It;
-	
+
+	unsigned int iterPhoto = 0;
+
 	for(It = files.begin(); It != files.end(); It++){
-		//std::string fileName = drogon::utils::genRandomString(16);
-		//std::cout << It->getMd5() << std::endl;
+		std::string fileName(It->getFileName());
+		std::string::size_type idx;
+		idx = fileName.rfind('.');
+
+		if(idx != std::string::npos){
+			std::string extension = fileName.substr(idx+1);
+			std::string _fileName = "";
+
+			if(extension == "html"){
+				_fileName = "content/" + drogon::utils::genRandomString(40) + "." + extension;			
+				productJSON["product"]["content"] = _fileName;
+				It->saveAs(_fileName);
+			}
+			else if(extension == "jpg" || extension == "png"){
+				_fileName = "photos/" + drogon::utils::genRandomString(40) + "." + extension;			
+				productJSON["product"]["images"][iterPhoto] = _fileName;
+				It->saveAs(_fileName);
+				iterPhoto++;
+			}
+			else{
+				auto resp = HttpResponse::newRedirectionResponse("/bum");
+				callback(resp);
+				return;
+			}
+
+		}
+		else {
+			auto resp = HttpResponse::newRedirectionResponse("/bum");
+			callback(resp);
+			return;
+		}
 	}
+
 	std::string title;
 	std::string featuredText;
 	std::string featuredHeader;
@@ -59,7 +92,7 @@ void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const H
 	std::string productCount;
 
 	unsigned int i = 0;
-	std::vector<unsigned int> values;
+	std::vector<float> values;
 	std::unordered_map<std::string, std::string> passedVars = sessionPtr->get<std::unordered_map<std::string, std::string>>("passedVars");
 	for(const auto& n : passedVars){
 		std::string firstVal = n.first;
@@ -77,14 +110,22 @@ void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const H
 
 		size_t found = firstVal.find("offValue");
 		if(found != std::string::npos){
-			values.push_back(std::stoi(secondVal));
-		}
-		else{	
-			productJSON["product"][firstVal] = secondVal;
+			values.push_back(std::stof(secondVal));
 		}
 	}
 	std::string checkIfExists = "SELECT title FROM product WHERE title='" + title + "'";
-	
+
+	std::sort(values.begin(), values.end(), std::greater<float>());
+	for(auto a : values){
+		float _price = floorf(a * 100) / 100;
+		productJSON["product"]["offValues"][i] = _price;
+		i++;
+	}
+
+	std::stringstream ss;
+	float _price = floorf(values[0] * 100) / 100;
+	ss << _price;
+
 	auto date = trantor::Date::now();
 
 	auto clientPtr = drogon::app().getDbClient();
@@ -92,16 +133,11 @@ void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const H
 	std::string createDate = date.toCustomedFormattedString("%d-%m-%Y");
 	std::string preQuery = "INSERT INTO products(title, text, featuredheader,outofdatetime, enrolleddate, maximumproductcount, isbuyable, customercount, type, brand, price, isfeatured, isverified, uuid) ";
 	std::string lastQuery = "VALUES('" + title + "', '" + featuredText + "', '" + featuredHeader + "', '" + outOfDate + "', '" + createDate + "', '" + productCount + "', FALSE, 0, '" + type + "', '"
-		+ brand + "', 100, FALSE, FALSE, '" + uuid + "')";
+		+ brand + "', " + ss.str() + ", FALSE, FALSE, '" + uuid + "')";
 	std::string totalQuery = preQuery + lastQuery;
 	auto f1 = clientPtr->execSqlAsyncFuture(totalQuery);
 
-	std::sort(values.begin(), values.end(), std::greater<int>());
-	for(auto a : values){
-		productJSON["product"]["offValues"][i] = a;
-		i++;
-	}
-	std::cout << uuid << std::endl;
+	std::cout << productJSON << std::endl;
 	sessionPtr->erase("passedVars");
 
 	auto resp = HttpResponse::newNotFoundResponse();
