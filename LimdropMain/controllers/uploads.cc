@@ -59,7 +59,7 @@ void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const H
 
 			if(extension == "html"){
 				_fileName = "content/" + drogon::utils::genRandomString(40) + "." + extension;			
-				productJSON["product"]["content"] = _fileName;
+				productJSON["product"]["description"] = _fileName;
 				It->saveAs(_fileName);
 			}
 			else if(extension == "jpg" || extension == "png"){
@@ -130,14 +130,16 @@ void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const H
 
 	auto clientPtr = drogon::app().getDbClient();
 	std::string uuid = drogon::utils::getUuid();
-	std::string createDate = date.toCustomedFormattedString("%d-%m-%Y");
-	std::string preQuery = "INSERT INTO products(title, text, featuredheader,outofdatetime, enrolleddate, maximumproductcount, isbuyable, customercount, type, brand, price, isfeatured, isverified, uuid) ";
+	std::string createDate = date.toCustomedFormattedString("%Y-%m-%d");
+	std::string preQuery = "INSERT INTO products(title, text, featuredheader,outofdatetime, enrolleddate, maximumproductcount, isbuyable, customercount, type, brand, price, isfeatured, isverified, uuid, details) ";
 	std::string lastQuery = "VALUES('" + title + "', '" + featuredText + "', '" + featuredHeader + "', '" + outOfDate + "', '" + createDate + "', '" + productCount + "', FALSE, 0, '" + type + "', '"
-		+ brand + "', " + ss.str() + ", FALSE, FALSE, '" + uuid + "')";
+		+ brand + "', " + ss.str() + ", FALSE, FALSE, '" + uuid + "', '" + productJSON.toStyledString() + "')";
 	std::string totalQuery = preQuery + lastQuery;
+
+	std::cout << totalQuery << std::endl;
 	auto f1 = clientPtr->execSqlAsyncFuture(totalQuery);
 
-	std::cout << productJSON << std::endl;
+	// std::cout << productJSON << std::endl;
 	sessionPtr->erase("passedVars");
 
 	auto resp = HttpResponse::newNotFoundResponse();

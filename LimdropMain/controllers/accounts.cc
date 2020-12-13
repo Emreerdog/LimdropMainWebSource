@@ -32,7 +32,7 @@ void accounts::createAccount(const HttpRequestPtr& req, std::function<void (cons
 	auto date = trantor::Date::now();
 
 	auto clientPtr = drogon::app().getDbClient();
-	std::string createDate = date.toCustomedFormattedString("%d-%m-%Y");
+	std::string createDate = date.toCustomedFormattedString("%Y-%m-%d");
 	std::string createTime = date.toCustomedFormattedString("%H:%M:%S");
 	std::string preQuery = "SELECT id FROM accounts WHERE username='"+ uname + "' OR email='" + email + "'";
 	auto f = clientPtr->execSqlAsyncFuture(preQuery);
