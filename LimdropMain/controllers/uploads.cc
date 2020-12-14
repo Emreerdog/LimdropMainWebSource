@@ -38,9 +38,15 @@ void uploads::upload_form(const HttpRequestPtr& req,std::function<void (const Ht
 
 
 void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
+	auto sessionPtr = req->session();
+	if(!sessionPtr->find("passedvars")){
+		auto resp = HttpResponse::newRedirectionResponse("/uploads/");
+		callback(resp);
+		return;
+	}
+
 	drogon::MultiPartParser mpp;
 	mpp.parse(req);
-	auto sessionPtr = req->session();
 	Json::Value productJSON;
 
 	std::vector<drogon::HttpFile> files = mpp.getFiles();

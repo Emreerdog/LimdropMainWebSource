@@ -145,6 +145,20 @@ CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.o: /usr/include/jsoncpp/json/val
 CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.o: /usr/include/jsoncpp/json/version.h
 CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.o: /usr/include/jsoncpp/json/writer.h
 
+CMakeFiles/PyEmbedd.dir/controllers/product.cc.o: ../controllers/limjson.h
+CMakeFiles/PyEmbedd.dir/controllers/product.cc.o: ../controllers/product.cc
+CMakeFiles/PyEmbedd.dir/controllers/product.cc.o: ../controllers/product.h
+CMakeFiles/PyEmbedd.dir/controllers/product.cc.o: /usr/include/jsoncpp/json/allocator.h
+CMakeFiles/PyEmbedd.dir/controllers/product.cc.o: /usr/include/jsoncpp/json/autolink.h
+CMakeFiles/PyEmbedd.dir/controllers/product.cc.o: /usr/include/jsoncpp/json/config.h
+CMakeFiles/PyEmbedd.dir/controllers/product.cc.o: /usr/include/jsoncpp/json/features.h
+CMakeFiles/PyEmbedd.dir/controllers/product.cc.o: /usr/include/jsoncpp/json/forwards.h
+CMakeFiles/PyEmbedd.dir/controllers/product.cc.o: /usr/include/jsoncpp/json/json.h
+CMakeFiles/PyEmbedd.dir/controllers/product.cc.o: /usr/include/jsoncpp/json/reader.h
+CMakeFiles/PyEmbedd.dir/controllers/product.cc.o: /usr/include/jsoncpp/json/value.h
+CMakeFiles/PyEmbedd.dir/controllers/product.cc.o: /usr/include/jsoncpp/json/version.h
+CMakeFiles/PyEmbedd.dir/controllers/product.cc.o: /usr/include/jsoncpp/json/writer.h
+
 CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o: ../limutils/PatternFiller.h
 CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o: ../controllers/profile.cc
 CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o: ../controllers/profile.h

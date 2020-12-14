@@ -84,6 +84,32 @@ void basket::addBasketItem(const HttpRequestPtr& req,std::function<void (const H
 	return;
 }
 void basket::removeBasketItem(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string itemId){
+	auto sessionPtr = req->session();
+	if(sessionPtr->find("isLoggedIn")){
+		auto clientPtr = drogon::app().getDbClient();
+		std::string username = sessionPtr->get<std::string>("username");
 
+		std::string totalQuery1 = "SELECT basketitem FROM accounts WHERE username='" + username + "'";
+		std::string tempBasket;
+		auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
+		auto result1 = f1.get();
+		for(auto row : result1){
+			tempBasket = row["basketitem"].as<std::string>();
+			if(tempBasket == ""){
+				std::cout << "There are no items in basket" << std::endl;
+			}
+			else{
+				Basket PB(tempBasket);
+				PB.removeItem(itemId);
+				std::string totalQuery2 = "UPDATE accounts SET basketitem='" + PB.getBasketAsString() + "'";
+				auto f2 = clientPtr->execSqlAsyncFuture(totalQuery2);
+			}
+			auto resp = HttpResponse::newRedirectionResponse("/basket/");
+			callback(resp);
+			return;
+		}
+	}
+	auto resp = HttpResponse::newNotFoundResponse();
+	callback(resp);
 }
 //add definition of your processing function here

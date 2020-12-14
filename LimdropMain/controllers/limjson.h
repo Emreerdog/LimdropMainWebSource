@@ -36,6 +36,7 @@ public:
     std::vector<std::string> getImagePaths();
     std::vector<std::string> getValues();
     std::vector<std::string> getProperties();
+    std::string getContent();
     Json::Value getProductJson();
     unsigned int getImageCount();
     unsigned int getOvCount();

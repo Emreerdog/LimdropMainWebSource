@@ -244,6 +244,33 @@ controllers/limjson.cpp.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.s
 .PHONY : controllers/limjson.cpp.s
 
+controllers/product.o: controllers/product.cc.o
+
+.PHONY : controllers/product.o
+
+# target to build an object file
+controllers/product.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/product.cc.o
+.PHONY : controllers/product.cc.o
+
+controllers/product.i: controllers/product.cc.i
+
+.PHONY : controllers/product.i
+
+# target to preprocess a source file
+controllers/product.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/product.cc.i
+.PHONY : controllers/product.cc.i
+
+controllers/product.s: controllers/product.cc.s
+
+.PHONY : controllers/product.s
+
+# target to generate assembly for a file
+controllers/product.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/product.cc.s
+.PHONY : controllers/product.cc.s
+
 controllers/profile.o: controllers/profile.cc.o
 
 .PHONY : controllers/profile.o
@@ -617,6 +644,9 @@ help:
 	@echo "... controllers/limjson.o"
 	@echo "... controllers/limjson.i"
 	@echo "... controllers/limjson.s"
+	@echo "... controllers/product.o"
+	@echo "... controllers/product.i"
+	@echo "... controllers/product.s"
 	@echo "... controllers/profile.o"
 	@echo "... controllers/profile.i"
 	@echo "... controllers/profile.s"
