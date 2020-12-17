@@ -15,6 +15,7 @@ void createaccount::doFilter(const HttpRequestPtr &req,
 {
     
         auto sessionPtr = req->session();
+	sessionPtr->erase("display");
 	sessionPtr->erase("status");
 	sessionPtr->erase("statusText");
 
@@ -26,10 +27,10 @@ void createaccount::doFilter(const HttpRequestPtr &req,
 			if(firstVal == "uname" || firstVal == "pass"){
 										
 	 			if(secondVal.length() < 6 || secondVal.length() > 16){
-					std::string redirLoc = "/accounts/create";
-					std::string display = "block";
-					std::string status = "red";
-					std::string statusText = "Kullanici adi veya sifre en az 6<br>En fazla 16 karakter olabilir";
+					const char* redirLoc = "/accounts/create";
+					const char* display = "block";
+					const char* status = "red";
+					const char* statusText = "Kullanici adi veya sifre en az 6<br>En fazla 16 karakter olabilir";
 					sessionPtr->insert("display", display);
 					sessionPtr->insert("status", status);
 					sessionPtr->insert("statusText", statusText);
@@ -39,10 +40,10 @@ void createaccount::doFilter(const HttpRequestPtr &req,
 					return;
 				}
 				if(!checkUsernameRegex(secondVal)){
-					std::string redirLoc = "/accounts/create";
-					std::string display = "block";
-					std::string status = "red";
-					std::string statusText = "hatali mail";
+					const char* redirLoc = "/accounts/create";
+					const char* display = "block";
+					const char* status = "red";
+					const char* statusText = "hatali mail";
 					sessionPtr->insert("display", display);
 					sessionPtr->insert("status", status);
 					sessionPtr->insert("statusText", statusText);
@@ -54,10 +55,10 @@ void createaccount::doFilter(const HttpRequestPtr &req,
 			}
 			else if(firstVal == "email"){
 				if(!checkEmailRegex(secondVal)){
-					std::string redirLoc = "/accounts/create";
-					std::string display = "block";
-					std::string status = "red";
-					std::string statusText = "hatali mail";
+					const char* redirLoc = "/accounts/create";
+					const char* display = "block";
+					const char* status = "red";
+					const char* statusText = "hatali mail";
 					sessionPtr->insert("display", display);
 					sessionPtr->insert("status", status);
 					sessionPtr->insert("statusText", statusText);	
@@ -71,9 +72,9 @@ void createaccount::doFilter(const HttpRequestPtr &req,
 		// Check if the username, password and email is valid
 		// Then redirect to profile
 	 } 
-	 std::string display = "hidden";
-	 std::string status = "green";
-	 std::string statusText = "hehe";
+	 const char* display = "hidden";
+	 const char* status = "green";
+	 const char* statusText = "hehe";
 	 sessionPtr->insert("status", status);
 	 sessionPtr->insert("statusText", statusText);	
 	 sessionPtr->insert("display", display);

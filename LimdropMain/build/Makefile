@@ -244,6 +244,33 @@ controllers/limjson.cpp.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.s
 .PHONY : controllers/limjson.cpp.s
 
+controllers/payment.o: controllers/payment.cc.o
+
+.PHONY : controllers/payment.o
+
+# target to build an object file
+controllers/payment.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/payment.cc.o
+.PHONY : controllers/payment.cc.o
+
+controllers/payment.i: controllers/payment.cc.i
+
+.PHONY : controllers/payment.i
+
+# target to preprocess a source file
+controllers/payment.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/payment.cc.i
+.PHONY : controllers/payment.cc.i
+
+controllers/payment.s: controllers/payment.cc.s
+
+.PHONY : controllers/payment.s
+
+# target to generate assembly for a file
+controllers/payment.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/payment.cc.s
+.PHONY : controllers/payment.cc.s
+
 controllers/product.o: controllers/product.cc.o
 
 .PHONY : controllers/product.o
@@ -644,6 +671,9 @@ help:
 	@echo "... controllers/limjson.o"
 	@echo "... controllers/limjson.i"
 	@echo "... controllers/limjson.s"
+	@echo "... controllers/payment.o"
+	@echo "... controllers/payment.i"
+	@echo "... controllers/payment.s"
 	@echo "... controllers/product.o"
 	@echo "... controllers/product.i"
 	@echo "... controllers/product.s"

@@ -49,7 +49,7 @@ void product::details(const HttpRequestPtr& req,std::function<void (const HttpRe
 	unsigned int imageCount = PJ.getImageCount();
 	unsigned int valueCount = PJ.getOvCount();
 
-	std::cout << "Title is: " << title << std::endl;
+	/*std::cout << "Title is: " << title << std::endl;
 	std::cout << "Out of date time is: " << outOfDateTime << std::endl;
 	std::cout << "Maximum product count is: " << maximumProductCount << std::endl;
 	std::cout << "Buyable status is: " << isBuyable << std::endl;
@@ -57,30 +57,39 @@ void product::details(const HttpRequestPtr& req,std::function<void (const HttpRe
 	std::cout << "Type is: " << type << std::endl;
 	std::cout << "Brand is: " << brand << std::endl;
 	std::cout << "Price is: " << price << std::endl;
-
+	*/
 	unsigned int j = 1;
 	std::vector<std::string>::iterator It1;
 
 	// Off value iterator
+	// Result will be sequential
 	for(It1 = values.begin(); It1 != values.end(); It1++){
 		std::stringstream ss;
+		std::stringstream ss1(*It1);
 		ss << j;
 		std::string valueOutput = "OffValue " + ss.str() + " is: ";
-		float beforeFloor = std::stof(*It1);
+		
+		float beforeFloor;
+		ss1 >> beforeFloor;
 		float floored = floorf(beforeFloor * 100) / 100;
-		std::cout << valueOutput << floored << std::endl;
+		//std::cout << valueOutput << floored << std::endl;
 		j++;
 	}
 	j = 1;
 	// Image path iterator
+	// Result will be sequential
 	std::vector<std::string>::iterator It2;
 	for(It2 = imagePaths.begin(); It2 != imagePaths.end(); It2++){
 		std::stringstream ss;
 		ss << j;
 		std::string pathOutput = "Image path " + ss.str() + " is: " + *It2;
-		std::cout << pathOutput << std::endl;
+		//std::cout << pathOutput << std::endl;
 		j++;
 	}
 	imagePaths.clear();
 	values.clear();
+
+	auto resp = HttpResponse::newNotFoundResponse();
+	callback(resp);
+
 }

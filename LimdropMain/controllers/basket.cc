@@ -20,7 +20,9 @@ void basket::showBasket(const HttpRequestPtr& req,std::function<void (const Http
 				callback(resp);
 				return;
 			}
-			std::cout << row["basketitem"].as<std::string>() << std::endl;
+			// std::cout << row["basketitem"].as<std::string>() << std::endl;
+			Basket PB(row["basketitem"].as<std::string>());
+			std::cout << PB.getBasket().size() << std::endl;
 		}	
 		auto resp = HttpResponse::newNotFoundResponse();
 		callback(resp);

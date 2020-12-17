@@ -39,12 +39,11 @@ void uploads::upload_form(const HttpRequestPtr& req,std::function<void (const Ht
 
 void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	auto sessionPtr = req->session();
-	if(!sessionPtr->find("passedvars")){
+	if(!sessionPtr->find("passedVars")){
 		auto resp = HttpResponse::newRedirectionResponse("/uploads/");
 		callback(resp);
 		return;
 	}
-
 	drogon::MultiPartParser mpp;
 	mpp.parse(req);
 	Json::Value productJSON;
@@ -116,7 +115,15 @@ void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const H
 
 		size_t found = firstVal.find("offValue");
 		if(found != std::string::npos){
-			values.push_back(std::stof(secondVal));
+			float _offVals;
+			std::stringstream OVstream(secondVal);
+			OVstream >> _offVals;
+			if(_offVals <= 0){
+				auto resp = HttpResponse::newRedirectionResponse("/uploads/");
+				callback(resp);
+				return;
+			}
+			values.push_back(_offVals);
 		}
 	}
 	std::string checkIfExists = "SELECT title FROM product WHERE title='" + title + "'";
@@ -169,7 +176,15 @@ void uploads::files_page(const HttpRequestPtr& req,std::function<void (const Htt
 		std::string firstParam = n.first;
 		std::string secondParam = n.second;
 		if(firstParam == "imgCount"){
-			imageCount = std::stoi(secondParam);
+			int _imageCount = 0;
+			std::stringstream imageCountStream(secondParam);
+			imageCountStream >> _imageCount;
+			if(_imageCount < 3 || _imageCount > 20){
+				auto resp = HttpResponse::newRedirectionResponse("/uploads/");
+				callback(resp);
+				return;
+			}
+			imageCount = _imageCount;	
 		}
 		std::string inputs = "<p>";
 		inputs += firstParam + ": <br>" + secondParam + "<br><p><br>";

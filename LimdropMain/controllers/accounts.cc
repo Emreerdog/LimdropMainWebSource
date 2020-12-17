@@ -90,9 +90,9 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 	if(result.size() == 0){
 		// TODO
 		// Redirect to login page
-		std::string _displaymessage = "block";
-		std::string _status = "red";
-		std::string _statusText = "Unable to login";
+		const char* _displaymessage = "block";
+		const char*  _status = "red";
+		const char*  _statusText = "Unable to login";
 		sessionPtr->insert("display", _displaymessage);
 		sessionPtr->insert("status", _status);
 		sessionPtr->insert("statusText", _statusText);
@@ -131,9 +131,9 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 			return;
 		}
 	}
-        std::string _displaymessage = "block";
-	std::string _status = "red";
-	std::string _statusText = "Password is incorrect";
+        const char* _displaymessage = "block";
+	const char* _status = "red";
+	const char* _statusText = "Password is incorrect";
 
 	sessionPtr->insert("display", _displaymessage);
 	sessionPtr->insert("status", _status);

@@ -6,6 +6,38 @@
 
 #IncludeRegexTransform: 
 
+../limutils/PatternFiller.h
+string
+-
+vector
+-
+stdarg.h
+-
+
+../limutils/inputregex.h
+string
+-
+
+../limutils/passhandler.h
+string
+-
+utility
+-
+
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/accounts.cc
+accounts.h
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/accounts.h
+limutils/passhandler.h
+-
+limutils/PatternFiller.h
+-
+limjson.h
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/limjson.h
+
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/accounts.h
+drogon/HttpController.h
+-
+
 /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/limjson.h
 vector
 -
@@ -16,14 +48,14 @@ string
 json/json.h
 -
 
-/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/product.cc
-product.h
-/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/product.h
-limjson.h
-/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/limjson.h
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/filters/createaccount.cc
+createaccount.h
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/filters/createaccount.h
+limutils/inputregex.h
+-
 
-/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/product.h
-drogon/HttpController.h
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/filters/createaccount.h
+drogon/HttpFilter.h
 -
 
 /usr/include/jsoncpp/json/allocator.h
