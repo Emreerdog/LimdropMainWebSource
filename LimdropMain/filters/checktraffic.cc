@@ -10,7 +10,7 @@ using namespace drogon;
 
 void checktraffic::doFilter(const HttpRequestPtr &req, FilterCallback &&fcb, FilterChainCallback &&fccb)
 {
-    	std::string lastVisited = req->getPath();
+	const char* lastVisited = req->getPath().c_str();
     	auto sessionPtr = req->session();
 
   	if(sessionPtr->find("lastVisit"))

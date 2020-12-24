@@ -4,6 +4,8 @@
 
 void signup::asyncHandleHttpRequest(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback)
 {
+	const char* status = req->getCookie("_color").c_str();
+	const char* statusText = req->getCookie("_feedback_msg").c_str();
 	ManualPatternFiller MPF(2, "status", "statusText");
 	std::string fileContent = "";
 
@@ -11,22 +13,13 @@ void signup::asyncHandleHttpRequest(const HttpRequestPtr& req, std::function<voi
 	if(sessionPtr->find("isloggedin")){
 		std::cout << "Nice look" << std::endl;
 	}
-
-	if(sessionPtr->find("status")){	
-
-			std::string status = sessionPtr->get<std::string>("status");
-			std::string statusText = sessionPtr->get<std::string>("statusText");			
-			fileContent = MPF.fillPatterns("account.html", status.c_str(), statusText.c_str());
-			// Free the status vars
-			sessionPtr->erase("status");
-			sessionPtr->erase("statusText");
-	}
-	else{
-		fileContent = MPF.fillPatterns("account.html", "mustafa", "ozan");
-	}
+	fileContent = MPF.fillPatterns("account.html", status, statusText);
 
 	auto resp = HttpResponse::newHttpResponse();
 	resp->setBody(fileContent);
+	resp->addCookie("_isdisplayed", "");
+	resp->addCookie("_color", "");
+	resp->addCookie("_feedback_msg", "");	
 	callback(resp);
     //write your application logic here
 }

@@ -13,6 +13,7 @@ void basket::showBasket(const HttpRequestPtr& req,std::function<void (const Http
 		std::string totalQuery = "SELECT basketitem FROM accounts WHERE username='" + username + "'";
 		auto f = clientPtr->execSqlAsyncFuture(totalQuery);
 		auto result = f.get();
+		
 		for(auto row : result){
 			if(row["basketitem"].as<std::string>() == ""){
 				std::cout << "There are no items in basket" << std::endl;
@@ -22,7 +23,7 @@ void basket::showBasket(const HttpRequestPtr& req,std::function<void (const Http
 			}
 			// std::cout << row["basketitem"].as<std::string>() << std::endl;
 			Basket PB(row["basketitem"].as<std::string>());
-			std::cout << PB.getBasket().size() << std::endl;
+			std::cout << PB.getBasket() << std::endl;
 		}	
 		auto resp = HttpResponse::newNotFoundResponse();
 		callback(resp);

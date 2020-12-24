@@ -14,6 +14,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/signup.cc" "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o"
   "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/trjson.cc" "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o"
   "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/uploads.cc" "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o"
+  "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/wallet.cc" "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/PyEmbedd.dir/controllers/wallet.cc.o"
   "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/filters/checktraffic.cc" "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o"
   "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/filters/createaccount.cc" "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/PyEmbedd.dir/filters/createaccount.cc.o"
   "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/filters/login.cc" "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/PyEmbedd.dir/filters/login.cc.o"

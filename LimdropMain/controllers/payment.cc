@@ -13,32 +13,95 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 	if(sessionPtr->find("isLoggedIn")){
 		std::string username = sessionPtr->get<std::string>("username");
 		auto clientPtr = drogon::app().getDbClient();
-		auto totalQuery1 = "SELECT basketitem FROM accounts WHERE username='" + username + "'";
+		auto totalQuery1 = "SELECT basketitem, address FROM accounts WHERE username='" + username + "'";
 		auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
 		auto result1 = f1.get();
-
+		
+		Json::Value addressJson;
 		std::string basket;
+		std::string addressString;
 		for(auto row : result1){
 			basket = row["basketitem"].as<std::string>();
+			addressString = row["address"].as<std::string>();
+			if(addressString == ""){
+				// TODO
+				// If the address is empty
+				// Redirect to address input page
+				auto resp = HttpResponse::newRedirectionResponse("/");
+				callback(resp);
+				return;
+			}
+			std::stringstream addressToJson(addressString);
+			addressToJson >> addressJson;
+		}
+		if(basket == ""){
+			std::cout << "Basket is empty" << std::endl;
+			auto resp = HttpResponse::newNotFoundResponse();
+			callback(resp);
+			return;
 		}
 		Basket PB(basket);
 		Json::Value tempBasket = PB.getBasket();
 		Json::Value resultantBasket;
-		//float price = 1.0;
-		//std::stringstream ss;
-		//ss << price;
 
-		for(int i = 0; i < tempBasket["basket_items"].size(); i++){
-			//std::string _price = ss.str();
+		unsigned int tempBasketSize = tempBasket["basket_items"].size();
+		if(tempBasketSize == 0){
+			auto resp = HttpResponse::newRedirectionResponse("/");
+			callback(resp);
+			return;
+		}
+		for(int i = 0; i < tempBasketSize; i++){
 			resultantBasket[i] = tempBasket["basket_items"][i];
 			resultantBasket[i].removeMember("image");
-			//resultantBasket[i]["price"] = _price;
-			//tempBasket["basket_items"].removeIndex(i, NULL);
 		}
 
-		std::cout << resultantBasket << std::endl;
-		//std::string totalQuery2 = "UPDATE accounts SET basketitem='" + tempBasket.toStyledString() + "' WHERE username='" + username + "'";
+
 		std::string resultantBasketString = resultantBasket.toStyledString();
+		std::cout << resultantBasket << std::endl;
+
+		/*std::string totalQuery2 = "UPDATE accounts SET basketitem=NULL, boughtproducts='" + resultantBasketString + "', currentlyondrop='"+ resultantBasketString +"', boughtProductCount = boughtProductCount + 1 WHERE username='" + username + "'";
+		clientPtr->execSqlAsyncFuture(totalQuery2);*/
+		Json::Value buyers;
+		std::vector<std::string> _buyerJsonString;
+		for(int i = 0; i < resultantBasket.size(); i++){
+			std::string productID = resultantBasket[i]["id"].asString();
+			std::string totalQuery3 = "SELECT buyers, customercount, maximumproductcount FROM products WHERE id=" + productID + "";
+			std::string buyerJsonString;
+			auto f3 = clientPtr->execSqlAsyncFuture(totalQuery3);
+			auto result3 = f3.get();
+			unsigned int sizeOfBuyersJson;
+			unsigned int customerCount;
+			unsigned int maximumproductCount;
+			for(auto row : result3){
+				customerCount = row["customercount"].as<unsigned int>();
+				customerCount++;
+				maximumproductCount = row["maximumproductcount"].as<unsigned int>();
+				
+				if(customerCount >= maximumproductCount ){
+					std::cout << "Product is out of stock" << std::endl;
+					// Remove the product from the basket
+					resultantBasket.removeIndex(i, NULL);
+					auto resp = HttpResponse::newNotFoundResponse();
+					callback(resp);
+					return;	
+				}
+				buyerJsonString = row["buyers"].as<std::string>();
+				if(buyerJsonString == ""){
+					// In case the buyer is the first buyer
+					sizeOfBuyersJson = 0;
+				}
+				else{
+					std::stringstream streamBuyer(buyerJsonString);
+					streamBuyer >> buyers;
+					sizeOfBuyersJson = buyers.size();
+				}
+			}
+			buyers[sizeOfBuyersJson]["username"] = username;
+			buyerJsonString = buyers.toStyledString();
+			_buyerJsonString.push_back(buyerJsonString);
+			/*std::string totalQuery4 = "UPDATE products SET buyers='" + buyerJsonString + "', customercount = customercount + 1 WHERE id=" + productID;
+			auto f4 = clientPtr->execSqlAsyncFuture(totalQuery4);*/
+		}
 
 		std::vector<std::pair<std::string, std::string>> payment_card = {
     		std::make_pair("cardHolderName", "John Doe"),
@@ -74,7 +137,8 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
     		std::make_pair("zipCode", "34732")
     		};
 
-    		std::vector<std::pair<std::string, std::string>>::iterator paymentIT;
+
+		std::vector<std::pair<std::string, std::string>>::iterator paymentIT;
     		std::vector<std::pair<std::string, std::string>>::iterator buyerIT;
     		std::vector<std::pair<std::string, std::string>>::iterator addressIT;
 
@@ -98,12 +162,7 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 		std::string _buyer = Jbuyer.toStyledString();
 		std::string _address = Jaddress.toStyledString();
 
-		std::cout << _payment_card << std::endl;
-		std::cout << _buyer << std::endl;
-		std::cout << _address << std::endl;
-
-
-		Py_Initialize();
+		/*Py_Initialize();
 		POBJECT p_payment_card = LIM_PSTR(_payment_card.c_str());
 		POBJECT p_buyer = LIM_PSTR(_buyer.c_str());
 		POBJECT p_address = LIM_PSTR(_address.c_str()); 
@@ -123,8 +182,11 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 		Py_CLEAR(returnValue);
 		Py_CLEAR(functionArgs);
 		Py_FinalizeEx();
+		*/
 
-		//auto f2 = clientPtr->execSqlAsyncFuture(totalQuery2);
+
+		/*std::string totalQuery4 = "UPDATE products SET buyers='" + buyerJsonString + "', customercount = customercount + 1 WHERE id=" + productID;
+		auto f4 = clientPtr->execSqlAsyncFuture(totalQuery4);*/
 		auto resp = HttpResponse::newRedirectionResponse("/");
 		callback(resp);
 		return;
@@ -132,7 +194,6 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 	auto resp = HttpResponse::newNotFoundResponse();
 	callback(resp);
 }
-
 
 void payment::paymentpage(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback)
 {
@@ -142,5 +203,10 @@ void payment::paymentpage(const HttpRequestPtr& req,std::function<void (const Ht
 	}
 	auto resp = HttpResponse::newRedirectionResponse("/");
 	callback(resp);
+}
+
+void payment::paymenthistory(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback)
+{
+
 }
 //add definition of your processing function here

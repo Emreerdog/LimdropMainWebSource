@@ -406,6 +406,33 @@ controllers/uploads.cc.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.s
 .PHONY : controllers/uploads.cc.s
 
+controllers/wallet.o: controllers/wallet.cc.o
+
+.PHONY : controllers/wallet.o
+
+# target to build an object file
+controllers/wallet.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/wallet.cc.o
+.PHONY : controllers/wallet.cc.o
+
+controllers/wallet.i: controllers/wallet.cc.i
+
+.PHONY : controllers/wallet.i
+
+# target to preprocess a source file
+controllers/wallet.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/wallet.cc.i
+.PHONY : controllers/wallet.cc.i
+
+controllers/wallet.s: controllers/wallet.cc.s
+
+.PHONY : controllers/wallet.s
+
+# target to generate assembly for a file
+controllers/wallet.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/wallet.cc.s
+.PHONY : controllers/wallet.cc.s
+
 filters/checktraffic.o: filters/checktraffic.cc.o
 
 .PHONY : filters/checktraffic.o
@@ -689,6 +716,9 @@ help:
 	@echo "... controllers/uploads.o"
 	@echo "... controllers/uploads.i"
 	@echo "... controllers/uploads.s"
+	@echo "... controllers/wallet.o"
+	@echo "... controllers/wallet.i"
+	@echo "... controllers/wallet.s"
 	@echo "... filters/checktraffic.o"
 	@echo "... filters/checktraffic.i"
 	@echo "... filters/checktraffic.s"

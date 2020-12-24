@@ -298,6 +298,9 @@ CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o: /usr/include/jsoncpp/json/valu
 CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o: /usr/include/jsoncpp/json/version.h
 CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o: /usr/include/jsoncpp/json/writer.h
 
+CMakeFiles/PyEmbedd.dir/controllers/wallet.cc.o: ../controllers/wallet.cc
+CMakeFiles/PyEmbedd.dir/controllers/wallet.cc.o: ../controllers/wallet.h
+
 CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o: ../filters/checktraffic.cc
 CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o: ../filters/checktraffic.h
 

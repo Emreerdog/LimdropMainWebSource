@@ -8,9 +8,14 @@
 void accounts::createAccount(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback, std::string uname, std::string pass, std::string email){
 
 	auto sessionPtr = req->session();
-	sessionPtr->erase("display");
-	sessionPtr->erase("status");
-	sessionPtr->erase("statusText");
+	
+	drogon::Cookie loginDisplay;
+	drogon::Cookie loginCssStat;
+	drogon::Cookie loginStatus;
+	loginDisplay.setKey("_isdisplayed");
+	loginCssStat.setKey("_color");
+	loginStatus.setKey("_feedback_msg");
+	
 	PasswordHandler passHandler(pass, Mode::PS_ENCRYPT);
 
 	srand(time(0));
@@ -37,13 +42,17 @@ void accounts::createAccount(const HttpRequestPtr& req, std::function<void (cons
 	std::string preQuery = "SELECT id FROM accounts WHERE username='"+ uname + "' OR email='" + email + "'";
 	auto f = clientPtr->execSqlAsyncFuture(preQuery);
 	if(f.get().size() > 0){
-		std::string _display = "block";
-		std::string _status = "red";
-		std::string _statusText = "Username or email already exists";
-		sessionPtr->insert("display", _display);
-		sessionPtr->insert("status", _status);
-		sessionPtr->insert("statusText", _statusText);
+		const char* _display = "block";
+		const char* _status = "red";
+		const char* _statusText = "Username or email already exists";
+		
+		loginDisplay.setValue(_display);
+		loginCssStat.setValue(_status);
+		loginStatus.setValue(_statusText);
 		auto res = HttpResponse::newRedirectionResponse("/accounts/create");
+		res->addCookie(loginDisplay);
+		res->addCookie(loginCssStat);
+		res->addCookie(loginStatus);
 		callback(res);
 		return;
 	}
@@ -55,15 +64,17 @@ void accounts::createAccount(const HttpRequestPtr& req, std::function<void (cons
       	std::string totalQuery = queryStart + queryEnd;	
 	clientPtr->execSqlAsyncFuture(totalQuery);
 
-	std::string _display = "block";
-	std::string _status = "green";
+	const char* _display = "block";
+	const char* _status = "green";
 	std::string _statusText = uuid;
 
-	sessionPtr->insert("display", _display);
-	sessionPtr->insert("status", _status);
-	sessionPtr->insert("statusText", _statusText);
-	
-	auto res = HttpResponse::newRedirectionResponse("/accounts/");
+	loginDisplay.setValue(_display);
+	loginCssStat.setValue(_status);
+	loginStatus.setValue(_statusText);
+	auto res = HttpResponse::newRedirectionResponse("/accounts/create");
+	res->addCookie(loginDisplay);
+	res->addCookie(loginCssStat);
+	res->addCookie(loginStatus);
 	callback(res);
 }
 
@@ -81,22 +92,30 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 	// Then,
 	// Check the validity by comparing new L and R values
 	auto clientPtr = drogon::app().getDbClient();
-	std::string queryStart = "SELECT L, R, P1, P2 FROM accounts WHERE ";
+	drogon::Cookie loginDisplay;
+	drogon::Cookie loginCssStat;
+	drogon::Cookie loginStatus;
+	loginDisplay.setKey("_isdisplayed");
+	loginCssStat.setKey("_color");
+	loginStatus.setKey("_feedback_msg");
+
+	std::string queryStart = "SELECT L, R, P1, P2, id FROM accounts WHERE ";
 	std::string queryEnd = "username = '" + uname + "' AND isverified = TRUE";
 	std::string totalQuery = queryStart + queryEnd;
 
 	auto f = clientPtr->execSqlAsyncFuture(totalQuery);
 	auto result = f.get();
 	if(result.size() == 0){
-		// TODO
-		// Redirect to login page
 		const char* _displaymessage = "block";
 		const char*  _status = "red";
 		const char*  _statusText = "Unable to login";
-		sessionPtr->insert("display", _displaymessage);
-		sessionPtr->insert("status", _status);
-		sessionPtr->insert("statusText", _statusText);
+		loginDisplay.setValue(_displaymessage);
+		loginCssStat.setValue(_status);
+		loginStatus.setValue(_statusText);
 		auto resp = HttpResponse::newRedirectionResponse("/accounts/");
+		resp->addCookie(loginDisplay);
+		resp->addCookie(loginCssStat);
+		resp->addCookie(loginStatus);
 		callback(resp);
 		return;
 	}
@@ -105,11 +124,13 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 		unsigned long R = 0;
 		unsigned long P1 = 0;
 		unsigned long P2 = 0;
+		std::string user_id;
 		for(auto row : result){
 			L = row["L"].as<unsigned long>();
 			R = row["R"].as<unsigned long>();
 			P1 = row["P1"].as<unsigned long>();
 			P2 = row["P2"].as<unsigned long>();
+			user_id = row["id"].as<std::string>();
 		}
 		PasswordHandler passHandler(pass, Mode::PS_ENCRYPT);
 		passHandler.MakeLRpair(L, R);
@@ -120,12 +141,14 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 			sessionPtr->erase("isLoggedIn");
 			sessionPtr->erase("username");
 			sessionPtr->erase("balance");
+			sessionPtr->erase("id");
 
 			bool isLoggedIn = true;
 			float balance = 0;
 			sessionPtr->insert("isLoggedIn", isLoggedIn);
 			sessionPtr->insert("username", uname);
 			sessionPtr->insert("balance", balance);
+			sessionPtr->insert("id", user_id);
 			auto resp = HttpResponse::newNotFoundResponse();
 			callback(resp);
 			return;
@@ -134,11 +157,13 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
         const char* _displaymessage = "block";
 	const char* _status = "red";
 	const char* _statusText = "Password is incorrect";
-
-	sessionPtr->insert("display", _displaymessage);
-	sessionPtr->insert("status", _status);
-	sessionPtr->insert("statusText", _statusText);
+	loginDisplay.setValue(_displaymessage);
+	loginCssStat.setValue(_status);
+	loginStatus.setValue(_statusText);
 	auto resp = HttpResponse::newRedirectionResponse("/accounts/");
+	resp->addCookie(loginDisplay);
+	resp->addCookie(loginCssStat);
+	resp->addCookie(loginStatus);
 	callback(resp);
 	return;
 }
@@ -146,24 +171,24 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 
 void accounts::loginPage(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	auto sessionPtr = req->session();
-	std::string _display = "hidden";
-	if(sessionPtr->find("display")){
-		_display = sessionPtr->get<std::string>("display");
+
+	if(sessionPtr->find("isLoggedIn")){
+		auto resp = HttpResponse::newRedirectionResponse("/");
+		callback(resp);
+		return;
 	}
-
-
-	std::string _status = sessionPtr->get<std::string>("status");
-	std::string _statusText = sessionPtr->get<std::string>("statusText");
+	const char* _display = req->getCookie("_isdisplayed").c_str();
+	const char* _status = req->getCookie("_color").c_str();
+	const char* _statusText = req->getCookie("_feedback_msg").c_str();
 
 	ManualPatternFiller MPF(3, "display", "status", "statusText");
-	std::string result = MPF.fillPatterns("login.html", _display.c_str(), _status.c_str(), _statusText.c_str());
+	std::string result = MPF.fillPatterns("login.html", _display, _status, _statusText);
 
 	auto resp = HttpResponse::newHttpResponse();
 	resp->setBody(result);
+	resp->addCookie("_isdisplayed", "");
+	resp->addCookie("_color", "");
+	resp->addCookie("_feedback_msg", "");	
 	callback(resp);
-	sessionPtr->erase("display");
-	sessionPtr->erase("status");
-	sessionPtr->erase("statusText");
-
 }
 

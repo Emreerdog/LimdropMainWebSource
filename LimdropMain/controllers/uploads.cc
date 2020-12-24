@@ -28,6 +28,7 @@ void uploads::upload_form(const HttpRequestPtr& req,std::function<void (const Ht
 	auto sessionPtr = req->session();
 	sessionPtr->erase("passedVars");
 
+	drogon::Cookie cookie3("test3", "hello cookie!");
 	ManualPatternFiller MPF(1, "mark");
 	std::string content = MPF.fillPatterns("addproduct.html", "");
 

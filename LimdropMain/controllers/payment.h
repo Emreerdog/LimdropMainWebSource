@@ -8,8 +8,10 @@ class payment:public drogon::HttpController<payment>
     
     METHOD_ADD(payment::payit, "/pay", Get);
     METHOD_ADD(payment::paymentpage, "/page", Get);
+    METHOD_ADD(payment::paymenthistory, "/history", Get);
 
     METHOD_LIST_END
     void payit(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback);    
     void paymentpage(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback);
+    void paymenthistory(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback);
 };

@@ -9,6 +9,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o"
   "CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o"
   "CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o"
+  "CMakeFiles/PyEmbedd.dir/controllers/wallet.cc.o"
   "CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o"
   "CMakeFiles/PyEmbedd.dir/filters/createaccount.cc.o"
   "CMakeFiles/PyEmbedd.dir/filters/login.cc.o"
