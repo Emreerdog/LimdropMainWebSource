@@ -45,7 +45,35 @@ void profile::addAddress(const HttpRequestPtr& req,std::function<void (const Htt
 {
 	auto sessionPtr = req->session();
 	if(sessionPtr->find("isLoggedIn")){
-	
+		std::string username = sessionPtr->get<std::string>("username");	
+		unsigned int addressCount = 0;
+		auto clientPtr = drogon::app().getDbClient();
+		auto f1 = clientPtr->execSqlAsyncFuture("SELECT addresses FROM accounts WHERE username='" + username + "'");
+		auto result1 = f1.get();
+		
+		Json::Value addresses;
+		for(auto row : result1){
+			std::string addStr = row["addresses"].as<std::string>(); 
+			if(addStr == ""){
+				std::cout << "No addresses" << std::endl;
+				addressCount = 0;
+			}
+			else{	
+				std::cout << "There is address" << std::endl;
+				std::stringstream ss(addStr);
+				ss >> addresses;
+				addressCount = addresses["addresses"].size();
+			}
+		}	
+		std::cout << addresses << std::endl;
+		std::cout << "/////////////////////" << std::endl;
+
+		addresses["addresses"][addressCount]["city"] = city;
+    		addresses["addresses"][addressCount]["address"] = address;
+    		addresses["addresses"][addressCount]["phonenumber"] = phoneNumber;
+    		addresses["addresses"][addressCount]["zipcode"] = zipcode;
+		clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='" + addresses.toStyledString()  + "' WHERE username='" + username + "'");
+		std::cout << addresses << std::endl;
 	}
 	auto resp = HttpResponse::newRedirectionResponse("/");
 	callback(resp);
@@ -54,19 +82,53 @@ void profile::removeAddress(const HttpRequestPtr& req,std::function<void (const 
 {
 	auto sessionPtr = req->session();
 	if(sessionPtr->find("isLoggedIn")){
+
 		std::string username = sessionPtr->get<std::string>("username");
 		unsigned int _addressIndex;
 		auto clientPtr = drogon::app().getDbClient();
 		std::stringstream ss(addressIndex);
-		addressIndex >> _addressIndex;
+		ss >> _addressIndex;
 		Json::Value addresses;
-		auto f1 = clientPtr->execSqlAysncFuture("SELECT address FROM accounts WHERE username='" + username + "'");
+		auto f1 = clientPtr->execSqlAsyncFuture("SELECT addresses FROM accounts WHERE username='" + username + "'");
 		auto result1 = f1.get();
+		std::string Address;
 		for(auto row : result1){
-			
+			Address = row["addresses"].as<std::string>();
+			if(Address == ""){
+				// There no addresses to remove
+				auto resp = HttpResponse::newRedirectionResponse("/profile/address/");
+				callback(resp);
+				return;
+			}
+			else{
+				std::stringstream strToJson(Address);
+				strToJson >> addresses;
+				int addressCount =  addresses["addresses"].size();
+				if(_addressIndex > addressCount || _addressIndex < addressCount){
+					// Given index is out of bounds
+					std::cout << "Given index is out of bounds" << std::endl;
+					auto resp = HttpResponse::newRedirectionResponse("/profile/address/");
+					callback(resp);
+					return;
+				}
+				
+				addresses["addresses"].removeIndex(_addressIndex - 1, NULL);
+				if(addresses["addresses"].size() == 0){
+					// Write null to database
+					clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='' WHERE username='" + username + "'");				
+					auto resp = HttpResponse::newRedirectionResponse("/profile/address/");
+					callback(resp);
+					return;
+				}
 
+				Address = addresses.toStyledString();
+				clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='" + Address + "' WHERE username='" + username + "'");
+				std::cout << "Successfully removed address" << std::endl;
+				auto resp = HttpResponse::newRedirectionResponse("/profile/address/");
+				callback(resp);
+				return;
+			}
 		}	
-	
 	}
 	auto resp = HttpResponse::newRedirectionResponse("/");
 	callback(resp);
@@ -75,7 +137,17 @@ void profile::showAddress(const HttpRequestPtr& req,std::function<void (const Ht
 {
 	auto sessionPtr = req->session();
 	if(sessionPtr->find("isLoggedIn")){
-	
+		std::string username = sessionPtr->get<std::string>("username");
+		auto clientPtr = drogon::app().getDbClient();
+		auto f1 = clientPtr->execSqlAsyncFuture("SELECT addresses FROM accounts WHERE username='" + username + "'");
+		auto result1 = f1.get();
+		for(auto row : result1){	
+			std::cout << row["addresses"].as<std::string>() << std::endl;
+		}	
+		auto resp = HttpResponse::newHttpResponse();
+		resp->setBody("Hello");
+		callback(resp);
+		return;
 	}
 	auto resp = HttpResponse::newRedirectionResponse("/");
 	callback(resp);

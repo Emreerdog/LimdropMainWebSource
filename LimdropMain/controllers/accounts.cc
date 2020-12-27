@@ -95,9 +95,9 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 	drogon::Cookie loginDisplay;
 	drogon::Cookie loginCssStat;
 	drogon::Cookie loginStatus;
-	loginDisplay.setKey("_isdisplayed");
-	loginCssStat.setKey("_color");
-	loginStatus.setKey("_feedback_msg");
+	loginDisplay.setKey("isdisplayed");
+	loginCssStat.setKey("color");
+	loginStatus.setKey("feedback_msg");
 
 	std::string queryStart = "SELECT L, R, P1, P2, id FROM accounts WHERE ";
 	std::string queryEnd = "username = '" + uname + "' AND isverified = TRUE";
@@ -177,18 +177,18 @@ void accounts::loginPage(const HttpRequestPtr& req,std::function<void (const Htt
 		callback(resp);
 		return;
 	}
-	const char* _display = req->getCookie("_isdisplayed").c_str();
-	const char* _status = req->getCookie("_color").c_str();
-	const char* _statusText = req->getCookie("_feedback_msg").c_str();
+	const char* _display = req->getCookie("isdisplayed").c_str();
+	const char* _status = req->getCookie("color").c_str();
+	const char* _statusText = req->getCookie("feedback_msg").c_str();
 
 	ManualPatternFiller MPF(3, "display", "status", "statusText");
 	std::string result = MPF.fillPatterns("login.html", _display, _status, _statusText);
 
 	auto resp = HttpResponse::newHttpResponse();
 	resp->setBody(result);
-	resp->addCookie("_isdisplayed", "");
-	resp->addCookie("_color", "");
-	resp->addCookie("_feedback_msg", "");	
+	resp->addCookie("isdisplayed", "");
+	resp->addCookie("color", "");
+	resp->addCookie("feedback_msg", "");	
 	callback(resp);
 }
 

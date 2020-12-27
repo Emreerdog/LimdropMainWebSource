@@ -28,9 +28,8 @@ void uploads::upload_form(const HttpRequestPtr& req,std::function<void (const Ht
 	auto sessionPtr = req->session();
 	sessionPtr->erase("passedVars");
 
-	drogon::Cookie cookie3("test3", "hello cookie!");
-	ManualPatternFiller MPF(1, "mark");
-	std::string content = MPF.fillPatterns("addproduct.html", "");
+	ManualPatternFiller MPF(1, "_isdisplayed");
+	std::string content = MPF.fillPatterns("addproduct.html", "yes");
 
 	auto resp = HttpResponse::newHttpResponse();
 	resp->setBody(content);
@@ -156,7 +155,7 @@ void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const H
 	// std::cout << productJSON << std::endl;
 	sessionPtr->erase("passedVars");
 
-	auto resp = HttpResponse::newNotFoundResponse();
+	auto resp = HttpResponse::newRedirectionResponse("/uploads/");
 	callback(resp);
 }
 
@@ -176,11 +175,17 @@ void uploads::files_page(const HttpRequestPtr& req,std::function<void (const Htt
 	for(const auto& n : tempParam){
 		std::string firstParam = n.first;
 		std::string secondParam = n.second;
+		if(secondParam == ""){
+			// Input fields cannot be empty
+			auto resp = HttpResponse::newRedirectionResponse("/uploads/");
+			callback(resp);
+			return;
+		}
 		if(firstParam == "imgCount"){
 			int _imageCount = 0;
 			std::stringstream imageCountStream(secondParam);
 			imageCountStream >> _imageCount;
-			if(_imageCount < 3 || _imageCount > 20){
+			if(_imageCount < 2 || _imageCount > 20){
 				auto resp = HttpResponse::newRedirectionResponse("/uploads/");
 				callback(resp);
 				return;
