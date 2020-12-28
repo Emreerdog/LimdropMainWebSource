@@ -55,25 +55,19 @@ void profile::addAddress(const HttpRequestPtr& req,std::function<void (const Htt
 		for(auto row : result1){
 			std::string addStr = row["addresses"].as<std::string>(); 
 			if(addStr == ""){
-				std::cout << "No addresses" << std::endl;
 				addressCount = 0;
 			}
 			else{	
-				std::cout << "There is address" << std::endl;
 				std::stringstream ss(addStr);
 				ss >> addresses;
 				addressCount = addresses["addresses"].size();
 			}
 		}	
-		std::cout << addresses << std::endl;
-		std::cout << "/////////////////////" << std::endl;
-
 		addresses["addresses"][addressCount]["city"] = city;
     		addresses["addresses"][addressCount]["address"] = address;
     		addresses["addresses"][addressCount]["phonenumber"] = phoneNumber;
     		addresses["addresses"][addressCount]["zipcode"] = zipcode;
 		clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='" + addresses.toStyledString()  + "' WHERE username='" + username + "'");
-		std::cout << addresses << std::endl;
 	}
 	auto resp = HttpResponse::newRedirectionResponse("/");
 	callback(resp);
@@ -96,6 +90,7 @@ void profile::removeAddress(const HttpRequestPtr& req,std::function<void (const 
 			Address = row["addresses"].as<std::string>();
 			if(Address == ""){
 				// There no addresses to remove
+				std::cout << "There are no addresses to remove" << std::endl;
 				auto resp = HttpResponse::newRedirectionResponse("/profile/address/");
 				callback(resp);
 				return;
@@ -104,26 +99,26 @@ void profile::removeAddress(const HttpRequestPtr& req,std::function<void (const 
 				std::stringstream strToJson(Address);
 				strToJson >> addresses;
 				int addressCount =  addresses["addresses"].size();
-				if(_addressIndex > addressCount || _addressIndex < addressCount){
+				/*if(_addressIndex > addressCount || _addressIndex < addressCount){
 					// Given index is out of bounds
 					std::cout << "Given index is out of bounds" << std::endl;
 					auto resp = HttpResponse::newRedirectionResponse("/profile/address/");
 					callback(resp);
 					return;
-				}
+				}*/
+				Json::Value asd;
+				std::cout << addresses << std::endl;
+				std::cout << addresses["addresses"].size() << std::endl;
+				std::cout << _addressIndex << std::endl;
 				
-				addresses["addresses"].removeIndex(_addressIndex - 1, NULL);
-				if(addresses["addresses"].size() == 0){
-					// Write null to database
-					clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='' WHERE username='" + username + "'");				
-					auto resp = HttpResponse::newRedirectionResponse("/profile/address/");
-					callback(resp);
-					return;
+				if(addresses["addresses"].removeIndex(_addressIndex, &asd)){
+					std::cout << "Address removing failed successfully" << std::endl;
 				}
-
-				Address = addresses.toStyledString();
-				clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='" + Address + "' WHERE username='" + username + "'");
-				std::cout << "Successfully removed address" << std::endl;
+				else{
+					std::cout << "Successfully removed address" << std::endl;
+					Address = addresses.toStyledString();
+					clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='" + Address + "' WHERE username='" + username + "'");
+				}
 				auto resp = HttpResponse::newRedirectionResponse("/profile/address/");
 				callback(resp);
 				return;
