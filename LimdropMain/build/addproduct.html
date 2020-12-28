@@ -18,6 +18,10 @@
   <label for="offCount">Off count: </label><br>
   <input type="text" id="offCount" name="offCount" value="" onblur="addOffValue()"><br>
   <div id="offCounts">
+  </div>
+  <label for="properties">Properties:</label><br>
+  <input type="text" id="properties" name="properties" value="" onblur="addPropertyCount()"><br>
+  <div id="props">
 
   </div>
   <label for="productCount">Product Count:</label><br>
@@ -61,6 +65,44 @@
             countdiv.appendChild(space);
         }
 
+    }
+    function addPropertyCount(){
+        var countdiv = document.getElementById("props");
+        countdiv.style.paddingTop = "10px";
+        var number = document.getElementById("properties").value;
+        var i;
+        
+        while(countdiv.firstChild){
+            countdiv.removeChild(countdiv.firstChild);
+        }
+
+        for(i = 0; i < number; i++){
+            
+            var space = document.createElement("br");
+            var newElemLabel = document.createElement("label");
+            var newKey = document.createElement("input");
+            var newVal = document.createElement("input");
+
+            newElemLabel.innerHTML = "Property " + i;
+            newKey.name = "propertyKey" + i;
+            newKey.id = "propertyKey" + i;
+            newKey.value = "";
+            newKey.innerHTML = "Vals";
+            newKey.style.marginTop = "5px";
+            newKey.style.marginBottom = "5px";
+            newElemLabel.style.paddingRight = "5px";
+
+            newVal.name = "propertyVal" + i;
+            newVal.id = "propertyVal" + i;
+            newVal.value = "";
+            newVal.style.marginLeft = "5px";
+
+            countdiv.appendChild(newElemLabel);
+            countdiv.appendChild(space);
+            countdiv.appendChild(newKey);
+            countdiv.appendChild(newVal);
+            countdiv.appendChild(space);
+        }
     }
 </script>
 </body>

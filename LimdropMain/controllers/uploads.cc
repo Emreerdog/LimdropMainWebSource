@@ -5,12 +5,7 @@
 #include <algorithm>
 
 void uploads::upload_product(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
-	//This is file parser
-
-	//drogon::MultiPartParser mpp;
-	//mpp.parse(req);
-	//const std::vector<drogon::HttpFile> f = mpp.getFiles();
-	//std::cout << f[0].getFileName() << std::endl;
+	// Tis is experimental
 	Json::Value ourProduct;
 
 	std::unordered_map<std::string, std::string> tempParam = req->parameters();
@@ -102,7 +97,7 @@ void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const H
 	for(const auto& n : passedVars){
 		std::string firstVal = n.first;
 		std::string secondVal = n.second;
-
+		std::cout << "First Val: " << firstVal << " type=" << typeid(firstVal).name()  << " correspons to=" << secondVal << std::endl;
 		// We are doing this because somehow values in vector array
 		// are mixed inside
 		if(firstVal == "title"){ title = secondVal; }
@@ -177,15 +172,31 @@ void uploads::files_page(const HttpRequestPtr& req,std::function<void (const Htt
 		std::string secondParam = n.second;
 		if(secondParam == ""){
 			// Input fields cannot be empty
+			std::cout << "Input fields cannot be left empty" << std::endl;
 			auto resp = HttpResponse::newRedirectionResponse("/uploads/");
 			callback(resp);
 			return;
 		}
+
+		size_t found = firstParam.find("offValue");
+		if (found != std::string::npos) {
+			float _offVals;
+			std::stringstream OVstream(secondParam);
+			OVstream >> _offVals;
+			if (_offVals <= 0) {
+				std::cout << "Negative values are not okay" << std::endl;
+				auto resp = HttpResponse::newRedirectionResponse("/uploads/");
+				callback(resp);
+				return;
+			}
+		}
+
 		if(firstParam == "imgCount"){
 			int _imageCount = 0;
 			std::stringstream imageCountStream(secondParam);
 			imageCountStream >> _imageCount;
 			if(_imageCount < 2 || _imageCount > 20){
+				std::cout << "Image count is out of bounds" << std::endl;
 				auto resp = HttpResponse::newRedirectionResponse("/uploads/");
 				callback(resp);
 				return;

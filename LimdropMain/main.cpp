@@ -5,6 +5,7 @@ main(int argc, char *argv[])
 {
     const char* uploadPath = "../../../../rootDrop/";
 
+
     //drogon::app().addListener("192.168.1.27", 443, true, "/etc/ssl/certs/drogon-selfsigned.crt", "/etc/ssl/private/drogon-selfsigned.key"); 
     drogon::app().setDocumentRoot(uploadPath);
     drogon::app().setUploadPath(uploadPath);
