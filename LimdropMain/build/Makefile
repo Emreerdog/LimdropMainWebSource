@@ -190,6 +190,33 @@ controllers/activation.cc.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/activation.cc.s
 .PHONY : controllers/activation.cc.s
 
+controllers/administration.o: controllers/administration.cc.o
+
+.PHONY : controllers/administration.o
+
+# target to build an object file
+controllers/administration.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/administration.cc.o
+.PHONY : controllers/administration.cc.o
+
+controllers/administration.i: controllers/administration.cc.i
+
+.PHONY : controllers/administration.i
+
+# target to preprocess a source file
+controllers/administration.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/administration.cc.i
+.PHONY : controllers/administration.cc.i
+
+controllers/administration.s: controllers/administration.cc.s
+
+.PHONY : controllers/administration.s
+
+# target to generate assembly for a file
+controllers/administration.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/administration.cc.s
+.PHONY : controllers/administration.cc.s
+
 controllers/basket.o: controllers/basket.cc.o
 
 .PHONY : controllers/basket.o
@@ -216,6 +243,60 @@ controllers/basket.s: controllers/basket.cc.s
 controllers/basket.cc.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/basket.cc.s
 .PHONY : controllers/basket.cc.s
+
+controllers/business.o: controllers/business.cc.o
+
+.PHONY : controllers/business.o
+
+# target to build an object file
+controllers/business.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/business.cc.o
+.PHONY : controllers/business.cc.o
+
+controllers/business.i: controllers/business.cc.i
+
+.PHONY : controllers/business.i
+
+# target to preprocess a source file
+controllers/business.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/business.cc.i
+.PHONY : controllers/business.cc.i
+
+controllers/business.s: controllers/business.cc.s
+
+.PHONY : controllers/business.s
+
+# target to generate assembly for a file
+controllers/business.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/business.cc.s
+.PHONY : controllers/business.cc.s
+
+controllers/factory.o: controllers/factory.cc.o
+
+.PHONY : controllers/factory.o
+
+# target to build an object file
+controllers/factory.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/factory.cc.o
+.PHONY : controllers/factory.cc.o
+
+controllers/factory.i: controllers/factory.cc.i
+
+.PHONY : controllers/factory.i
+
+# target to preprocess a source file
+controllers/factory.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/factory.cc.i
+.PHONY : controllers/factory.cc.i
+
+controllers/factory.s: controllers/factory.cc.s
+
+.PHONY : controllers/factory.s
+
+# target to generate assembly for a file
+controllers/factory.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/factory.cc.s
+.PHONY : controllers/factory.cc.s
 
 controllers/limjson.o: controllers/limjson.cpp.o
 
@@ -433,6 +514,87 @@ controllers/wallet.cc.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/wallet.cc.s
 .PHONY : controllers/wallet.cc.s
 
+filters/businesscreate.o: filters/businesscreate.cc.o
+
+.PHONY : filters/businesscreate.o
+
+# target to build an object file
+filters/businesscreate.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/businesscreate.cc.o
+.PHONY : filters/businesscreate.cc.o
+
+filters/businesscreate.i: filters/businesscreate.cc.i
+
+.PHONY : filters/businesscreate.i
+
+# target to preprocess a source file
+filters/businesscreate.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/businesscreate.cc.i
+.PHONY : filters/businesscreate.cc.i
+
+filters/businesscreate.s: filters/businesscreate.cc.s
+
+.PHONY : filters/businesscreate.s
+
+# target to generate assembly for a file
+filters/businesscreate.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/businesscreate.cc.s
+.PHONY : filters/businesscreate.cc.s
+
+filters/businesslogin.o: filters/businesslogin.cc.o
+
+.PHONY : filters/businesslogin.o
+
+# target to build an object file
+filters/businesslogin.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/businesslogin.cc.o
+.PHONY : filters/businesslogin.cc.o
+
+filters/businesslogin.i: filters/businesslogin.cc.i
+
+.PHONY : filters/businesslogin.i
+
+# target to preprocess a source file
+filters/businesslogin.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/businesslogin.cc.i
+.PHONY : filters/businesslogin.cc.i
+
+filters/businesslogin.s: filters/businesslogin.cc.s
+
+.PHONY : filters/businesslogin.s
+
+# target to generate assembly for a file
+filters/businesslogin.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/businesslogin.cc.s
+.PHONY : filters/businesslogin.cc.s
+
+filters/changeparamsfilter.o: filters/changeparamsfilter.cc.o
+
+.PHONY : filters/changeparamsfilter.o
+
+# target to build an object file
+filters/changeparamsfilter.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/changeparamsfilter.cc.o
+.PHONY : filters/changeparamsfilter.cc.o
+
+filters/changeparamsfilter.i: filters/changeparamsfilter.cc.i
+
+.PHONY : filters/changeparamsfilter.i
+
+# target to preprocess a source file
+filters/changeparamsfilter.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/changeparamsfilter.cc.i
+.PHONY : filters/changeparamsfilter.cc.i
+
+filters/changeparamsfilter.s: filters/changeparamsfilter.cc.s
+
+.PHONY : filters/changeparamsfilter.s
+
+# target to generate assembly for a file
+filters/changeparamsfilter.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/changeparamsfilter.cc.s
+.PHONY : filters/changeparamsfilter.cc.s
+
 filters/checktraffic.o: filters/checktraffic.cc.o
 
 .PHONY : filters/checktraffic.o
@@ -513,6 +675,87 @@ filters/login.s: filters/login.cc.s
 filters/login.cc.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/login.cc.s
 .PHONY : filters/login.cc.s
+
+filters/passwordchangefilter.o: filters/passwordchangefilter.cc.o
+
+.PHONY : filters/passwordchangefilter.o
+
+# target to build an object file
+filters/passwordchangefilter.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/passwordchangefilter.cc.o
+.PHONY : filters/passwordchangefilter.cc.o
+
+filters/passwordchangefilter.i: filters/passwordchangefilter.cc.i
+
+.PHONY : filters/passwordchangefilter.i
+
+# target to preprocess a source file
+filters/passwordchangefilter.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/passwordchangefilter.cc.i
+.PHONY : filters/passwordchangefilter.cc.i
+
+filters/passwordchangefilter.s: filters/passwordchangefilter.cc.s
+
+.PHONY : filters/passwordchangefilter.s
+
+# target to generate assembly for a file
+filters/passwordchangefilter.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/passwordchangefilter.cc.s
+.PHONY : filters/passwordchangefilter.cc.s
+
+filters/paymentcheck.o: filters/paymentcheck.cc.o
+
+.PHONY : filters/paymentcheck.o
+
+# target to build an object file
+filters/paymentcheck.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/paymentcheck.cc.o
+.PHONY : filters/paymentcheck.cc.o
+
+filters/paymentcheck.i: filters/paymentcheck.cc.i
+
+.PHONY : filters/paymentcheck.i
+
+# target to preprocess a source file
+filters/paymentcheck.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/paymentcheck.cc.i
+.PHONY : filters/paymentcheck.cc.i
+
+filters/paymentcheck.s: filters/paymentcheck.cc.s
+
+.PHONY : filters/paymentcheck.s
+
+# target to generate assembly for a file
+filters/paymentcheck.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/paymentcheck.cc.s
+.PHONY : filters/paymentcheck.cc.s
+
+filters/profilechangefilter.o: filters/profilechangefilter.cc.o
+
+.PHONY : filters/profilechangefilter.o
+
+# target to build an object file
+filters/profilechangefilter.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/profilechangefilter.cc.o
+.PHONY : filters/profilechangefilter.cc.o
+
+filters/profilechangefilter.i: filters/profilechangefilter.cc.i
+
+.PHONY : filters/profilechangefilter.i
+
+# target to preprocess a source file
+filters/profilechangefilter.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/profilechangefilter.cc.i
+.PHONY : filters/profilechangefilter.cc.i
+
+filters/profilechangefilter.s: filters/profilechangefilter.cc.s
+
+.PHONY : filters/profilechangefilter.s
+
+# target to generate assembly for a file
+filters/profilechangefilter.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/filters/profilechangefilter.cc.s
+.PHONY : filters/profilechangefilter.cc.s
 
 limutils/PatternFiller.o: limutils/PatternFiller.cpp.o
 
@@ -692,9 +935,18 @@ help:
 	@echo "... controllers/activation.o"
 	@echo "... controllers/activation.i"
 	@echo "... controllers/activation.s"
+	@echo "... controllers/administration.o"
+	@echo "... controllers/administration.i"
+	@echo "... controllers/administration.s"
 	@echo "... controllers/basket.o"
 	@echo "... controllers/basket.i"
 	@echo "... controllers/basket.s"
+	@echo "... controllers/business.o"
+	@echo "... controllers/business.i"
+	@echo "... controllers/business.s"
+	@echo "... controllers/factory.o"
+	@echo "... controllers/factory.i"
+	@echo "... controllers/factory.s"
 	@echo "... controllers/limjson.o"
 	@echo "... controllers/limjson.i"
 	@echo "... controllers/limjson.s"
@@ -719,6 +971,15 @@ help:
 	@echo "... controllers/wallet.o"
 	@echo "... controllers/wallet.i"
 	@echo "... controllers/wallet.s"
+	@echo "... filters/businesscreate.o"
+	@echo "... filters/businesscreate.i"
+	@echo "... filters/businesscreate.s"
+	@echo "... filters/businesslogin.o"
+	@echo "... filters/businesslogin.i"
+	@echo "... filters/businesslogin.s"
+	@echo "... filters/changeparamsfilter.o"
+	@echo "... filters/changeparamsfilter.i"
+	@echo "... filters/changeparamsfilter.s"
 	@echo "... filters/checktraffic.o"
 	@echo "... filters/checktraffic.i"
 	@echo "... filters/checktraffic.s"
@@ -728,6 +989,15 @@ help:
 	@echo "... filters/login.o"
 	@echo "... filters/login.i"
 	@echo "... filters/login.s"
+	@echo "... filters/passwordchangefilter.o"
+	@echo "... filters/passwordchangefilter.i"
+	@echo "... filters/passwordchangefilter.s"
+	@echo "... filters/paymentcheck.o"
+	@echo "... filters/paymentcheck.i"
+	@echo "... filters/paymentcheck.s"
+	@echo "... filters/profilechangefilter.o"
+	@echo "... filters/profilechangefilter.i"
+	@echo "... filters/profilechangefilter.s"
 	@echo "... limutils/PatternFiller.o"
 	@echo "... limutils/PatternFiller.i"
 	@echo "... limutils/PatternFiller.s"

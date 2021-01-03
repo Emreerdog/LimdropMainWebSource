@@ -20,6 +20,9 @@ CMakeFiles/PyEmbedd.dir/controllers/accounts.cc.o: /usr/include/jsoncpp/json/wri
 CMakeFiles/PyEmbedd.dir/controllers/activation.cc.o: ../controllers/activation.cc
 CMakeFiles/PyEmbedd.dir/controllers/activation.cc.o: ../controllers/activation.h
 
+CMakeFiles/PyEmbedd.dir/controllers/administration.cc.o: ../controllers/administration.cc
+CMakeFiles/PyEmbedd.dir/controllers/administration.cc.o: ../controllers/administration.h
+
 CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o: ../PyLib/python3.9/Python.h
 CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o: ../PyLib/python3.9/abstract.h
 CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o: ../PyLib/python3.9/bltinmodule.h
@@ -131,6 +134,12 @@ CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o: /usr/include/jsoncpp/json/reade
 CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o: /usr/include/jsoncpp/json/value.h
 CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o: /usr/include/jsoncpp/json/version.h
 CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o: /usr/include/jsoncpp/json/writer.h
+
+CMakeFiles/PyEmbedd.dir/controllers/business.cc.o: ../controllers/business.cc
+CMakeFiles/PyEmbedd.dir/controllers/business.cc.o: ../controllers/business.h
+
+CMakeFiles/PyEmbedd.dir/controllers/factory.cc.o: ../controllers/factory.cc
+CMakeFiles/PyEmbedd.dir/controllers/factory.cc.o: ../controllers/factory.h
 
 CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.o: ../controllers/limjson.cpp
 CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.o: ../controllers/limjson.h
@@ -301,6 +310,15 @@ CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o: /usr/include/jsoncpp/json/writ
 CMakeFiles/PyEmbedd.dir/controllers/wallet.cc.o: ../controllers/wallet.cc
 CMakeFiles/PyEmbedd.dir/controllers/wallet.cc.o: ../controllers/wallet.h
 
+CMakeFiles/PyEmbedd.dir/filters/businesscreate.cc.o: ../filters/businesscreate.cc
+CMakeFiles/PyEmbedd.dir/filters/businesscreate.cc.o: ../filters/businesscreate.h
+
+CMakeFiles/PyEmbedd.dir/filters/businesslogin.cc.o: ../filters/businesslogin.cc
+CMakeFiles/PyEmbedd.dir/filters/businesslogin.cc.o: ../filters/businesslogin.h
+
+CMakeFiles/PyEmbedd.dir/filters/changeparamsfilter.cc.o: ../filters/changeparamsfilter.cc
+CMakeFiles/PyEmbedd.dir/filters/changeparamsfilter.cc.o: ../filters/changeparamsfilter.h
+
 CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o: ../filters/checktraffic.cc
 CMakeFiles/PyEmbedd.dir/filters/checktraffic.cc.o: ../filters/checktraffic.h
 
@@ -310,6 +328,15 @@ CMakeFiles/PyEmbedd.dir/filters/createaccount.cc.o: ../filters/createaccount.h
 
 CMakeFiles/PyEmbedd.dir/filters/login.cc.o: ../filters/login.cc
 CMakeFiles/PyEmbedd.dir/filters/login.cc.o: ../filters/login.h
+
+CMakeFiles/PyEmbedd.dir/filters/passwordchangefilter.cc.o: ../filters/passwordchangefilter.cc
+CMakeFiles/PyEmbedd.dir/filters/passwordchangefilter.cc.o: ../filters/passwordchangefilter.h
+
+CMakeFiles/PyEmbedd.dir/filters/paymentcheck.cc.o: ../filters/paymentcheck.cc
+CMakeFiles/PyEmbedd.dir/filters/paymentcheck.cc.o: ../filters/paymentcheck.h
+
+CMakeFiles/PyEmbedd.dir/filters/profilechangefilter.cc.o: ../filters/profilechangefilter.cc
+CMakeFiles/PyEmbedd.dir/filters/profilechangefilter.cc.o: ../filters/profilechangefilter.h
 
 CMakeFiles/PyEmbedd.dir/limutils/PatternFiller.cpp.o: ../limutils/PatternFiller.cpp
 CMakeFiles/PyEmbedd.dir/limutils/PatternFiller.cpp.o: ../limutils/PatternFiller.h

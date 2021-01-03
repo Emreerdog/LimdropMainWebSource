@@ -13,7 +13,7 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 	if(sessionPtr->find("isLoggedIn")){
 		std::string username = sessionPtr->get<std::string>("username");
 		auto clientPtr = drogon::app().getDbClient();
-		auto totalQuery1 = "SELECT basketitem, address FROM accounts WHERE username='" + username + "'";
+		auto totalQuery1 = "SELECT basketitem, addresses FROM accounts WHERE username='" + username + "'";
 		auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
 		auto result1 = f1.get();
 		
@@ -22,7 +22,7 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 		std::string addressString;
 		for(auto row : result1){
 			basket = row["basketitem"].as<std::string>();
-			addressString = row["address"].as<std::string>();
+			addressString = row["addresses"].as<std::string>();
 			if(addressString == ""){
 				// TODO
 				// If the address is empty
@@ -33,8 +33,17 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 			}
 			std::stringstream addressToJson(addressString);
 			addressToJson >> addressJson;
+			if(addressJson["addresses"].size() == 0){	
+				// TODO
+				// If the address is empty
+				// Redirect to address input page
+				auto resp = HttpResponse::newRedirectionResponse("/");
+				callback(resp);
+				return;
+			}
 		}
 		if(basket == ""){
+			// Basket is empty redirect to main page
 			std::cout << "Basket is empty" << std::endl;
 			auto resp = HttpResponse::newNotFoundResponse();
 			callback(resp);
@@ -46,6 +55,7 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 
 		unsigned int tempBasketSize = tempBasket["basket_items"].size();
 		if(tempBasketSize == 0){
+			// Basket is empty redirect to main page
 			auto resp = HttpResponse::newRedirectionResponse("/");
 			callback(resp);
 			return;
