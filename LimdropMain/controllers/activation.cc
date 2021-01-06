@@ -5,7 +5,7 @@ void activation::profileActivation(const HttpRequestPtr& req,std::function<void 
 
 
 	auto clientPtr = drogon::app().getDbClient();
-	std::string Query = "SELECT username FROM accounts WHERE uuid ='"+ activationCode + "'";
+	std::string Query = "SELECT id FROM accounts WHERE uuid ='"+ activationCode + "'";
 	
 	auto f = clientPtr->execSqlAsyncFuture(Query);	
 	if(f.get().size() == 0){

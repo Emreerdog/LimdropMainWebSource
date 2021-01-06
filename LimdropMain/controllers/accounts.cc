@@ -5,16 +5,15 @@
 //add definition of your processing function here
 
 
-void accounts::createAccount(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback, std::string uname, std::string pass, std::string email){
+void accounts::createAccount(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback, std::string email, std::string name, std::string surname, std::string pass, std::string passCheck){
 
+	if(pass != passCheck){
+		// Password doesn't match
+		auto resp = HttpResponse::newNotFoundResponse();
+		callback(resp);
+		return;
+	}
 	auto sessionPtr = req->session();
-	
-	drogon::Cookie loginDisplay;
-	drogon::Cookie loginCssStat;
-	drogon::Cookie loginStatus;
-	loginDisplay.setKey("_isdisplayed");
-	loginCssStat.setKey("_color");
-	loginStatus.setKey("_feedback_msg");
 	
 	PasswordHandler passHandler(pass, Mode::PS_ENCRYPT);
 
@@ -39,47 +38,37 @@ void accounts::createAccount(const HttpRequestPtr& req, std::function<void (cons
 	auto clientPtr = drogon::app().getDbClient();
 	std::string createDate = date.toCustomedFormattedString("%Y-%m-%d");
 	std::string createTime = date.toCustomedFormattedString("%H:%M:%S");
-	std::string preQuery = "SELECT id FROM accounts WHERE username='"+ uname + "' OR email='" + email + "'";
+	std::string preQuery = "SELECT id FROM accounts WHERE email='" + email + "'";
 	auto f = clientPtr->execSqlAsyncFuture(preQuery);
 	if(f.get().size() > 0){
 		const char* _display = "block";
 		const char* _status = "red";
-		const char* _statusText = "Username or email already exists";
+		const char* _statusText = "E-mail already exists";
 		
-		loginDisplay.setValue(_display);
-		loginCssStat.setValue(_status);
-		loginStatus.setValue(_statusText);
 		auto res = HttpResponse::newRedirectionResponse("/accounts/create");
-		res->addCookie(loginDisplay);
-		res->addCookie(loginCssStat);
-		res->addCookie(loginStatus);
 		callback(res);
 		return;
 	}
 	
 
 	std::string uuid = drogon::utils::getUuid();
-	std::string queryStart = "INSERT INTO accounts(username, L, R, P1, P2, email, accountCreateDate, accountCreateTime, uuid, isverified) VALUES";
-	std::string queryEnd = "('" + uname + "'," + L + "," + R + ",'" + LE + "','" + RE +"','" + email + "','" + createDate + "','" + createTime+ "', '" + uuid + "', FALSE)";
+	std::string queryStart = "INSERT INTO accounts(L, R, P1, P2, email, name, surname, accountCreateDate, accountCreateTime, uuid, isverified) VALUES";
+	std::string queryEnd = "(" + L + "," + R + ",'" + LE + "','" + RE +"','" + email + "','" + name + "', '" + surname +"', '" + createDate + "','" + createTime+ "', '" + uuid + "', FALSE)";
       	std::string totalQuery = queryStart + queryEnd;	
 	clientPtr->execSqlAsyncFuture(totalQuery);
+
+	std::cout << totalQuery << std::endl;
 
 	const char* _display = "block";
 	const char* _status = "green";
 	std::string _statusText = uuid;
 
-	loginDisplay.setValue(_display);
-	loginCssStat.setValue(_status);
-	loginStatus.setValue(_statusText);
 	auto res = HttpResponse::newRedirectionResponse("/accounts/create");
-	res->addCookie(loginDisplay);
-	res->addCookie(loginCssStat);
-	res->addCookie(loginStatus);
 	callback(res);
 }
 
 
-void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback, std::string uname, std::string pass){
+void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback, std::string email, std::string pass){
 
 	auto sessionPtr = req->session();	
 	// TODO 
@@ -92,30 +81,20 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 	// Then,
 	// Check the validity by comparing new L and R values
 	auto clientPtr = drogon::app().getDbClient();
-	drogon::Cookie loginDisplay;
-	drogon::Cookie loginCssStat;
-	drogon::Cookie loginStatus;
-	loginDisplay.setKey("isdisplayed");
-	loginCssStat.setKey("color");
-	loginStatus.setKey("feedback_msg");
 
-	std::string queryStart = "SELECT L, R, P1, P2, id FROM accounts WHERE ";
-	std::string queryEnd = "username = '" + uname + "' AND isverified = TRUE";
+	std::string queryStart = "SELECT L, R, P1, P2, id, name, surname FROM accounts WHERE ";
+	std::string queryEnd = "email='" + email + "' AND isverified = TRUE";
 	std::string totalQuery = queryStart + queryEnd;
 
 	auto f = clientPtr->execSqlAsyncFuture(totalQuery);
 	auto result = f.get();
 	if(result.size() == 0){
+		// ERROR
+		// UNABLE TO LOGIN
 		const char* _displaymessage = "block";
 		const char*  _status = "red";
 		const char*  _statusText = "Unable to login";
-		loginDisplay.setValue(_displaymessage);
-		loginCssStat.setValue(_status);
-		loginStatus.setValue(_statusText);
 		auto resp = HttpResponse::newRedirectionResponse("/accounts/");
-		resp->addCookie(loginDisplay);
-		resp->addCookie(loginCssStat);
-		resp->addCookie(loginStatus);
 		callback(resp);
 		return;
 	}
@@ -125,12 +104,16 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 		unsigned long P1 = 0;
 		unsigned long P2 = 0;
 		std::string user_id;
+		std::string name;
+		std::string surname;
 		for(auto row : result){
 			L = row["L"].as<unsigned long>();
 			R = row["R"].as<unsigned long>();
 			P1 = row["P1"].as<unsigned long>();
 			P2 = row["P2"].as<unsigned long>();
 			user_id = row["id"].as<std::string>();
+			name = row["name"].as<std::string>();
+		        surname = row["surname"].as<std::string>();	
 		}
 		PasswordHandler passHandler(pass, Mode::PS_ENCRYPT);
 		passHandler.MakeLRpair(L, R);
@@ -139,16 +122,19 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 		// Decrypt password
 		if(LRpair.first == P1 && LRpair.second == P2){
 			sessionPtr->erase("isLoggedIn");
-			sessionPtr->erase("username");
 			sessionPtr->erase("balance");
 			sessionPtr->erase("id");
+			sessionPtr->erase("name");	
+			sessionPtr->erase("surname");
 
 			bool isLoggedIn = true;
 			float balance = 0;
 			sessionPtr->insert("isLoggedIn", isLoggedIn);
-			sessionPtr->insert("username", uname);
+			sessionPtr->insert("email", email);
 			sessionPtr->insert("balance", balance);
 			sessionPtr->insert("id", user_id);
+			sessionPtr->insert("name", name);
+			sessionPtr->insert("surname", surname);
 			auto resp = HttpResponse::newNotFoundResponse();
 			callback(resp);
 			return;
@@ -157,13 +143,8 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
         const char* _displaymessage = "block";
 	const char* _status = "red";
 	const char* _statusText = "Password is incorrect";
-	loginDisplay.setValue(_displaymessage);
-	loginCssStat.setValue(_status);
-	loginStatus.setValue(_statusText);
+	std::cout << _statusText << std::endl;
 	auto resp = HttpResponse::newRedirectionResponse("/accounts/");
-	resp->addCookie(loginDisplay);
-	resp->addCookie(loginCssStat);
-	resp->addCookie(loginStatus);
 	callback(resp);
 	return;
 }

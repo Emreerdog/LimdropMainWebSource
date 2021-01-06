@@ -24,14 +24,14 @@ void wallet::addmoney(const HttpRequestPtr& req,std::function<void (const HttpRe
 
 		int _amount;
 		auto clientPtr = drogon::app().getDbClient();
-		std::string username = sessionPtr->get<std::string>("username");
+		std::string id = sessionPtr->get<std::string>("id");
 		std::stringstream amountStr(amount);
 		amountStr >> _amount;
 		if(_amount == 0){
 			// Entered argument is probably invalid
 			// Return to wallet page
 		}
-		std::string totalQuery1 = "UPDATE accounts SET balance = balance + " + amount + " WHERE username='" + username + "'";
+		std::string totalQuery1 = "UPDATE accounts SET balance = balance + " + amount + " WHERE id=" + id;
 		clientPtr->execSqlAsyncFuture(totalQuery1);
 	}
 	// TODO
@@ -42,7 +42,7 @@ void wallet::addmoney(const HttpRequestPtr& req,std::function<void (const HttpRe
 }
 
 
-void wallet::addcard(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string holderName, std::string cardNumber, std::string expireMonth, std::string expireYear, std::string cvc)
+void wallet::addcard(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string cardholderName, std::string cardNumber, std::string expireMonth, std::string expireYear, std::string cvc)
 {
 	auto sessionPtr = req->session();
 	if(sessionPtr->find("isLoggedIn")){
@@ -50,9 +50,9 @@ void wallet::addcard(const HttpRequestPtr& req,std::function<void (const HttpRes
 		// Check arguments if they are valid
 		Json::Value addedCard;
 
-		std::string username = sessionPtr->get<std::string>("username");
+		std::string id = sessionPtr->get<std::string>("id");
 		auto clientPtr = drogon::app().getDbClient();
-		auto f1 = clientPtr->execSqlAsyncFuture("SELECT cardlist FROM accounts WHERE username='" + username + "'");
+		auto f1 = clientPtr->execSqlAsyncFuture("SELECT cardlist FROM accounts WHERE id=" + id);
 		auto result1 = f1.get();
 		int resultSize = result1.size();
 		int cardCount = 0; // Default card count is null
@@ -65,14 +65,14 @@ void wallet::addcard(const HttpRequestPtr& req,std::function<void (const HttpRes
 			}
 		}
 
-		addedCard[cardCount]["cardHolderName"] = holderName;
+		addedCard[cardCount]["cardHolderName"] = cardholderName;
 		addedCard[cardCount]["cardNumber"] = cardNumber;
 		addedCard[cardCount]["expireMonth"] = expireMonth;
 		addedCard[cardCount]["expireYear"] = expireYear;
 		addedCard[cardCount]["cvc"] = cvc;
 		
 		std::string _addedCard = addedCard.toStyledString();
-		clientPtr->execSqlAsyncFuture("UPDATE accounts SET cardlist='" + _addedCard + "' WHERE username='" + username + "'");
+		clientPtr->execSqlAsyncFuture("UPDATE accounts SET cardlist='" + _addedCard + "' WHERE id=" + id);
 		
 		std::cout << "Card successfuly added to your saved cards" << std::endl; 
 	}

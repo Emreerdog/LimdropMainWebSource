@@ -11,9 +11,9 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 {
 	auto sessionPtr = req->session();
 	if(sessionPtr->find("isLoggedIn")){
-		std::string username = sessionPtr->get<std::string>("username");
+		std::string id = sessionPtr->get<std::string>("id");
 		auto clientPtr = drogon::app().getDbClient();
-		auto totalQuery1 = "SELECT basketitem, addresses FROM accounts WHERE username='" + username + "'";
+		auto totalQuery1 = "SELECT basketitem, addresses FROM accounts WHERE id=" + id;
 		auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
 		auto result1 = f1.get();
 		
@@ -75,7 +75,7 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 		std::vector<std::string> _buyerJsonString;
 		for(int i = 0; i < resultantBasket.size(); i++){
 			std::string productID = resultantBasket[i]["id"].asString();
-			std::string totalQuery3 = "SELECT buyers, customercount, maximumproductcount FROM products WHERE id=" + productID + "";
+			std::string totalQuery3 = "SELECT buyers, customercount, maximumproductcount FROM products WHERE id=" + productID;
 			std::string buyerJsonString;
 			auto f3 = clientPtr->execSqlAsyncFuture(totalQuery3);
 			auto result3 = f3.get();
@@ -106,7 +106,7 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 					sizeOfBuyersJson = buyers.size();
 				}
 			}
-			buyers[sizeOfBuyersJson]["username"] = username;
+			buyers[sizeOfBuyersJson]["id"] = id;
 			buyerJsonString = buyers.toStyledString();
 			_buyerJsonString.push_back(buyerJsonString);
 			/*std::string totalQuery4 = "UPDATE products SET buyers='" + buyerJsonString + "', customercount = customercount + 1 WHERE id=" + productID;

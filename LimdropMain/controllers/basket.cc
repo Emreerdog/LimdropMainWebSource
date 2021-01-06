@@ -9,8 +9,8 @@ void basket::showBasket(const HttpRequestPtr& req,std::function<void (const Http
 		// TODO 
 		// Check if item exists
 		auto clientPtr = drogon::app().getDbClient();
-		std::string username = sessionPtr->get<std::string>("username");
-		std::string totalQuery = "SELECT basketitem FROM accounts WHERE username='" + username + "'";
+		std::string id = sessionPtr->get<std::string>("id");
+		std::string totalQuery = "SELECT basketitem FROM accounts WHERE id=" + id;
 		auto f = clientPtr->execSqlAsyncFuture(totalQuery);
 		auto result = f.get();
 		
@@ -38,7 +38,7 @@ void basket::addBasketItem(const HttpRequestPtr& req,std::function<void (const H
 	auto sessionPtr = req->session();
 	if(sessionPtr->find("isLoggedIn")){
 		auto clientPtr = drogon::app().getDbClient();
-		std::string username = sessionPtr->get<std::string>("username");
+		std::string id = sessionPtr->get<std::string>("id");
 		std::string totalQuery1 = "SELECT id, title, type, brand, price, details FROM products WHERE id=" + itemId;
 		auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
 		auto result1 = f1.get();
@@ -63,7 +63,7 @@ void basket::addBasketItem(const HttpRequestPtr& req,std::function<void (const H
 		}
 		ProductJSON PJ(proDetails);
 		std::string proImage = PJ.getImagePaths()[0];
-		std::string totalQuery2 = "SELECT basketitem FROM accounts WHERE username='" + username + "'";
+		std::string totalQuery2 = "SELECT basketitem FROM accounts WHERE id=" + id;
 		auto f2 = clientPtr->execSqlAsyncFuture(totalQuery2);
 		auto result2 = f2.get();
 		for(auto row : result2){
@@ -78,7 +78,7 @@ void basket::addBasketItem(const HttpRequestPtr& req,std::function<void (const H
 				resultPB = PB;		
 			}
 			std::string tempBasket = resultPB.getBasketAsString();
-			std::string totalQuery3 = "UPDATE accounts SET basketitem='" + tempBasket + "' WHERE username='" + username + "'";
+			std::string totalQuery3 = "UPDATE accounts SET basketitem='" + tempBasket + "' WHERE id=" + id;
 			auto f3 = clientPtr->execSqlAsyncFuture(totalQuery3);
 		}
 	}
@@ -90,9 +90,9 @@ void basket::removeBasketItem(const HttpRequestPtr& req,std::function<void (cons
 	auto sessionPtr = req->session();
 	if(sessionPtr->find("isLoggedIn")){
 		auto clientPtr = drogon::app().getDbClient();
-		std::string username = sessionPtr->get<std::string>("username");
+		std::string id = sessionPtr->get<std::string>("id");
 
-		std::string totalQuery1 = "SELECT basketitem FROM accounts WHERE username='" + username + "'";
+		std::string totalQuery1 = "SELECT basketitem FROM accounts WHERE id=" + id;
 		std::string tempBasket;
 		auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
 		auto result1 = f1.get();
@@ -104,7 +104,7 @@ void basket::removeBasketItem(const HttpRequestPtr& req,std::function<void (cons
 			else{
 				Basket PB(tempBasket);
 				PB.removeItem(itemId);
-				std::string totalQuery2 = "UPDATE accounts SET basketitem='" + PB.getBasketAsString() + "'";
+				std::string totalQuery2 = "UPDATE accounts SET basketitem='" + PB.getBasketAsString() + "' WHERE id=" + id;
 				auto f2 = clientPtr->execSqlAsyncFuture(totalQuery2);
 			}
 			auto resp = HttpResponse::newRedirectionResponse("/basket/");

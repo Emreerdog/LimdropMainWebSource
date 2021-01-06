@@ -15,10 +15,10 @@ void factory::changeProductParams(const HttpRequestPtr& req,std::function<void (
 void factory::addAddress(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string city, std::string address, std::string phoneNumber, std::string zipcode){	
 	auto sessionPtr = req->session();
 	if(sessionPtr->find("isLoggedIn")){
-		std::string username = sessionPtr->get<std::string>("username");	
+		std::string id = sessionPtr->get<std::string>("id");	
 		unsigned int addressCount = 0;
 		auto clientPtr = drogon::app().getDbClient();
-		auto f1 = clientPtr->execSqlAsyncFuture("SELECT addresses FROM accounts WHERE username='" + username + "'");
+		auto f1 = clientPtr->execSqlAsyncFuture("SELECT addresses FROM accounts WHERE id=" + id);
 		auto result1 = f1.get();
 		
 		Json::Value addresses;
@@ -37,7 +37,7 @@ void factory::addAddress(const HttpRequestPtr& req,std::function<void (const Htt
     		addresses["addresses"][addressCount]["address"] = address;
     		addresses["addresses"][addressCount]["phonenumber"] = phoneNumber;
     		addresses["addresses"][addressCount]["zipcode"] = zipcode;
-		clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='" + addresses.toStyledString()  + "' WHERE username='" + username + "'");
+		clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='" + addresses.toStyledString()  + "' WHERE id='" + id);
 	}
 	auto resp = HttpResponse::newRedirectionResponse("/");
 	callback(resp);
@@ -47,13 +47,13 @@ void factory::removeAddress(const HttpRequestPtr& req,std::function<void (const 
 	auto sessionPtr = req->session();
 	if(sessionPtr->find("isLoggedIn")){
 
-		std::string username = sessionPtr->get<std::string>("username");
+		std::string id = sessionPtr->get<std::string>("id");
 		unsigned int _addressIndex;
 		auto clientPtr = drogon::app().getDbClient();
 		std::stringstream ss(addressIndex);
 		ss >> _addressIndex;
 		Json::Value addresses;
-		auto f1 = clientPtr->execSqlAsyncFuture("SELECT addresses FROM accounts WHERE username='" + username + "'");
+		auto f1 = clientPtr->execSqlAsyncFuture("SELECT addresses FROM accounts WHERE id=" + id);
 		auto result1 = f1.get();
 		std::string Address;
 		for(auto row : result1){
@@ -87,7 +87,7 @@ void factory::removeAddress(const HttpRequestPtr& req,std::function<void (const 
 				else{
 					std::cout << "Successfully removed address" << std::endl;
 					Address = addresses.toStyledString();
-					clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='" + Address + "' WHERE username='" + username + "'");
+					clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='" + Address + "' WHERE id=" + id);
 				}
 				auto resp = HttpResponse::newRedirectionResponse("/profile/address/");
 				callback(resp);

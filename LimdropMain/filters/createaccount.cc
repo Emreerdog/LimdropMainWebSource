@@ -30,24 +30,11 @@ void createaccount::doFilter(const HttpRequestPtr &req,
 					const char* redirLoc = "/accounts/create";
 					const char* display = "block";
 					const char* status = "red";
-					const char* statusText = "Kullanici adi veya sifre en az 6<br>En fazla 16 karakter olabilir";
+					const char* statusText = "Sifre en az 6<br>En fazla 16 karakter olabilir";
 					sessionPtr->insert("display", display);
 					sessionPtr->insert("status", status);
 					sessionPtr->insert("statusText", statusText);
 			
-					auto res = HttpResponse::newRedirectionResponse(redirLoc);
-					fcb(res);
-					return;
-				}
-				if(!checkUsernameRegex(secondVal)){
-					const char* redirLoc = "/accounts/create";
-					const char* display = "block";
-					const char* status = "red";
-					const char* statusText = "hatali mail";
-					sessionPtr->insert("display", display);
-					sessionPtr->insert("status", status);
-					sessionPtr->insert("statusText", statusText);
-					
 					auto res = HttpResponse::newRedirectionResponse(redirLoc);
 					fcb(res);
 					return;
