@@ -44,10 +44,6 @@ string
 json/json.h
 -
 
-/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/main.cpp
-drogon/drogon.h
--
-
 /usr/include/jsoncpp/json/allocator.h
 cstring
 -

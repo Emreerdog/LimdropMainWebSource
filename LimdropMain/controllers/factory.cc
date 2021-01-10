@@ -12,8 +12,9 @@ void factory::changeUserPasswordEmail(const HttpRequestPtr& req,std::function<vo
 void factory::changeProductParams(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 
 }
-void factory::addAddress(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string city, std::string address, std::string phoneNumber, std::string zipcode){	
+void factory::addAddress(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string city, std::string ilce,std::string address, std::string phoneNumber, std::string zipcode){	
 	auto sessionPtr = req->session();
+	Json::Value resultantJSON;
 	if(sessionPtr->find("isLoggedIn")){
 		std::string id = sessionPtr->get<std::string>("id");	
 		unsigned int addressCount = 0;
@@ -33,18 +34,27 @@ void factory::addAddress(const HttpRequestPtr& req,std::function<void (const Htt
 				addressCount = addresses["addresses"].size();
 			}
 		}	
-		addresses["addresses"][addressCount]["city"] = city;
-    		addresses["addresses"][addressCount]["address"] = address;
-    		addresses["addresses"][addressCount]["phonenumber"] = phoneNumber;
-    		addresses["addresses"][addressCount]["zipcode"] = zipcode;
+		addresses["addresses"][addressCount]["Sehir"] = city;
+		addresses["addresses"][addressCount]["Ilce"] = ilce;
+    		addresses["addresses"][addressCount]["acikAdres"] = address;
+    		addresses["addresses"][addressCount]["telefonNumara"] = phoneNumber;
+    		addresses["addresses"][addressCount]["postaKodu"] = zipcode;
 		clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='" + addresses.toStyledString()  + "' WHERE id='" + id);
+		resultantJSON["feedback"] = "Adres başarıyla eklendi!";
+		resultantJSON["actionStatus"] = "true";
+		auto resp = HttpResponse::newHttpJsonResponse(resultantJSON);
+		callback(resp);
+		return;
 	}
-	auto resp = HttpResponse::newRedirectionResponse("/");
+	resultantJSON["feedback"] = "User not logged in";
+	resultantJSON["actionStatus"] = "false";
+	auto resp = HttpResponse::newHttpJsonResponse(resultantJSON);
 	callback(resp);
 }
 void factory::removeAddress(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string addressIndex){
 
 	auto sessionPtr = req->session();
+	Json::Value resultantJSON;
 	if(sessionPtr->find("isLoggedIn")){
 
 		std::string id = sessionPtr->get<std::string>("id");
@@ -82,20 +92,28 @@ void factory::removeAddress(const HttpRequestPtr& req,std::function<void (const 
 				std::cout << _addressIndex << std::endl;
 				
 				if(addresses["addresses"].removeIndex(_addressIndex, &asd)){
-					std::cout << "Address removing failed successfully" << std::endl;
+					resultantJSON["feedback"] = "Address removing failed";
+					resultantJSON["actionStatus"] = "false";
+					auto resp = HttpResponse::newHttpJsonResponse(resultantJSON);
+					callback(resp);
+					return;
 				}
 				else{
 					std::cout << "Successfully removed address" << std::endl;
 					Address = addresses.toStyledString();
 					clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='" + Address + "' WHERE id=" + id);
 				}
-				auto resp = HttpResponse::newRedirectionResponse("/profile/address/");
+				resultantJSON["feedback"] = "Successfully removed address";
+				resultantJSON["actionStatus"] = "true";
+				auto resp = HttpResponse::newHttpJsonResponse(resultantJSON);
 				callback(resp);
 				return;
 			}
 		}
 	}
-	auto resp = HttpResponse::newRedirectionResponse("/");
+	resultantJSON["feedback"] = "User not logged in";
+	resultantJSON["actionStatus"] = "false";
+	auto resp = HttpResponse::newHttpJsonResponse(resultantJSON);
 	callback(resp);
 }
 

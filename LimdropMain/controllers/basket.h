@@ -8,7 +8,7 @@ class basket:public drogon::HttpController<basket>
 
     //use METHOD_ADD to add your custom processing function here;
     METHOD_ADD(basket::showBasket,"/", Get, "checktraffic");//path is /basket/{arg2}/{arg1}
-    METHOD_ADD(basket::addBasketItem,"/additem?itemId={1}", Get, "basketcheck");//path is /basket/{arg1}/{arg2}/list
+    METHOD_ADD(basket::addBasketItem,"/additem?itemId={1}", Get);//path is /basket/{arg1}/{arg2}/list
     METHOD_ADD(basket::removeBasketItem,"/removeitem?itemId={1}", Get);//path is /basket/{arg1}/{arg2}/list
     
     METHOD_LIST_END

@@ -7,10 +7,10 @@ class profile:public drogon::HttpController<profile>
     METHOD_LIST_BEGIN
     
     METHOD_ADD(profile::showProfile,"/{1}/", Get, "checktraffic");
-    METHOD_ADD(profile::showAddress, "/address/", Get, "checktraffic");
+    METHOD_ADD(profile::showAddress, "/address", Post);
 
     METHOD_LIST_END
     
     void showProfile(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string profileKey);
-    void showAddress(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string addressIndex);
+    void showAddress(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback);
 };

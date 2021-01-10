@@ -5,6 +5,7 @@
 
 void basket::showBasket(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	auto sessionPtr = req->session();
+	Json::Value responseJson;
 	if(sessionPtr->find("isLoggedIn")){
 		// TODO 
 		// Check if item exists
@@ -16,21 +17,24 @@ void basket::showBasket(const HttpRequestPtr& req,std::function<void (const Http
 		
 		for(auto row : result){
 			if(row["basketitem"].as<std::string>() == ""){
-				std::cout << "There are no items in basket" << std::endl;
-				auto resp = HttpResponse::newNotFoundResponse();
+				responseJson["feedback"] = "Sepette hiç ürün yok";
+				responseJson["actionStatus"] = "false";
+				auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 				callback(resp);
 				return;
 			}
-			// std::cout << row["basketitem"].as<std::string>() << std::endl;
+			// std::cout << row["basketitem"].as<std::string>() << std::endl;	
 			Basket PB(row["basketitem"].as<std::string>());
-			std::cout << PB.getBasket() << std::endl;
+			responseJson = PB.getBasket();
+
+			
 		}	
-		auto resp = HttpResponse::newNotFoundResponse();
+		responseJson["actionStatus"] = "true";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 		callback(resp);
 		return;
-
 	}
-	auto resp = HttpResponse::newRedirectionResponse("/");
+	auto resp = HttpResponse::newNotFoundResponse();
 	callback(resp);
 }
 

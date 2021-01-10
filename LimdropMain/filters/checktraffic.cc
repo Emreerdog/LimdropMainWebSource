@@ -28,5 +28,6 @@ void checktraffic::doFilter(const HttpRequestPtr &req, FilterCallback &&fcb, Fil
 		sessionPtr->insert("lastVisit", lastVisited);
 		fccb();
 		return;
-	}	
+	}
+	fccb();    
 }

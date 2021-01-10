@@ -7,9 +7,12 @@
 
 void accounts::createAccount(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback, std::string email, std::string name, std::string surname, std::string pass, std::string passCheck){
 
+	Json::Value responseJson;	
 	if(pass != passCheck){
 		// Password doesn't match
-		auto resp = HttpResponse::newNotFoundResponse();
+		responseJson["feedback"] = "Parola uyumlu değil";
+		responseJson["actionStatus"] = "false";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 		callback(resp);
 		return;
 	}
@@ -41,36 +44,30 @@ void accounts::createAccount(const HttpRequestPtr& req, std::function<void (cons
 	std::string preQuery = "SELECT id FROM accounts WHERE email='" + email + "'";
 	auto f = clientPtr->execSqlAsyncFuture(preQuery);
 	if(f.get().size() > 0){
-		const char* _display = "block";
-		const char* _status = "red";
-		const char* _statusText = "E-mail already exists";
-		
-		auto res = HttpResponse::newRedirectionResponse("/accounts/create");
-		callback(res);
+		responseJson["feedback"] = "Böyle bir kullanıcı zaten mevcut";
+		responseJson["actionStatus"] = "false";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
 		return;
 	}
-	
 
 	std::string uuid = drogon::utils::getUuid();
 	std::string queryStart = "INSERT INTO accounts(L, R, P1, P2, email, name, surname, accountCreateDate, accountCreateTime, uuid, isverified) VALUES";
 	std::string queryEnd = "(" + L + "," + R + ",'" + LE + "','" + RE +"','" + email + "','" + name + "', '" + surname +"', '" + createDate + "','" + createTime+ "', '" + uuid + "', FALSE)";
       	std::string totalQuery = queryStart + queryEnd;	
 	clientPtr->execSqlAsyncFuture(totalQuery);
-
-	std::cout << totalQuery << std::endl;
-
-	const char* _display = "block";
-	const char* _status = "green";
-	std::string _statusText = uuid;
-
-	auto res = HttpResponse::newRedirectionResponse("/accounts/create");
-	callback(res);
+		
+	responseJson["feedback"] = email;
+	responseJson["actionStatus"] = "true";
+	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+	callback(resp);
 }
 
 
 void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback, std::string email, std::string pass){
 
-	auto sessionPtr = req->session();	
+	auto sessionPtr = req->session();
+	Json::Value responseJson;	
 	// TODO 
 	// Read the name and password from the database
 	// Password should be decrypted using blowfish 
@@ -91,10 +88,9 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 	if(result.size() == 0){
 		// ERROR
 		// UNABLE TO LOGIN
-		const char* _displaymessage = "block";
-		const char*  _status = "red";
-		const char*  _statusText = "Unable to login";
-		auto resp = HttpResponse::newRedirectionResponse("/accounts/");
+		responseJson["feedback"] = "Hatalı Giriş";
+	        responseJson["actionStatus"] = "false";	
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 		callback(resp);
 		return;
 	}
@@ -135,20 +131,19 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 			sessionPtr->insert("id", user_id);
 			sessionPtr->insert("name", name);
 			sessionPtr->insert("surname", surname);
-			auto resp = HttpResponse::newNotFoundResponse();
+
+			responseJson["feedback"] = "Giriş Onaylandı";
+	        	responseJson["actionStatus"] = "true";	
+			auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 			callback(resp);
 			return;
 		}
 	}
-        const char* _displaymessage = "block";
-	const char* _status = "red";
-	const char* _statusText = "Password is incorrect";
-	std::cout << _statusText << std::endl;
-	auto resp = HttpResponse::newRedirectionResponse("/accounts/");
+	responseJson["feedback"] = "Parola Hatalı";
+	responseJson["actionStatus"] = "false";	
+	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 	callback(resp);
-	return;
 }
-
 
 void accounts::loginPage(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	auto sessionPtr = req->session();
@@ -158,18 +153,9 @@ void accounts::loginPage(const HttpRequestPtr& req,std::function<void (const Htt
 		callback(resp);
 		return;
 	}
-	const char* _display = req->getCookie("isdisplayed").c_str();
-	const char* _status = req->getCookie("color").c_str();
-	const char* _statusText = req->getCookie("feedback_msg").c_str();
-
-	ManualPatternFiller MPF(3, "display", "status", "statusText");
-	std::string result = MPF.fillPatterns("login.html", _display, _status, _statusText);
 
 	auto resp = HttpResponse::newHttpResponse();
-	resp->setBody(result);
-	resp->addCookie("isdisplayed", "");
-	resp->addCookie("color", "");
-	resp->addCookie("feedback_msg", "");	
+	resp->setBody("Hi");
 	callback(resp);
 }
 

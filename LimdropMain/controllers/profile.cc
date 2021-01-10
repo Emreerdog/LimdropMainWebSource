@@ -52,23 +52,29 @@ void profile::showProfile(const HttpRequestPtr& req,std::function<void (const Ht
 }
 
 
-void profile::showAddress(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string addressIndex)
+void profile::showAddress(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback)
 {
 	auto sessionPtr = req->session();
+	Json::Value resultantJson;
 	if(sessionPtr->find("isLoggedIn")){
 		std::string id = sessionPtr->get<std::string>("id");
 		auto clientPtr = drogon::app().getDbClient();
 		auto f1 = clientPtr->execSqlAsyncFuture("SELECT addresses FROM accounts WHERE username=" + id);
+		std::string addressString;
 		auto result1 = f1.get();
 		for(auto row : result1){	
-			std::cout << row["addresses"].as<std::string>() << std::endl;
+			addressString = row["addresses"].as<std::string>();
+			std::stringstream ss(addressString);
+			ss >> resultantJson;
 		}	
-		auto resp = HttpResponse::newHttpResponse();
-		resp->setBody("Hello");
+		auto resp = HttpResponse::newHttpJsonResponse(resultantJson);
 		callback(resp);
 		return;
 	}
-	auto resp = HttpResponse::newRedirectionResponse("/");
+	resultantJson["feedback"] = "User not logged in";
+	resultantJson["actionStatus"] = "false";
+	std::cout << resultantJson << std::endl;
+	auto resp = HttpResponse::newHttpJsonResponse(resultantJson);
 	callback(resp);
 }
 
