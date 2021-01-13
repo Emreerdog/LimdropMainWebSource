@@ -1,21 +1,9 @@
 #include "wallet.h"
 
-
-void wallet::show(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback)
-{
-	auto sessionPtr = req->session();
-	if(sessionPtr->find("isLoggedIn")){
-		// TODO
-		// +Query the database and print the currency the account has
-		// +Show added cards
-	}
-	auto resp = HttpResponse::newRedirectionResponse("/");
-	callback(resp);
-}
-
 void wallet::addmoney(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string amount)
 {
 	auto sessionPtr = req->session();
+	Json::Value responseJson;
 	if(sessionPtr->find("isLoggedIn")){
 		// TODO
 		// Check post arguments if they are valid
@@ -33,11 +21,19 @@ void wallet::addmoney(const HttpRequestPtr& req,std::function<void (const HttpRe
 		}
 		std::string totalQuery1 = "UPDATE accounts SET balance = balance + " + amount + " WHERE id=" + id;
 		clientPtr->execSqlAsyncFuture(totalQuery1);
+		responseJson["feedback"] = "Bakiye yüklendi";
+		responseJson["Miktar"] = amount;
+		responseJson["actionStatus"] = "true";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
 	}
 	// TODO
 	// +Report the attempt to add money to wallet without logging in
 	// +Report the attempt of outside post request
-	auto resp = HttpResponse::newRedirectionResponse("/");	
+	responseJson["feedback"] = "Hesaba giriş yapılmamış";
+	responseJson["actionStatus"] = "false";
+	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 	callback(resp);
 }
 
@@ -45,6 +41,7 @@ void wallet::addmoney(const HttpRequestPtr& req,std::function<void (const HttpRe
 void wallet::addcard(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string cardholderName, std::string cardNumber, std::string expireMonth, std::string expireYear, std::string cvc)
 {
 	auto sessionPtr = req->session();
+	Json::Value responseJson;
 	if(sessionPtr->find("isLoggedIn")){
 		// TODO
 		// Check arguments if they are valid
@@ -73,10 +70,15 @@ void wallet::addcard(const HttpRequestPtr& req,std::function<void (const HttpRes
 		
 		std::string _addedCard = addedCard.toStyledString();
 		clientPtr->execSqlAsyncFuture("UPDATE accounts SET cardlist='" + _addedCard + "' WHERE id=" + id);
-		
-		std::cout << "Card successfuly added to your saved cards" << std::endl; 
+		responseJson["feedback"] = "Yeni kart başarıyla eklendi.";
+		responseJson["actionStatus"] = "true";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
 	}
-	auto resp = HttpResponse::newRedirectionResponse("/");
+	responseJson["feedback"] = "Hesaba giriş yapılmamış";
+	responseJson["actionStatus"] = "false";
+	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 	callback(resp);
 }
 //add definition of your processing function here

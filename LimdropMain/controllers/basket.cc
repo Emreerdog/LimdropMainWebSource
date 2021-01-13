@@ -34,12 +34,15 @@ void basket::showBasket(const HttpRequestPtr& req,std::function<void (const Http
 		callback(resp);
 		return;
 	}
-	auto resp = HttpResponse::newNotFoundResponse();
+	responseJson["feedback"] = "Hesaba giriş yapılmamış";
+	responseJson["actionStatus"] = "false";
+	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 	callback(resp);
 }
 
 void basket::addBasketItem(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string itemId){
 	auto sessionPtr = req->session();
+	Json::Value responseJson;
 	if(sessionPtr->find("isLoggedIn")){
 		auto clientPtr = drogon::app().getDbClient();
 		std::string id = sessionPtr->get<std::string>("id");
@@ -47,7 +50,9 @@ void basket::addBasketItem(const HttpRequestPtr& req,std::function<void (const H
 		auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
 		auto result1 = f1.get();
 		if(result1.size() == 0){
-			auto resp = HttpResponse::newRedirectionResponse("/bum");
+			responseJson["feedback"] = "Böyle bir ürün bulunmamaktadır";
+			responseJson["actionStatus"] = "false";
+			auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 			callback(resp);
 			return;
 		}
@@ -85,13 +90,21 @@ void basket::addBasketItem(const HttpRequestPtr& req,std::function<void (const H
 			std::string totalQuery3 = "UPDATE accounts SET basketitem='" + tempBasket + "' WHERE id=" + id;
 			auto f3 = clientPtr->execSqlAsyncFuture(totalQuery3);
 		}
+		responseJson["feedback"] = "Urun eklendi";
+		responseJson["productId"] = proId;
+		responseJson["actionStatus"] = "true";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
 	}
-	auto resp = HttpResponse::newRedirectionResponse("/");
+	responseJson["feedback"] = "Hesaba giriş yapılmamış";
+	responseJson["actionStatus"] = "false";
+	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 	callback(resp);
-	return;
 }
 void basket::removeBasketItem(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string itemId){
 	auto sessionPtr = req->session();
+	Json::Value responseJson;
 	if(sessionPtr->find("isLoggedIn")){
 		auto clientPtr = drogon::app().getDbClient();
 		std::string id = sessionPtr->get<std::string>("id");
@@ -103,20 +116,28 @@ void basket::removeBasketItem(const HttpRequestPtr& req,std::function<void (cons
 		for(auto row : result1){
 			tempBasket = row["basketitem"].as<std::string>();
 			if(tempBasket == ""){
-				std::cout << "There are no items in basket" << std::endl;
+				responseJson["feedback"] = "Sepette böyle bir ürün yok";
+				responseJson["actionStatus"] = "false";
+				auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+				callback(resp);
+				return;
 			}
 			else{
 				Basket PB(tempBasket);
 				PB.removeItem(itemId);
+				responseJson = PB.getBasket();
 				std::string totalQuery2 = "UPDATE accounts SET basketitem='" + PB.getBasketAsString() + "' WHERE id=" + id;
 				auto f2 = clientPtr->execSqlAsyncFuture(totalQuery2);
 			}
-			auto resp = HttpResponse::newRedirectionResponse("/basket/");
+			responseJson["actionStatus"] = "true";
+			auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 			callback(resp);
 			return;
 		}
 	}
-	auto resp = HttpResponse::newNotFoundResponse();
+	responseJson["feedback"] = "Hesaba giriş yapılmamış";
+	responseJson["actionStatus"] = "false";
+	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 	callback(resp);
 }
 //add definition of your processing function here

@@ -15,6 +15,7 @@ void factory::changeProductParams(const HttpRequestPtr& req,std::function<void (
 void factory::addAddress(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string city, std::string ilce,std::string address, std::string phoneNumber, std::string zipcode){	
 	auto sessionPtr = req->session();
 	Json::Value resultantJSON;
+	std::cout << "Request send" << std::endl;
 	if(sessionPtr->find("isLoggedIn")){
 		std::string id = sessionPtr->get<std::string>("id");	
 		unsigned int addressCount = 0;
@@ -55,6 +56,7 @@ void factory::removeAddress(const HttpRequestPtr& req,std::function<void (const 
 
 	auto sessionPtr = req->session();
 	Json::Value resultantJSON;
+
 	if(sessionPtr->find("isLoggedIn")){
 
 		std::string id = sessionPtr->get<std::string>("id");

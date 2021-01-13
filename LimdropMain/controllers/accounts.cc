@@ -1,6 +1,7 @@
 #include "accounts.h"
 #include <limutils/passhandler.h>
 #include <limutils/PatternFiller.h>
+#include <limutils/inputregex.h>
 #include "limjson.h"
 //add definition of your processing function here
 
@@ -16,6 +17,26 @@ void accounts::createAccount(const HttpRequestPtr& req, std::function<void (cons
 		callback(resp);
 		return;
 	}
+
+	std::cout << pass.length() << std::endl;
+
+	if (pass.length() < 6 || pass.length() > 16) {
+
+		responseJson["feedback"] = "Şifre en az 6 En fazla 16 karakter olabilir";
+		responseJson["actionStatus"] = "false";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
+	}
+
+	if (!checkEmailRegex(email)) {
+		responseJson["feedback"] = "Mail formatı hatalı";
+		responseJson["actionStatus"] = "false";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
+	}
+	
 	auto sessionPtr = req->session();
 	
 	PasswordHandler passHandler(pass, Mode::PS_ENCRYPT);
@@ -57,8 +78,14 @@ void accounts::createAccount(const HttpRequestPtr& req, std::function<void (cons
       	std::string totalQuery = queryStart + queryEnd;	
 	clientPtr->execSqlAsyncFuture(totalQuery);
 		
-	responseJson["feedback"] = email;
+	responseJson["feedback"] = "Hesap oluşturuldu";
+	responseJson["accountEmail"] = email;
+	responseJson["accountName"] = name;
+	responseJson["accountSurname"] = surname;
 	responseJson["actionStatus"] = "true";
+	responseJson["activationLink"] = "192.168.1.40/activation/profile/" + uuid;
+        responseJson["accountCreationDate"] = createDate;
+	responseJson["accountCreate"] = createTime;
 	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 	callback(resp);
 }
@@ -132,7 +159,12 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 			sessionPtr->insert("name", name);
 			sessionPtr->insert("surname", surname);
 
+			auto date = trantor::Date::now();
+			std::string lastLoginDate = date.toCustomedFormattedString("%Y-%m-%d");
+			std::string lastLoginTime = date.toCustomedFormattedString("%H:%M:%S");
 			responseJson["feedback"] = "Giriş Onaylandı";
+			responseJson["lastLoginDate"] = lastLoginDate;
+			responseJson["lastLoginTime"] = lastLoginTime;
 	        	responseJson["actionStatus"] = "true";	
 			auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 			callback(resp);
@@ -142,20 +174,6 @@ void accounts::loginAccount(const HttpRequestPtr& req, std::function<void (const
 	responseJson["feedback"] = "Parola Hatalı";
 	responseJson["actionStatus"] = "false";	
 	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
-	callback(resp);
-}
-
-void accounts::loginPage(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
-	auto sessionPtr = req->session();
-
-	if(sessionPtr->find("isLoggedIn")){
-		auto resp = HttpResponse::newRedirectionResponse("/");
-		callback(resp);
-		return;
-	}
-
-	auto resp = HttpResponse::newHttpResponse();
-	resp->setBody("Hi");
 	callback(resp);
 }
 

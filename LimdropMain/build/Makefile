@@ -244,33 +244,6 @@ controllers/basket.cc.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/basket.cc.s
 .PHONY : controllers/basket.cc.s
 
-controllers/business.o: controllers/business.cc.o
-
-.PHONY : controllers/business.o
-
-# target to build an object file
-controllers/business.cc.o:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/business.cc.o
-.PHONY : controllers/business.cc.o
-
-controllers/business.i: controllers/business.cc.i
-
-.PHONY : controllers/business.i
-
-# target to preprocess a source file
-controllers/business.cc.i:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/business.cc.i
-.PHONY : controllers/business.cc.i
-
-controllers/business.s: controllers/business.cc.s
-
-.PHONY : controllers/business.s
-
-# target to generate assembly for a file
-controllers/business.cc.s:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/business.cc.s
-.PHONY : controllers/business.cc.s
-
 controllers/factory.o: controllers/factory.cc.o
 
 .PHONY : controllers/factory.o
@@ -405,33 +378,6 @@ controllers/profile.s: controllers/profile.cc.s
 controllers/profile.cc.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/profile.cc.s
 .PHONY : controllers/profile.cc.s
-
-controllers/signup.o: controllers/signup.cc.o
-
-.PHONY : controllers/signup.o
-
-# target to build an object file
-controllers/signup.cc.o:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/signup.cc.o
-.PHONY : controllers/signup.cc.o
-
-controllers/signup.i: controllers/signup.cc.i
-
-.PHONY : controllers/signup.i
-
-# target to preprocess a source file
-controllers/signup.cc.i:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/signup.cc.i
-.PHONY : controllers/signup.cc.i
-
-controllers/signup.s: controllers/signup.cc.s
-
-.PHONY : controllers/signup.s
-
-# target to generate assembly for a file
-controllers/signup.cc.s:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/signup.cc.s
-.PHONY : controllers/signup.cc.s
 
 controllers/trjson.o: controllers/trjson.cc.o
 
@@ -941,9 +887,6 @@ help:
 	@echo "... controllers/basket.o"
 	@echo "... controllers/basket.i"
 	@echo "... controllers/basket.s"
-	@echo "... controllers/business.o"
-	@echo "... controllers/business.i"
-	@echo "... controllers/business.s"
 	@echo "... controllers/factory.o"
 	@echo "... controllers/factory.i"
 	@echo "... controllers/factory.s"
@@ -959,9 +902,6 @@ help:
 	@echo "... controllers/profile.o"
 	@echo "... controllers/profile.i"
 	@echo "... controllers/profile.s"
-	@echo "... controllers/signup.o"
-	@echo "... controllers/signup.i"
-	@echo "... controllers/signup.s"
 	@echo "... controllers/trjson.o"
 	@echo "... controllers/trjson.i"
 	@echo "... controllers/trjson.s"
