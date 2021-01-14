@@ -56,7 +56,7 @@ void factory::removeAddress(const HttpRequestPtr& req,std::function<void (const 
 
 	auto sessionPtr = req->session();
 	Json::Value resultantJSON;
-
+//
 	if(sessionPtr->find("isLoggedIn")){
 
 		std::string id = sessionPtr->get<std::string>("id");

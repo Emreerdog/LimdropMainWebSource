@@ -9,7 +9,7 @@ class uploads:public drogon::HttpController<uploads>
     METHOD_ADD(uploads::files_page, "/product/files-page", Post);
     METHOD_ADD(uploads::upload_files, "/product/upload-photo", Post);
     METHOD_ADD(uploads::upload_form,"/",Get);
-
+//
     METHOD_LIST_END
  
     void upload_product(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback);

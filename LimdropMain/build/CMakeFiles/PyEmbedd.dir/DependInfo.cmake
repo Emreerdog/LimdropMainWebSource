@@ -13,7 +13,6 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/payment.cc" "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/PyEmbedd.dir/controllers/payment.cc.o"
   "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/product.cc" "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/PyEmbedd.dir/controllers/product.cc.o"
   "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/profile.cc" "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o"
-  "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/trjson.cc" "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o"
   "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/uploads.cc" "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o"
   "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/wallet.cc" "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/PyEmbedd.dir/controllers/wallet.cc.o"
   "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/filters/businesscreate.cc" "/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build/CMakeFiles/PyEmbedd.dir/filters/businesscreate.cc.o"

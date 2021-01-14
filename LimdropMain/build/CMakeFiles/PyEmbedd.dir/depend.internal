@@ -282,10 +282,6 @@ CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o
  ../limutils/PatternFiller.h
  /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/profile.cc
  /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/profile.h
-CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o
- ../limutils/PatternFiller.h
- /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/trjson.cc
- /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/trjson.h
 CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o
  ../limutils/PatternFiller.h
  /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/limjson.h

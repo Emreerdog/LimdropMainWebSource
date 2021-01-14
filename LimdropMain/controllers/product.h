@@ -6,7 +6,7 @@ class product:public drogon::HttpController<product>
   public:
     METHOD_LIST_BEGIN
     METHOD_ADD(product::details,"/?itemId={1}",Get);//path is /product/{arg2}/{arg1}
-
+//
     METHOD_LIST_END
     // your declaration of processing function maybe like this:
     void details(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string itemId);

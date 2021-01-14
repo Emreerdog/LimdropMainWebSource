@@ -76,7 +76,7 @@ void product::details(const HttpRequestPtr& req,std::function<void (const HttpRe
 		j++;
 	}
 	j = 1;
-	// Image path iterator
+//	// Image path iterator
 	// Result will be sequential
 	std::vector<std::string>::iterator It2;
 	for(It2 = imagePaths.begin(); It2 != imagePaths.end(); It2++){

@@ -12,6 +12,7 @@ main(int argc, char *argv[])
     drogon::app().addListener("192.168.1.40", 80);
     drogon::app().createDbClient("postgresql", "192.168.1.40", 5432, "limdrop", "anil", "mt98mxb9r2");
     drogon::app().enableSession();
+    drogon::app().enableReusePort(true);
     auto resp = drogon::HttpResponse::newHttpResponse();
     resp->setBody("404");
     drogon::app().setCustom404Page(resp);

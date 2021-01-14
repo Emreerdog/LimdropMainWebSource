@@ -17,7 +17,7 @@ void activation::profileActivation(const HttpRequestPtr& req,std::function<void 
 	else{
 		std::string _Query = "UPDATE accounts SET isverified = TRUE WHERE uuid = '" + activationCode + "'";
 		auto _f = clientPtr->execSqlAsyncFuture(_Query);
-
+//
 		responseJson["feedback"] = "Hesabın onaylandı";
                 responseJson["actionStatus"] = "true";
                 auto resp = HttpResponse::newHttpJsonResponse(responseJson);

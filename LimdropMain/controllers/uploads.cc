@@ -7,7 +7,7 @@
 void uploads::upload_product(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	// Tis is experimental
 	Json::Value ourProduct;
-
+//
 	std::unordered_map<std::string, std::string> tempParam = req->parameters();
 	for(const auto& n : tempParam){
 		 

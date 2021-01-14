@@ -5,7 +5,7 @@ void profile::showProfile(const HttpRequestPtr& req,std::function<void (const Ht
 
 	auto sessionPtr = req->session();
 	Json::Value responseJson;
-
+	std::string checkString = "Hello guyz";
 	auto clientPtr = drogon::app().getDbClient();
 	int _profileKey;
 	std::stringstream ss(profileKey);
@@ -18,6 +18,10 @@ void profile::showProfile(const HttpRequestPtr& req,std::function<void (const Ht
 		return;
 	}
 
+	sessionPtr->insert("myVar", checkString);
+	std::string key1 = "isLogged";
+	std::cout << req->getHeader(key1) << std::endl;
+	std::cout << sessionPtr->get<std::string>("myVar") << std::endl;
 	std::string totalQuery = "SELECT id, name, surname FROM accounts WHERE id=" + profileKey;
 	auto f = clientPtr->execSqlAsyncFuture(totalQuery);
 	auto result = f.get();
@@ -38,7 +42,7 @@ void profile::showProfile(const HttpRequestPtr& req,std::function<void (const Ht
 		}
 		if (sessionPtr->find("id")) {
 			// TODO
-			// In case if we are already logged in
+			// In case if we are alreaddy logged in
 			// If the queried id is our id
 			// We will show our profile with edit buttons
 			std::string userID = sessionPtr->get<std::string>("id");

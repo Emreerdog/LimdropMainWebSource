@@ -7,7 +7,7 @@ void wallet::addmoney(const HttpRequestPtr& req,std::function<void (const HttpRe
 	if(sessionPtr->find("isLoggedIn")){
 		// TODO
 		// Check post arguments if they are valid
-		// Do all the money operations via embedd python
+		// Ddo all the money operations via embedd python
 		// POBJECT and shit...
 
 		int _amount;

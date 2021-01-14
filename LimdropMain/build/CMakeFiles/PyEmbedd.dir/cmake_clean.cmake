@@ -8,7 +8,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/PyEmbedd.dir/controllers/payment.cc.o"
   "CMakeFiles/PyEmbedd.dir/controllers/product.cc.o"
   "CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o"
-  "CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o"
   "CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o"
   "CMakeFiles/PyEmbedd.dir/controllers/wallet.cc.o"
   "CMakeFiles/PyEmbedd.dir/filters/businesscreate.cc.o"

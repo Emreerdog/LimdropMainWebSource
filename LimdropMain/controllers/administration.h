@@ -5,7 +5,7 @@ class administration:public drogon::HttpController<administration>
 {
   public:
     METHOD_LIST_BEGIN
-
+//
     METHOD_ADD(administration::login, "/login?loginId={1}", Post);
     METHOD_ADD(administration::panel,"/", Get);
     METHOD_ADD(administration::banUser,"/banUser?username={1}&banReason={2}", Post); // Ban User

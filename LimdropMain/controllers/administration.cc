@@ -14,7 +14,7 @@ void administration::login(const HttpRequestPtr& req,std::function<void (const H
 		auto resp = HttpResponse::newRedirectionResponse("/");
 		callback(resp);
 		return;
-	}
+	}//
 	auto sessionPtr = req->session();
 	sessionPtr->erase("loggedAsAdmin");
 	sessionPtr->insert("loggedAsAdmin", "true");

@@ -91,7 +91,7 @@ void basket::addBasketItem(const HttpRequestPtr& req,std::function<void (const H
 			auto f3 = clientPtr->execSqlAsyncFuture(totalQuery3);
 		}
 		responseJson["feedback"] = "Urun eklendi";
-		responseJson["productId"] = proId;
+		responseJson["productId"] = proId; // 
 		responseJson["actionStatus"] = "true";
 		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 		callback(resp);

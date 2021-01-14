@@ -379,33 +379,6 @@ controllers/profile.cc.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/profile.cc.s
 .PHONY : controllers/profile.cc.s
 
-controllers/trjson.o: controllers/trjson.cc.o
-
-.PHONY : controllers/trjson.o
-
-# target to build an object file
-controllers/trjson.cc.o:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.o
-.PHONY : controllers/trjson.cc.o
-
-controllers/trjson.i: controllers/trjson.cc.i
-
-.PHONY : controllers/trjson.i
-
-# target to preprocess a source file
-controllers/trjson.cc.i:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.i
-.PHONY : controllers/trjson.cc.i
-
-controllers/trjson.s: controllers/trjson.cc.s
-
-.PHONY : controllers/trjson.s
-
-# target to generate assembly for a file
-controllers/trjson.cc.s:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/trjson.cc.s
-.PHONY : controllers/trjson.cc.s
-
 controllers/uploads.o: controllers/uploads.cc.o
 
 .PHONY : controllers/uploads.o
@@ -902,9 +875,6 @@ help:
 	@echo "... controllers/profile.o"
 	@echo "... controllers/profile.i"
 	@echo "... controllers/profile.s"
-	@echo "... controllers/trjson.o"
-	@echo "... controllers/trjson.i"
-	@echo "... controllers/trjson.s"
 	@echo "... controllers/uploads.o"
 	@echo "... controllers/uploads.i"
 	@echo "... controllers/uploads.s"

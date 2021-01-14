@@ -18,8 +18,6 @@ void accounts::createAccount(const HttpRequestPtr& req, std::function<void (cons
 		return;
 	}
 
-	std::cout << pass.length() << std::endl;
-
 	if (pass.length() < 6 || pass.length() > 16) {
 
 		responseJson["feedback"] = "Şifre en az 6 En fazla 16 karakter olabilir";

@@ -6,7 +6,21 @@
 
 #IncludeRegexTransform: 
 
-/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/main.cpp
-drogon/drogon.h
+../limutils/PatternFiller.h
+string
+-
+vector
+-
+stdarg.h
+-
+
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/profile.cc
+profile.h
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/profile.h
+limutils/PatternFiller.h
+-
+
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/profile.h
+drogon/HttpController.h
 -
 

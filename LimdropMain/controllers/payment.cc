@@ -64,7 +64,7 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 			resultantBasket[i] = tempBasket["basket_items"][i];
 			resultantBasket[i].removeMember("image");
 		}
-
+//
 
 		std::string resultantBasketString = resultantBasket.toStyledString();
 		std::cout << resultantBasket << std::endl;

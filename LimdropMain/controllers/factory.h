@@ -10,7 +10,7 @@ class factory:public drogon::HttpController<factory>
     METHOD_ADD(factory::changeUserPassword,"/user/passchange", Post, "passwordchangefilter");
     METHOD_ADD(factory::changeUserPasswordEmail, "/user/passchangemail", Post);
     METHOD_ADD(factory::changeProductParams, "/product/changeparams", Post, "changeparamsfilter");
-    METHOD_ADD(factory::addAddress, "/user/addAddress?city={1}&ilce={2}address={3}&phoneNumber={4}&zipcode={5}", Post);
+    METHOD_ADD(factory::addAddress, "/user/addAddress?city={1}&ilce={2}address={3}&phoneNumber={4}&zipcode={5}", Post); // 
     METHOD_ADD(factory::removeAddress, "/user/removeAddress?addressIndex={1}", Post);
 
     METHOD_LIST_END

@@ -12,7 +12,7 @@ class profile:public drogon::HttpController<profile>
     METHOD_ADD(profile::logout, "/logout", Post);
 
     METHOD_LIST_END
-    
+    //
     void showProfile(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string profileKey);
     void showAddress(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback);
     void currentInfo(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback);
