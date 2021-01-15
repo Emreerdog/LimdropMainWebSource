@@ -24,3 +24,11 @@ limutils/PatternFiller.h
 drogon/HttpController.h
 -
 
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/wallet.cc
+wallet.h
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/wallet.h
+
+/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/controllers/wallet.h
+drogon/HttpController.h
+-
+

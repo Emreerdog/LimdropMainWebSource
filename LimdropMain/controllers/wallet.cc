@@ -2,9 +2,16 @@
 
 void wallet::addmoney(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string amount)
 {
-	auto sessionPtr = req->session();
 	Json::Value responseJson;
-	if(sessionPtr->find("isLoggedIn")){
+	if(req->getHeader("fromProxy") != "true"){
+		responseJson["feedback"] = "Illegal request has been sent";
+		responseJson["actionStatus"] = "false";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
+	}
+
+	if(req->getHeader("isLogged") == "true"){
 		// TODO
 		// Check post arguments if they are valid
 		// Ddo all the money operations via embedd python
@@ -12,7 +19,7 @@ void wallet::addmoney(const HttpRequestPtr& req,std::function<void (const HttpRe
 
 		int _amount;
 		auto clientPtr = drogon::app().getDbClient();
-		std::string id = sessionPtr->get<std::string>("id");
+		std::string id = req->getHeader("id");
 		std::stringstream amountStr(amount);
 		amountStr >> _amount;
 		if(_amount == 0){
@@ -40,14 +47,21 @@ void wallet::addmoney(const HttpRequestPtr& req,std::function<void (const HttpRe
 
 void wallet::addcard(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string cardholderName, std::string cardNumber, std::string expireMonth, std::string expireYear, std::string cvc)
 {
-	auto sessionPtr = req->session();
 	Json::Value responseJson;
-	if(sessionPtr->find("isLoggedIn")){
+	if(req->getHeader("fromProxy") != "true"){
+		responseJson["feedback"] = "Illegal request has been sent";
+		responseJson["actionStatus"] = "false";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
+	}
+
+	if(req->getHeader("isLogged") == "true"){
 		// TODO
 		// Check arguments if they are valid
 		Json::Value addedCard;
 
-		std::string id = sessionPtr->get<std::string>("id");
+		std::string id = req->getHeader("id");
 		auto clientPtr = drogon::app().getDbClient();
 		auto f1 = clientPtr->execSqlAsyncFuture("SELECT cardlist FROM accounts WHERE id=" + id);
 		auto result1 = f1.get();

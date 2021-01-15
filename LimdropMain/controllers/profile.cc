@@ -3,9 +3,14 @@
 
 void profile::showProfile(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string profileKey){
 
-	auto sessionPtr = req->session();
 	Json::Value responseJson;
-	std::string checkString = "Hello guyz";
+	if(req->getHeader("fromProxy") != "true"){
+		responseJson["feedback"] = "Illegal request has been sent";
+		responseJson["actionStatus"] = "false";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
+	}
 	auto clientPtr = drogon::app().getDbClient();
 	int _profileKey;
 	std::stringstream ss(profileKey);
@@ -18,10 +23,7 @@ void profile::showProfile(const HttpRequestPtr& req,std::function<void (const Ht
 		return;
 	}
 
-	sessionPtr->insert("myVar", checkString);
-	std::string key1 = "isLogged";
-	std::cout << req->getHeader(key1) << std::endl;
-	std::cout << sessionPtr->get<std::string>("myVar") << std::endl;
+
 	std::string totalQuery = "SELECT id, name, surname FROM accounts WHERE id=" + profileKey;
 	auto f = clientPtr->execSqlAsyncFuture(totalQuery);
 	auto result = f.get();
@@ -40,12 +42,12 @@ void profile::showProfile(const HttpRequestPtr& req,std::function<void (const Ht
 			responseJson["name"] = row["name"].as<std::string>();
 			responseJson["surname"] = row["surname"].as<std::string>();
 		}
-		if (sessionPtr->find("id")) {
+		if (req->getHeader("isLogged") == "true") {
 			// TODO
 			// In case if we are alreaddy logged in
 			// If the queried id is our id
 			// We will show our profile with edit buttons
-			std::string userID = sessionPtr->get<std::string>("id");
+			std::string userID = req->getHeader("id");
 			if (userID == responseJson["id"].asString()) {
 				// It means our profile
 				responseJson["profileOwn"] = "true";
@@ -61,10 +63,18 @@ void profile::showProfile(const HttpRequestPtr& req,std::function<void (const Ht
 
 void profile::showAddress(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback)
 {
-	auto sessionPtr = req->session();
-	Json::Value resultantJson;
-	if(sessionPtr->find("isLoggedIn")){
-		std::string id = sessionPtr->get<std::string>("id");
+	Json::Value responseJson;
+
+	if(req->getHeader("fromProxy") != "true"){
+		responseJson["feedback"] = "Illegal request has been sent";
+		responseJson["actionStatus"] = "false";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
+	}
+
+	if(req->getHeader("isLogged") == "true"){
+		std::string id = req->getHeader("id");
 		auto clientPtr = drogon::app().getDbClient();
 		auto f1 = clientPtr->execSqlAsyncFuture("SELECT addresses FROM accounts WHERE id=" + id);
 		std::string addressString;
@@ -72,28 +82,35 @@ void profile::showAddress(const HttpRequestPtr& req,std::function<void (const Ht
 		for(auto row : result1){	
 			addressString = row["addresses"].as<std::string>();
 			std::stringstream ss(addressString);
-			ss >> resultantJson;
+			ss >> responseJson;
 		}	
-		resultantJson["actionStatus"] = "true";
-		std::cout << resultantJson << std::endl;
-		auto resp = HttpResponse::newHttpJsonResponse(resultantJson);
+		responseJson["actionStatus"] = "true";
+		std::cout << responseJson << std::endl;
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 		callback(resp);
 		return;
 	}
-	resultantJson["feedback"] = "Hesaba giriþ yapýlmamýþ";
-	resultantJson["actionStatus"] = "false";
-	auto resp = HttpResponse::newHttpJsonResponse(resultantJson);
+	responseJson["feedback"] = "Hesaba giriþ yapýlmamýþ";
+	responseJson["actionStatus"] = "false";
+	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 	callback(resp);
 }
 
 void profile::currentInfo(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	
-	auto sessionPtr = req->session();
 	Json::Value responseJson;
 
-	if(sessionPtr->find("isLoggedIn")){
+	if(req->getHeader("fromProxy") != "true"){
+		responseJson["feedback"] = "Illegal request has been sent";
+		responseJson["actionStatus"] = "false";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
+	}
+
+	if(req->getHeader("isLogged") == "true"){
 		responseJson["isloggedin"] = "true";
-		responseJson["id"] = sessionPtr->get<std::string>("id");
+		responseJson["id"] = req->getHeader("id");
 		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 		callback(resp);
 		return;
