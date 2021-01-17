@@ -136,33 +136,6 @@ limutils/fast:
 	$(MAKE) -f limutils/CMakeFiles/limutils.dir/build.make limutils/CMakeFiles/limutils.dir/build
 .PHONY : limutils/fast
 
-controllers/accounts.o: controllers/accounts.cc.o
-
-.PHONY : controllers/accounts.o
-
-# target to build an object file
-controllers/accounts.cc.o:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/accounts.cc.o
-.PHONY : controllers/accounts.cc.o
-
-controllers/accounts.i: controllers/accounts.cc.i
-
-.PHONY : controllers/accounts.i
-
-# target to preprocess a source file
-controllers/accounts.cc.i:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/accounts.cc.i
-.PHONY : controllers/accounts.cc.i
-
-controllers/accounts.s: controllers/accounts.cc.s
-
-.PHONY : controllers/accounts.s
-
-# target to generate assembly for a file
-controllers/accounts.cc.s:
-	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/accounts.cc.s
-.PHONY : controllers/accounts.cc.s
-
 controllers/activation.o: controllers/activation.cc.o
 
 .PHONY : controllers/activation.o
@@ -848,9 +821,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... PyEmbedd"
 	@echo "... limutils"
-	@echo "... controllers/accounts.o"
-	@echo "... controllers/accounts.i"
-	@echo "... controllers/accounts.s"
 	@echo "... controllers/activation.o"
 	@echo "... controllers/activation.i"
 	@echo "... controllers/activation.s"

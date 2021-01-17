@@ -4,13 +4,19 @@
 
 
 void basket::showBasket(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
-	auto sessionPtr = req->session();
 	Json::Value responseJson;
-	if(sessionPtr->find("isLoggedIn")){
+	if (req->getHeader("fromProxy") != "true") {
+		responseJson["feedback"] = "Illegal request has been sent";
+		responseJson["actionStatus"] = "false";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
+	}
+	if(req->getHeader("isLogged") == "true"){
 		// TODO 
 		// Check if item exists
 		auto clientPtr = drogon::app().getDbClient();
-		std::string id = sessionPtr->get<std::string>("id");
+		std::string id = req->getHeader("id");
 		std::string totalQuery = "SELECT basketitem FROM accounts WHERE id=" + id;
 		auto f = clientPtr->execSqlAsyncFuture(totalQuery);
 		auto result = f.get();
@@ -41,11 +47,17 @@ void basket::showBasket(const HttpRequestPtr& req,std::function<void (const Http
 }
 
 void basket::addBasketItem(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string itemId){
-	auto sessionPtr = req->session();
 	Json::Value responseJson;
-	if(sessionPtr->find("isLoggedIn")){
+	if (req->getHeader("fromProxy") != "true") {
+		responseJson["feedback"] = "Illegal request has been sent";
+		responseJson["actionStatus"] = "false";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
+	}
+	if(req->getHeader("isLogged") == "true"){
 		auto clientPtr = drogon::app().getDbClient();
-		std::string id = sessionPtr->get<std::string>("id");
+		std::string id = req->getHeader("id");
 		std::string totalQuery1 = "SELECT id, title, type, brand, price, details FROM products WHERE id=" + itemId;
 		auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
 		auto result1 = f1.get();
@@ -103,11 +115,18 @@ void basket::addBasketItem(const HttpRequestPtr& req,std::function<void (const H
 	callback(resp);
 }
 void basket::removeBasketItem(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string itemId){
-	auto sessionPtr = req->session();
 	Json::Value responseJson;
-	if(sessionPtr->find("isLoggedIn")){
+	if (req->getHeader("fromProxy") != "true") {
+		responseJson["feedback"] = "Illegal request has been sent";
+		responseJson["actionStatus"] = "false";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
+	}
+
+	if(req->getHeader("isLogged") == "true"){
 		auto clientPtr = drogon::app().getDbClient();
-		std::string id = sessionPtr->get<std::string>("id");
+		std::string id = req->getHeader("id");
 
 		std::string totalQuery1 = "SELECT basketitem FROM accounts WHERE id=" + id;
 		std::string tempBasket;

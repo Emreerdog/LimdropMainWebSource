@@ -230,4 +230,105 @@ void uploads::files_page(const HttpRequestPtr& req,std::function<void (const Htt
 	callback(resp);
 
 }
-//add definition of your processing function here
+
+void uploads::enterprops(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
+	
+	Json::Value responseJson;
+	
+	std::cout << req->getPath() << std::endl;
+	std::cout << req->getMatchedPathPattern() << std::endl;
+	responseJson["title"] = req->getParameter("title");
+	responseJson["featuredheader"] = req->getParameter("htitle");
+	responseJson["text"] = req->getParameter("htext");
+	responseJson["type"] = req->getParameter("type");
+	responseJson["brand"] = req->getParameter("brand");
+	responseJson["propertyCount"] = req->getParameter("propertyCount");
+	responseJson["layerCount"] = req->getParameter("layerCount");
+	responseJson["customerCount"] = req->getParameter("customerCount");
+	responseJson["imageCount"] = req->getParameter("imageCount");
+	responseJson["outOfDate"] = req->getParameter("outofdate");
+	responseJson["outOfDateTime"] = req->getParameter("outofdatetime");
+
+	int _layerCount = 0;
+	int _propertyCount = 0;
+	std::stringstream ssLayer(responseJson["layerCount"].asString());
+	ssLayer >> _layerCount;
+	std::stringstream ssProperty(responseJson["propertyCount"].asString());
+	ssProperty >> _propertyCount;
+	if(_layerCount <= 3){
+		responseJson["feedback"] = "Katman sayısı en az 4 olmalıdır";
+		responseJson["actionStatus"] = "false";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
+	}
+
+	for(int i = 0; i < _layerCount; i++){
+		float presentValue = 0.0f;
+
+		std::string currentLayer = "L" + std::to_string(i);
+		std::string currentLayerValue = req->getParameter(currentLayer);
+		std::stringstream ss2(currentLayerValue);
+		ss2 >> presentValue;
+		responseJson["offVals"][i][currentLayer] = presentValue;
+	}
+
+	for(int i = 0; i < _propertyCount; i++){
+		std::string pLeft = req->getParameter("PL" + std::to_string(i));
+		std::string pRight = req->getParameter("PR" + std::to_string(i));
+		responseJson["properties"][i][pLeft] = pRight;
+	}
+
+
+	responseJson["actionStatus"] = "true";
+	std::cout << req->getPath() << std::endl;
+	std::cout << req->getMatchedPathPattern() << std::endl;
+	auto resp = HttpResponse::newRedirectionResponse("/showreview.html?text=hah");
+	callback(resp);
+}
+
+void uploads::enterImages(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
+	Json::Value responseJson;
+	std::unordered_map<std::string, std::string> tempParam = req->parameters();
+	ManualPatternFiller MPF(1, "mark");
+	std::string tempContent = MPF.fillPatterns("addimage.html", "");
+	std::vector<std::string> unchangable;
+	std::vector<std::string> fileInputs;
+	std::vector<std::string> passedVars;
+	unsigned short imageCount = 0;
+
+	for(const auto& n : tempParam){
+		std::cout << n.first << std::endl;
+		std::cout << n.second << std::endl;
+	}
+}
+
+void uploads::yukle(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
+	Json::Value responseJson;
+
+	std::unordered_map<std::string, std::string> tempParam = req->parameters();
+	drogon::MultiPartParser mpp;
+	mpp.parse(req);
+
+	for(const auto& n : tempParam){
+		std::cout << n.first << std::endl;
+		std::cout << n.second << std::endl;
+	}
+
+	std::vector<drogon::HttpFile> files = mpp.getFiles();
+	std::vector<drogon::HttpFile>::iterator It;
+
+	for(It = files.begin(); It != files.end(); It++){
+		std::cout << It->getFileName() << std::endl;
+	}
+
+	responseJson["feedback"] = "Ürün yüklendi";
+	responseJson["actionStatus"] = "true";
+	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+	callback(resp);
+}
+
+void uploads::fillprops(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
+	
+}
+

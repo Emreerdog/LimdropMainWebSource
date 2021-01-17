@@ -96,3 +96,36 @@ void wallet::addcard(const HttpRequestPtr& req,std::function<void (const HttpRes
 	callback(resp);
 }
 //add definition of your processing function here
+
+void wallet::showBalance(const HttpRequestPtr& req, std::function<void(const HttpResponsePtr&)>&& callback) {
+	Json::Value responseJson;
+	if (req->getHeader("fromProxy") != "true") {
+		responseJson["feedback"] = "Illegal request has been sent";
+		responseJson["actionStatus"] = "false";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
+	}
+
+	if (req->getHeader("isLogged") == "true") {
+		std::string id = req->getHeader("id");
+		std::string balance = "";
+		auto clientPtr = drogon::app().getDbClient();
+		auto f1 = clientPtr->execSqlAsyncFuture("SELECT balance FROM accounts WHERE id=" + id);
+		auto result1 = f1.get();
+		for (auto row : result1) {
+			balance = row["balance"].as<std::string>();
+		}
+		responseJson["feedback"] = "Balance is successfully seend";
+		responseJson["balance"] = balance;
+		responseJson["actionStatus"] = "true";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
+	}
+
+	responseJson["feedback"] = "Hesaba giriş yapılmamış";
+	responseJson["actionStatus"] = "false";
+	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+	callback(resp);
+}

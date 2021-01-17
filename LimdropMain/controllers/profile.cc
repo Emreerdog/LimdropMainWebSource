@@ -16,7 +16,7 @@ void profile::showProfile(const HttpRequestPtr& req,std::function<void (const Ht
 	std::stringstream ss(profileKey);
 	ss >> _profileKey;
 	if(_profileKey <= 0){
-		responseJson["feedback"] = "Profil numaras¿ negatif olamaz";
+		responseJson["feedback"] = "Profil numarasï¿½ negatif olamaz";
 		responseJson["actionStatus"] = "false";
 		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 		callback(resp);
@@ -30,7 +30,7 @@ void profile::showProfile(const HttpRequestPtr& req,std::function<void (const Ht
 	if(result.size() == 0){
 		// TODO
 		// Show that there is no such profile
-		responseJson["feedback"] = "Böyle bir profil mevcut de¿il";
+		responseJson["feedback"] = "Bï¿½yle bir profil mevcut deï¿½il";
 		responseJson["actionStatus"] = "true";
 		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 		callback(resp);
@@ -90,7 +90,7 @@ void profile::showAddress(const HttpRequestPtr& req,std::function<void (const Ht
 		callback(resp);
 		return;
 	}
-	responseJson["feedback"] = "Hesaba giriþ yapýlmamýþ";
+	responseJson["feedback"] = "Hesaba giriï¿½ yapï¿½lmamï¿½ï¿½";
 	responseJson["actionStatus"] = "false";
 	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 	callback(resp);

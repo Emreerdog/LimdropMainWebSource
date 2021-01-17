@@ -19,10 +19,10 @@ void activation::profileActivation(const HttpRequestPtr& req,std::function<void 
 		auto _f = clientPtr->execSqlAsyncFuture(_Query);
 //
 		responseJson["feedback"] = "Hesabın onaylandı";
-                responseJson["actionStatus"] = "true";
-                auto resp = HttpResponse::newHttpJsonResponse(responseJson);
-                callback(resp);
-                return;
+        responseJson["actionStatus"] = "true";
+        auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+        callback(resp);
+        return;
 	}
 } 
 
@@ -44,10 +44,10 @@ void activation::productActivation(const HttpRequestPtr& req,std::function<void 
 		std::string _Query = "UPDATE products SET isverified = TRUE WHERE uuid = '" + activationCode + "'";
 		auto _f = clientPtr->execSqlAsyncFuture(_Query);
 		responseJson["feedback"] = "Ürün onaylandı";
-                responseJson["actionStatus"] = "true";
-                auto resp = HttpResponse::newHttpJsonResponse(responseJson);
-                callback(resp);
-                return;
+        responseJson["actionStatus"] = "true";
+        auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+        callback(resp);
+        return;
 	}
 } 
 
