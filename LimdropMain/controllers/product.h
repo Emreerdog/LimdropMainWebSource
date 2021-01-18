@@ -8,11 +8,11 @@ class product:public drogon::HttpController<product>
 
     METHOD_LIST_BEGIN
 
-    METHOD_ADD(product::details,"/?itemId={1}", Get);
-    METHOD_ADD(product::makeFeatured,"/makeFeatured?itemId={1}", Post); // Make the product featured
+    METHOD_ADD(product::details,"/{1}", Get);
+    METHOD_ADD(product::makeFeatured,"/makeFeatured/{1}", Post); // Make the product featured
     METHOD_ADD(product::featuredList,"/featured/", Get); // If there is no featured product, 4 random product will be featured
-    METHOD_ADD(product::removeFeatured,"/removeFeatured?itemId={1}", Post); // Remove the product from featured
-    METHOD_ADD(product::getAllOnCategory, "/onCategory?category={1}", Get); // Get all products on specific category
+    METHOD_ADD(product::removeFeatured,"/removeFeatured/{1}", Post); // Remove the product from featured
+    METHOD_ADD(product::getAllOnCategory, "/onCategory/{1}", Get); // Get all products on specific category
     METHOD_ADD(product::getAllCategories, "/categoryList/", Get);
     METHOD_ADD(product::getAllFinishedDrops, "/finished/", Get);
     METHOD_ADD(product::getOnGoingDrops, "/ongoing/", Get);

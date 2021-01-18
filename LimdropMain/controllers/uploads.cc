@@ -4,34 +4,6 @@
 #include <limutils/PatternFiller.h>
 #include <algorithm>
 
-void uploads::upload_product(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
-	// Tis is experimental
-	Json::Value ourProduct;
-//
-	std::unordered_map<std::string, std::string> tempParam = req->parameters();
-	for(const auto& n : tempParam){
-		 
-		ourProduct[n.first] = n.second;
-	}
-	auto resp = HttpResponse::newHttpJsonResponse(ourProduct);
-	callback(resp);
-
-}
-
-
-void uploads::upload_form(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
-	auto sessionPtr = req->session();
-	sessionPtr->erase("passedVars");
-
-	ManualPatternFiller MPF(1, "_isdisplayed");
-	std::string content = MPF.fillPatterns("addproduct.html", "yes");
-
-	auto resp = HttpResponse::newHttpResponse();
-	resp->setBody(content);
-	callback(resp);
-}
-
-
 void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	auto sessionPtr = req->session();
 	if(!sessionPtr->find("passedVars")){
@@ -154,87 +126,11 @@ void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const H
 	callback(resp);
 }
 
-
-void uploads::files_page(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
-	auto sessionPtr = req->session();
-	sessionPtr->erase("passedVars");
-
-	std::unordered_map<std::string, std::string> tempParam = req->parameters();
-	ManualPatternFiller MPF(1, "mark");
-	std::string tempContent = MPF.fillPatterns("addimage.html", "");
-	std::vector<std::string> unchangable;
-	std::vector<std::string> fileInputs;
-	std::vector<std::string> passedVars;
-	unsigned short imageCount = 0;
-
-	for(const auto& n : tempParam){
-		std::string firstParam = n.first;
-		std::string secondParam = n.second;
-		if(secondParam == ""){
-			// Input fields cannot be empty
-			std::cout << "Input fields cannot be left empty" << std::endl;
-			auto resp = HttpResponse::newRedirectionResponse("/uploads/");
-			callback(resp);
-			return;
-		}
-
-		size_t found = firstParam.find("offValue");
-		if (found != std::string::npos) {
-			float _offVals;
-			std::stringstream OVstream(secondParam);
-			OVstream >> _offVals;
-			if (_offVals <= 0) {
-				std::cout << "Negative values are not okay" << std::endl;
-				auto resp = HttpResponse::newRedirectionResponse("/uploads/");
-				callback(resp);
-				return;
-			}
-		}
-
-		if(firstParam == "imgCount"){
-			int _imageCount = 0;
-			std::stringstream imageCountStream(secondParam);
-			imageCountStream >> _imageCount;
-			if(_imageCount < 2 || _imageCount > 20){
-				std::cout << "Image count is out of bounds" << std::endl;
-				auto resp = HttpResponse::newRedirectionResponse("/uploads/");
-				callback(resp);
-				return;
-			}
-			imageCount = _imageCount;	
-		}
-		std::string inputs = "<p>";
-		inputs += firstParam + ": <br>" + secondParam + "<br><p><br>";
-		passedVars.push_back(secondParam);
-		unchangable.push_back(inputs);
-	}
-
-	for(int i = 0; i < imageCount + 1; i++){
-		std::string formElement = "<input type='file' name='" + drogon::utils::genRandomString(5) + "'><br>";
-		fileInputs.push_back(formElement);
-	}
-
-	std::reverse(passedVars.begin(), passedVars.end());
-	std::reverse(unchangable.begin(), unchangable.end());
-
-	sessionPtr->insert("passedVars", tempParam);
-	fileInputs.push_back("<input type='submit' value='Upload files'>");
-	unchangable.insert(unchangable.end(), fileInputs.begin(), fileInputs.end());
-
-	SequentialPatternFiller SPF;
-	std::string content = SPF.fillOnString(tempContent, "#$ozan", unchangable, "form", true, true, "/uploads/product/upload-photo", "", "post", true);
-	fileInputs.clear();
-	unchangable.clear();
-	auto resp = HttpResponse::newHttpResponse();
-	resp->setBody(content);
-	callback(resp);
-
-}
-
 void uploads::enterprops(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	
 	Json::Value responseJson;
 	
+
 	std::cout << req->getPath() << std::endl;
 	std::cout << req->getMatchedPathPattern() << std::endl;
 	responseJson["title"] = req->getParameter("title");
@@ -276,59 +172,83 @@ void uploads::enterprops(const HttpRequestPtr& req,std::function<void (const Htt
 	for(int i = 0; i < _propertyCount; i++){
 		std::string pLeft = req->getParameter("PL" + std::to_string(i));
 		std::string pRight = req->getParameter("PR" + std::to_string(i));
-		responseJson["properties"][i][pLeft] = pRight;
+		responseJson["properties"][pLeft] = pRight;
 	}
+	auto sessionPtr = req->session();
+	sessionPtr->erase("productData");
+	sessionPtr->insert("productData", responseJson);
 
-
-	responseJson["actionStatus"] = "true";
-	std::cout << req->getPath() << std::endl;
-	std::cout << req->getMatchedPathPattern() << std::endl;
-	auto resp = HttpResponse::newRedirectionResponse("/showreview.html?text=hah");
-	callback(resp);
-}
-
-void uploads::enterImages(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
-	Json::Value responseJson;
-	std::unordered_map<std::string, std::string> tempParam = req->parameters();
-	ManualPatternFiller MPF(1, "mark");
-	std::string tempContent = MPF.fillPatterns("addimage.html", "");
-	std::vector<std::string> unchangable;
-	std::vector<std::string> fileInputs;
-	std::vector<std::string> passedVars;
-	unsigned short imageCount = 0;
-
-	for(const auto& n : tempParam){
-		std::cout << n.first << std::endl;
-		std::cout << n.second << std::endl;
-	}
-}
-
-void uploads::yukle(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
-	Json::Value responseJson;
-
-	std::unordered_map<std::string, std::string> tempParam = req->parameters();
-	drogon::MultiPartParser mpp;
-	mpp.parse(req);
-
-	for(const auto& n : tempParam){
-		std::cout << n.first << std::endl;
-		std::cout << n.second << std::endl;
-	}
-
-	std::vector<drogon::HttpFile> files = mpp.getFiles();
-	std::vector<drogon::HttpFile>::iterator It;
-
-	for(It = files.begin(); It != files.end(); It++){
-		std::cout << It->getFileName() << std::endl;
-	}
-
-	responseJson["feedback"] = "Ürün yüklendi";
 	responseJson["actionStatus"] = "true";
 	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 	callback(resp);
 }
 
-void uploads::fillprops(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
-	
+void uploads::yukle(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
+	Json::Value responseJson;
+	auto sessionPtr = req->session();
+	Json::Value productJSON = sessionPtr->get<Json::Value>("productData");
+	sessionPtr->erase("productData");
+
+	drogon::MultiPartParser mpp;
+	mpp.parse(req);
+
+	std::vector<drogon::HttpFile> files = mpp.getFiles();
+	std::vector<drogon::HttpFile>::iterator It;
+
+	unsigned int iterPhoto = 0;
+
+	for(It = files.begin(); It != files.end(); It++){
+		std::string fileName(It->getFileName());
+		std::string::size_type idx;
+		idx = fileName.rfind('.');
+
+		if(idx != std::string::npos){
+			std::string extension = fileName.substr(idx+1);
+			std::string _fileName = "";
+
+			if(extension == "html"){
+				_fileName = "content/" + drogon::utils::genRandomString(40) + "." + extension;			
+				productJSON["description"] = _fileName;
+				It->saveAs(_fileName);
+			}
+			else if(extension == "jpg" || extension == "png"){
+				_fileName = "photos/" + drogon::utils::genRandomString(40) + "." + extension;			
+				productJSON["images"][iterPhoto] = _fileName;
+				It->saveAs(_fileName);
+				iterPhoto++;
+			}
+			else{
+				responseJson["feedback"] = "Fotoğraf uzantıları yalnızca .jpg, .png olabilir. İçerik dosyası uzantısı yalnızca .html olabilir";
+				responseJson["actionStatus"] = "false";
+				auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+				callback(resp);
+				return;
+			}
+
+		}
+		else {
+			responseJson["feedback"] = "Uzantısı eksik dosya var";
+			responseJson["actionStatus"] = "false";
+			auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+			callback(resp);
+			return;
+		}
+	}
+
+	auto date = trantor::Date::now();
+	std::string uuid = drogon::utils::getUuid();
+	std::string createDate = date.toCustomedFormattedString("%Y-%m-%d");
+
+	std::string preQuery = "INSERT INTO products(enrolleddate, maximumproductcount, isbuyable, customercount, price, isfeatured, isverified, uuid, details, type) ";
+	std::string lastQuery = "VALUES('" + createDate + "', " + productJSON["customerCount"].asString() + ", FALSE, 0, " + productJSON["offVals"][0]["L0"].asString() + ", FALSE, FALSE, '" + uuid + "', '" + productJSON.toStyledString() + "', '" + productJSON["type"].asString() + "')";
+	std::string totalQuery = preQuery + lastQuery;
+
+	auto clientPtr = drogon::app().getDbClient();
+	auto f1 = clientPtr->execSqlAsyncFuture(totalQuery);
+
+	responseJson["feedback"] = "Ürün yüklendi";
+	responseJson["actionStatus"] = "true";
+	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+	callback(resp);
 }
 

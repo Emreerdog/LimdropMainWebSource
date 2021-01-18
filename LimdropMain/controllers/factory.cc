@@ -1,20 +1,51 @@
 #include "factory.h"
 
-void factory::changeUserProfile(const HttpRequestPtr& req, std::function<void(const HttpResponsePtr&)>&& callback) {
+void factory::showAddress(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
+	Json::Value responseJson;
+	
+	if (req->getHeader("fromProxy") != "true") {
+		responseJson["feedback"] = "Illegal request has been sent";
+		responseJson["actionStatus"] = "false";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
+	}
 
-}
-void factory::changeUserPassword(const HttpRequestPtr& req, std::function<void(const HttpResponsePtr&)>&& callback) {
+	if (req->getHeader("isLogged") == "true"){
+		std::string id = req->getHeader("id");
+		unsigned int addressCount = 0;
+		auto clientPtr = drogon::app().getDbClient();
+		auto f1 = clientPtr->execSqlAsyncFuture("SELECT addresses FROM accounts WHERE id=" + id);
+		auto result1 = f1.get();
 
+		for(auto row : result1){
+			std::string addressString = row["addresses"].as<std::string>();
+			if(addressString == ""){
+				responseJson["feedback"] = "Hiç adresin yok";
+				responseJson["actionStatus"] = "false";
+				auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+				callback(resp);
+				return;
+			}
+			std::stringstream _addressString(addressString);
+			_addressString >> responseJson;
+		}
+		responseJson["actionStatus"] = "true";
+		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+		callback(resp);
+		return;
+	}
+	responseJson["feedback"] = "Hesaba giriş yapılmamış";
+	responseJson["actionStatus"] = "false";
+	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+	callback(resp);
 }
-void factory::changeUserPasswordEmail(const HttpRequestPtr& req, std::function<void(const HttpResponsePtr&)>&& callback) {
 
-}
-void factory::changeProductParams(const HttpRequestPtr& req, std::function<void(const HttpResponsePtr&)>&& callback) {
 
-}
 void factory::addAddress(const HttpRequestPtr& req, std::function<void(const HttpResponsePtr&)>&& callback, std::string city, std::string ilce, std::string address, std::string phoneNumber, std::string zipcode) {
 
 	Json::Value responseJson;
+	
 	if (req->getHeader("fromProxy") != "true") {
 		responseJson["feedback"] = "Illegal request has been sent";
 		responseJson["actionStatus"] = "false";
@@ -47,7 +78,7 @@ void factory::addAddress(const HttpRequestPtr& req, std::function<void(const Htt
 		addresses["addresses"][addressCount]["acikAdres"] = address;
 		addresses["addresses"][addressCount]["telefonNumara"] = phoneNumber;
 		addresses["addresses"][addressCount]["postaKodu"] = zipcode;
-		clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='" + addresses.toStyledString() + "' WHERE id='" + id);
+		clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='" + addresses.toStyledString() + "' WHERE id=" + id);
 		responseJson["feedback"] = "Adres başarıyla eklendi!";
 		responseJson["actionStatus"] = "true";
 		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
@@ -104,11 +135,8 @@ void factory::removeAddress(const HttpRequestPtr& req, std::function<void(const 
 					return;
 				}*/
 				Json::Value asd;
-				std::cout << addresses << std::endl;
-				std::cout << addresses["addresses"].size() << std::endl;
-				std::cout << _addressIndex << std::endl;
 
-				if (addresses["addresses"].removeIndex(_addressIndex, &asd)) {
+				if (!addresses["addresses"].removeIndex(_addressIndex, &asd)) {
 					responseJson["feedback"] = "Address removing failed";
 					responseJson["actionStatus"] = "false";
 					auto resp = HttpResponse::newHttpJsonResponse(responseJson);
@@ -116,9 +144,13 @@ void factory::removeAddress(const HttpRequestPtr& req, std::function<void(const 
 					return;
 				}
 				else {
-					std::cout << "Successfully removed address" << std::endl;
-					Address = addresses.toStyledString();
-					clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='" + Address + "' WHERE id=" + id);
+					if(addresses["addresses"].size() == 0){
+						clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses=NULL WHERE id=" + id);
+					}
+					else{
+						Address = addresses.toStyledString();
+						clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='" + Address + "' WHERE id=" + id);
+					}
 				}
 				responseJson["feedback"] = "Successfully removed address";
 				responseJson["actionStatus"] = "true";

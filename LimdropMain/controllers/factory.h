@@ -6,18 +6,14 @@ class factory:public drogon::HttpController<factory>
   public:
     METHOD_LIST_BEGIN
 
-    METHOD_ADD(factory::changeUserProfile,"/user/profilechange", Post, "profilechangefilter");
-    METHOD_ADD(factory::changeUserPassword,"/user/passchange", Post, "passwordchangefilter");
-    METHOD_ADD(factory::changeUserPasswordEmail, "/user/passchangemail", Post);
-    METHOD_ADD(factory::changeProductParams, "/product/changeparams", Post, "changeparamsfilter");
-    METHOD_ADD(factory::addAddress, "/user/addAddress?city={1}&ilce={2}address={3}&phoneNumber={4}&zipcode={5}", Post); // 
-    METHOD_ADD(factory::removeAddress, "/user/removeAddress?addressIndex={1}", Post);
+    METHOD_ADD(factory::showAddress, "/address", Get);
+    METHOD_ADD(factory::addAddress, "/addAddress/{1}/{2}/{3}/{4}/{5}", Post); // 
+    METHOD_ADD(factory::removeAddress, "/removeAddress/{1}", Post);
 
     METHOD_LIST_END
-    void changeUserProfile(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback);	
-    void changeUserPassword(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback);
-    void changeUserPasswordEmail(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback);
-    void changeProductParams(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback);
+    
+    void showAddress(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback);
     void addAddress(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string city, std::string ilce, std::string address, std::string phoneNumber, std::string zipcode);
     void removeAddress(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string addressIndex);
+
 };

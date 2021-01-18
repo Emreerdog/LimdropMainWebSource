@@ -17,12 +17,13 @@ void basket::showBasket(const HttpRequestPtr& req,std::function<void (const Http
 		// Check if item exists
 		auto clientPtr = drogon::app().getDbClient();
 		std::string id = req->getHeader("id");
-		std::string totalQuery = "SELECT basketitem FROM accounts WHERE id=" + id;
+		std::string totalQuery = "SELECT id, basketitem FROM accounts WHERE id=" + id;
 		auto f = clientPtr->execSqlAsyncFuture(totalQuery);
 		auto result = f.get();
 		
 		for(auto row : result){
-			if(row["basketitem"].as<std::string>() == ""){
+			std::string returnedResult = row["basketitem"].as<std::string>();
+			if(returnedResult == ""){
 				responseJson["feedback"] = "Sepette hiç ürün yok";
 				responseJson["actionStatus"] = "false";
 				auto resp = HttpResponse::newHttpJsonResponse(responseJson);
@@ -30,11 +31,10 @@ void basket::showBasket(const HttpRequestPtr& req,std::function<void (const Http
 				return;
 			}
 			// std::cout << row["basketitem"].as<std::string>() << std::endl;	
-			Basket PB(row["basketitem"].as<std::string>());
-			responseJson = PB.getBasket();
-
+			std::stringstream basketString(returnedResult);
+			basketString >> responseJson;
+		}
 			
-		}	
 		responseJson["actionStatus"] = "true";
 		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 		callback(resp);
@@ -58,7 +58,7 @@ void basket::addBasketItem(const HttpRequestPtr& req,std::function<void (const H
 	if(req->getHeader("isLogged") == "true"){
 		auto clientPtr = drogon::app().getDbClient();
 		std::string id = req->getHeader("id");
-		std::string totalQuery1 = "SELECT id, title, type, brand, price, details FROM products WHERE id=" + itemId;
+		std::string totalQuery1 = "SELECT id, details FROM products WHERE id=" + itemId;
 		auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
 		auto result1 = f1.get();
 		if(result1.size() == 0){
@@ -69,41 +69,42 @@ void basket::addBasketItem(const HttpRequestPtr& req,std::function<void (const H
 			return;
 		}
 		std::string proId;
-		std::string proTitle;
-		std::string proType;
-		std::string proBrand;
-		std::string proPrice;
-		std::string proDetails;
+		Json::Value temporaryProduct;
+		Json::Value tempBasket;
 		for(auto row : result1){
 			proId = row["id"].as<std::string>();
-			proTitle = row["title"].as<std::string>();
-			proType = row["type"].as<std::string>();
-			proBrand = row["brand"].as<std::string>();
-			proPrice = row["price"].as<std::string>();
-			proDetails = row["details"].as<std::string>();
+			std::stringstream productString(row["details"].as<std::string>());
+			productString >> temporaryProduct;
 		}
-		ProductJSON PJ(proDetails);
-		std::string proImage = PJ.getImagePaths()[0];
+		
 		std::string totalQuery2 = "SELECT basketitem FROM accounts WHERE id=" + id;
 		auto f2 = clientPtr->execSqlAsyncFuture(totalQuery2);
 		auto result2 = f2.get();
 		for(auto row : result2){
-			Basket resultPB;
-			if(row["basketitem"].as<std::string>() == ""){
-				resultPB.addItem(proId, proTitle, proType, proBrand, EITEM_TYPE::PHYSICAL, proPrice, proImage);
+			
+			std::string resultantBasket = row["basketitem"].as<std::string>();
+			unsigned int sizeOfBasket = 0;
+			if(resultantBasket == ""){
+
 			}
 			else{
-				std::string currentBasket = row["basketitem"].as<std::string>();
-				Basket PB(currentBasket);
-				PB.addItem(proId, proTitle, proType, proBrand, EITEM_TYPE::PHYSICAL, proPrice, proImage);
-				resultPB = PB;		
+				std::stringstream tempBasketString(resultantBasket);
+				tempBasketString >> tempBasket;
+				sizeOfBasket = tempBasket["myBasket"].size();
 			}
-			std::string tempBasket = resultPB.getBasketAsString();
-			std::string totalQuery3 = "UPDATE accounts SET basketitem='" + tempBasket + "' WHERE id=" + id;
+
+			tempBasket["myBasket"][sizeOfBasket]["id"] = proId;
+			for(auto &n : temporaryProduct["properties"].getMemberNames()){
+				tempBasket["myBasket"][sizeOfBasket]["properties"][n.data()] = temporaryProduct["properties"][n.data()];
+			}
+			tempBasket["myBasket"][sizeOfBasket]["basketImage"] = temporaryProduct["images"][0];
+			tempBasket["myBasket"][sizeOfBasket]["title"] = temporaryProduct["title"];
+			
+			std::string totalQuery3 = "UPDATE accounts SET basketitem='" + tempBasket.toStyledString() + "' WHERE id=" + id;
 			auto f3 = clientPtr->execSqlAsyncFuture(totalQuery3);
 		}
 		responseJson["feedback"] = "Urun eklendi";
-		responseJson["productId"] = proId; // 
+		responseJson["productId"] = proId; 
 		responseJson["actionStatus"] = "true";
 		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 		callback(resp);
@@ -129,29 +130,58 @@ void basket::removeBasketItem(const HttpRequestPtr& req,std::function<void (cons
 		std::string id = req->getHeader("id");
 
 		std::string totalQuery1 = "SELECT basketitem FROM accounts WHERE id=" + id;
-		std::string tempBasket;
+		std::string tempBasketSTR;
 		auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
 		auto result1 = f1.get();
 		for(auto row : result1){
-			tempBasket = row["basketitem"].as<std::string>();
-			if(tempBasket == ""){
-				responseJson["feedback"] = "Sepette böyle bir ürün yok";
+			tempBasketSTR = row["basketitem"].as<std::string>();
+			if(tempBasketSTR == ""){
+				responseJson["feedback"] = "Sepet zaten boş";
 				responseJson["actionStatus"] = "false";
 				auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 				callback(resp);
 				return;
 			}
 			else{
-				Basket PB(tempBasket);
-				PB.removeItem(itemId);
-				responseJson = PB.getBasket();
-				std::string totalQuery2 = "UPDATE accounts SET basketitem='" + PB.getBasketAsString() + "' WHERE id=" + id;
+				Json::Value _tempBasket;
+				std::stringstream tempBasketSTRToJson(tempBasketSTR);
+				tempBasketSTRToJson >> _tempBasket;
+				unsigned int BasketSize = _tempBasket["myBasket"].size();
+				unsigned int BasketIterator = 0;
+				bool isItemFound = false;
+				std::cout << BasketSize << std::endl;
+				for(BasketIterator; BasketIterator < BasketSize; BasketIterator++){
+					if(_tempBasket["myBasket"][BasketIterator]["id"] == itemId){
+					 	isItemFound = true;
+					 	break;
+					}
+				}
+				if(!isItemFound){
+					responseJson["feedback"] = "Sepette böyle bir ürün yok";
+					responseJson["actionStatus"] = "false";
+					auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+					callback(resp);
+					return;
+				}
+				Json::Value *removeVersion = new Json::Value;
+
+				_tempBasket["myBasket"].removeIndex(BasketIterator, removeVersion);
+				delete removeVersion;
+
+				std::string totalQuery2;
+				if(_tempBasket["myBasket"].size() == 0){
+					totalQuery2 = "UPDATE accounts SET basketitem=NULL WHERE id=" + id;
+				}
+				else{
+					totalQuery2 = "UPDATE accounts SET basketitem='" + _tempBasket.toStyledString() + "' WHERE id=" + id;
+				}	
 				auto f2 = clientPtr->execSqlAsyncFuture(totalQuery2);
+				responseJson["feedback"] = "Ürün başarıyla kaldırıldı";
+				responseJson["actionStatus"] = "true";
+				auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+				callback(resp);
+				return;
 			}
-			responseJson["actionStatus"] = "true";
-			auto resp = HttpResponse::newHttpJsonResponse(responseJson);
-			callback(resp);
-			return;
 		}
 	}
 	responseJson["feedback"] = "Hesaba giriş yapılmamış";

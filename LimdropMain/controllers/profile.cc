@@ -111,12 +111,14 @@ void profile::currentInfo(const HttpRequestPtr& req,std::function<void (const Ht
 	if(req->getHeader("isLogged") == "true"){
 		responseJson["isloggedin"] = "true";
 		responseJson["id"] = req->getHeader("id");
+		responseJson["actionStatus"] = "true";
 		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 		callback(resp);
 		return;
 	}
 
 	responseJson["isloggedin"] = "false";
+	responseJson["actionStatus"] = "false";
 	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 	callback(resp);
 	return;

@@ -6,8 +6,8 @@ class wallet:public drogon::HttpController<wallet>
   public:
     METHOD_LIST_BEGIN
 
-    METHOD_ADD(wallet::addmoney,"/addmoney?amount={1}", Post);//path is /wallet/{arg1}/{arg2}/list	
-    METHOD_ADD(wallet::addcard,"/addcard?cardholderName={1}&cardNumber={2}&expireMonth={3}&expireYear={4}&cvc={5}", Post);//path is /wallet/{arg1}/{arg2}/list
+    METHOD_ADD(wallet::addmoney,"/addmoney/{1}", Post);//path is /wallet/{arg1}/{arg2}/list	
+    METHOD_ADD(wallet::addcard,"/addcard/{1}/{2}/{3}/{4}/{5}", Post);//path is /wallet/{arg1}/{arg2}/list
     METHOD_ADD(wallet::showBalance, "/balance");
 
     METHOD_LIST_END

@@ -8,8 +8,8 @@ class basket:public drogon::HttpController<basket>
 
     
     METHOD_ADD(basket::showBasket,"/", Get);
-    METHOD_ADD(basket::addBasketItem,"/additem?itemId={1}", Post);
-    METHOD_ADD(basket::removeBasketItem,"/removeitem?itemId={1}", Post);
+    METHOD_ADD(basket::addBasketItem,"/additem/{1}", Post);
+    METHOD_ADD(basket::removeBasketItem,"/removeitem/{1}", Post);
     
     METHOD_LIST_END
 
