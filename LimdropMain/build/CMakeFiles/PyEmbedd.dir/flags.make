@@ -6,5 +6,5 @@ CXX_FLAGS =
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/build -I/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/PyLib/python3.9 -I/home/erdog1/LimMain/LimdropMainWebSource/LimdropMain -isystem /usr/include/jsoncpp 
+CXX_INCLUDES = -I/home/eremmustaf/LimdropMain/LimdropMainWebSource/LimdropMain/build -I/home/eremmustaf/LimdropMain/LimdropMainWebSource/LimdropMain/PyLib/python3.9 -I/home/eremmustaf/LimdropMain/LimdropMainWebSource/LimdropMain -isystem /usr/include/jsoncpp 
 

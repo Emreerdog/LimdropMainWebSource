@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/PyEmbedd.dir/controllers/activation.cc.o"
   "CMakeFiles/PyEmbedd.dir/controllers/administration.cc.o"
   "CMakeFiles/PyEmbedd.dir/controllers/basket.cc.o"
+  "CMakeFiles/PyEmbedd.dir/controllers/checkpy.cc.o"
   "CMakeFiles/PyEmbedd.dir/controllers/factory.cc.o"
   "CMakeFiles/PyEmbedd.dir/controllers/limjson.cpp.o"
   "CMakeFiles/PyEmbedd.dir/controllers/payment.cc.o"

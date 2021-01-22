@@ -1,4 +1,4 @@
-# Install script for directory: /home/erdog1/LimMain/LimdropMainWebSource/LimdropMain/limutils
+# Install script for directory: /home/eremmustaf/LimdropMain/LimdropMainWebSource/LimdropMain/limutils
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

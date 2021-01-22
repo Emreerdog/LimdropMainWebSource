@@ -4,13 +4,13 @@
 void profile::showProfile(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string profileKey){
 
 	Json::Value responseJson;
-	if(req->getHeader("fromProxy") != "true"){
+	/*if(req->getHeader("fromProxy") != "true"){
 		responseJson["feedback"] = "Illegal request has been sent";
 		responseJson["actionStatus"] = "false";
 		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 		callback(resp);
 		return;
-	}
+	}*/
 	auto clientPtr = drogon::app().getDbClient();
 	int _profileKey;
 	std::stringstream ss(profileKey);
