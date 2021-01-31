@@ -9,7 +9,6 @@ class profile:public drogon::HttpController<profile>
     METHOD_ADD(profile::showProfile,"/{1}/", Get);
     METHOD_ADD(profile::showAddress, "/address", Get);
     METHOD_ADD(profile::currentInfo, "/currentInfo", Get); 
-    METHOD_ADD(profile::logout, "/logout", Post);
 
     METHOD_LIST_END
     //

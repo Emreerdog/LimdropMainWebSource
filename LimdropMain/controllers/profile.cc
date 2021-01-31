@@ -124,19 +124,3 @@ void profile::currentInfo(const HttpRequestPtr& req,std::function<void (const Ht
 	return;
 }
 
-void profile::logout(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
-	auto sessionPtr = req->session();
-	Json::Value responseJson;
-	if(sessionPtr->find("isLoggedIn")){
-		sessionPtr->clear();
-		responseJson["feedback"] = "Cikis basarili";
-		responseJson["actionStatus"] = true;
-		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
-		callback(resp);
-	}
-	responseJson["feedback"] = "Hesaba giris yapilmamis";
-	responseJson["actionStatus"] = false;
-	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
-	callback(resp);
-
-}

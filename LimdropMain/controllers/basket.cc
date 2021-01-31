@@ -4,6 +4,8 @@
 
 
 void basket::showBasket(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
+
+	std::cout << req->getCookie("myCookie") << std::endl;
 	Json::Value responseJson;
 	if (req->getHeader("fromProxy") != "true") {
 		responseJson["feedback"] = "Illegal request has been sent";
