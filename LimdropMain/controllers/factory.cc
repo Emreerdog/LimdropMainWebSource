@@ -73,13 +73,20 @@ void factory::addAddress(const HttpRequestPtr& req, std::function<void(const Htt
 				addressCount = addresses["addresses"].size();
 			}
 		}
+		if(addressCount >= 8){
+			responseJson["feedback"] = "8 den fazla adres ekleyemezsin";
+                	responseJson["actionStatus"] = "false";
+                	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+                	callback(resp);
+                	return;
+		}
 		addresses["addresses"][addressCount]["Sehir"] = city;
 		addresses["addresses"][addressCount]["Ilce"] = ilce;
 		addresses["addresses"][addressCount]["acikAdres"] = address;
 		addresses["addresses"][addressCount]["telefonNumara"] = phoneNumber;
 		addresses["addresses"][addressCount]["postaKodu"] = zipcode;
 		clientPtr->execSqlAsyncFuture("UPDATE accounts SET addresses='" + addresses.toStyledString() + "' WHERE id=" + id);
-		responseJson["feedback"] = "Adres başarıyla eklendi!";
+	        responseJson["feedback"] = "Adres başarıyla eklendi";
 		responseJson["actionStatus"] = "true";
 		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 		callback(resp);

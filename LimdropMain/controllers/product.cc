@@ -209,7 +209,7 @@ void product::getAllOnCategory(const HttpRequestPtr& req,std::function<void (con
 		responseJson["productJson"][i]["id"] = row["id"].as<std::string>();
 		i++;
 	}
-	responseJson["actionStatus"] = "false";
+	responseJson["actionStatus"] = "true";
 	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 	callback(resp);
 	return;
@@ -223,6 +223,20 @@ void product::getAllCategories(const HttpRequestPtr& req,std::function<void (con
 		callback(resp);
 		return;
 	}
+
+	auto clientPtr = drogon::app().getDbClient();
+	std::string totalQuery1 = "SELECT DISTINCT type FROM products";
+	auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
+	auto result1 = f1.get();
+	int i = 0;
+	for(auto row : result1){
+		responseJson["categories"][i] = row["type"].as<std::string>();
+		i++;
+	}
+
+	responseJson["actionStatus"] = "true";
+	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
+	callback(resp);
 }
 void product::getAllFinishedDrops(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	Json::Value responseJson;

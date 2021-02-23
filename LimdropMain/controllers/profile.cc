@@ -85,7 +85,6 @@ void profile::showAddress(const HttpRequestPtr& req,std::function<void (const Ht
 			ss >> responseJson;
 		}	
 		responseJson["actionStatus"] = "true";
-		std::cout << responseJson << std::endl;
 		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 		callback(resp);
 		return;

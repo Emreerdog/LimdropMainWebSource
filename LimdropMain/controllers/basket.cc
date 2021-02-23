@@ -5,7 +5,6 @@
 
 void basket::showBasket(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 
-	std::cout << req->getCookie("myCookie") << std::endl;
 	Json::Value responseJson;
 	if (req->getHeader("fromProxy") != "true") {
 		responseJson["feedback"] = "Illegal request has been sent";
@@ -101,6 +100,7 @@ void basket::addBasketItem(const HttpRequestPtr& req,std::function<void (const H
 			}
 			tempBasket["myBasket"][sizeOfBasket]["basketImage"] = temporaryProduct["images"][0];
 			tempBasket["myBasket"][sizeOfBasket]["title"] = temporaryProduct["title"];
+			tempBasket["myBasket"][sizeOfBasket]["price"] = temporaryProduct["offVals"][0]["L0"];
 			
 			std::string totalQuery3 = "UPDATE accounts SET basketitem='" + tempBasket.toStyledString() + "' WHERE id=" + id;
 			auto f3 = clientPtr->execSqlAsyncFuture(totalQuery3);

@@ -69,7 +69,6 @@ void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const H
 	for(const auto& n : passedVars){
 		std::string firstVal = n.first;
 		std::string secondVal = n.second;
-		std::cout << "First Val: " << firstVal << " type=" << typeid(firstVal).name()  << " correspons to=" << secondVal << std::endl;
 		// We are doing this because somehow values in vector array
 		// are mixed inside
 		if(firstVal == "title"){ title = secondVal; }
@@ -116,7 +115,6 @@ void uploads::upload_files(const HttpRequestPtr& req,std::function<void (const H
 		+ brand + "', " + ss.str() + ", FALSE, FALSE, '" + uuid + "', '" + productJSON.toStyledString() + "')";
 	std::string totalQuery = preQuery + lastQuery;
 
-	std::cout << totalQuery << std::endl;
 	auto f1 = clientPtr->execSqlAsyncFuture(totalQuery);
 
 	// std::cout << productJSON << std::endl;
@@ -130,9 +128,6 @@ void uploads::enterprops(const HttpRequestPtr& req,std::function<void (const Htt
 	
 	Json::Value responseJson;
 	
-
-	std::cout << req->getPath() << std::endl;
-	std::cout << req->getMatchedPathPattern() << std::endl;
 	responseJson["title"] = req->getParameter("title");
 	responseJson["featuredheader"] = req->getParameter("htitle");
 	responseJson["text"] = req->getParameter("htext");
@@ -166,7 +161,11 @@ void uploads::enterprops(const HttpRequestPtr& req,std::function<void (const Htt
 		std::string currentLayerValue = req->getParameter(currentLayer);
 		std::stringstream ss2(currentLayerValue);
 		ss2 >> presentValue;
-		responseJson["offVals"][i][currentLayer] = presentValue;
+
+		float roundIt = (int)(presentValue * 100 + .5);
+		float resultant = (float)roundIt / 100;
+		
+		responseJson["offVals"][i][currentLayer] = std::to_string(resultant);
 	}
 
 	for(int i = 0; i < _propertyCount; i++){

@@ -26,6 +26,5 @@ class product:public drogon::HttpController<product>
     void getAllOnCategory(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string category);
     void getAllCategories(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback);
     void getAllFinishedDrops(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback);
-    void getOnGoingDrops(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback);
-    
+    void getOnGoingDrops(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback); 
 };
