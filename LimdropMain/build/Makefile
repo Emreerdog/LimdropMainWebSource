@@ -379,6 +379,33 @@ controllers/profile.cc.s:
 	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/profile.cc.s
 .PHONY : controllers/profile.cc.s
 
+controllers/sutils.o: controllers/sutils.cc.o
+
+.PHONY : controllers/sutils.o
+
+# target to build an object file
+controllers/sutils.cc.o:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/sutils.cc.o
+.PHONY : controllers/sutils.cc.o
+
+controllers/sutils.i: controllers/sutils.cc.i
+
+.PHONY : controllers/sutils.i
+
+# target to preprocess a source file
+controllers/sutils.cc.i:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/sutils.cc.i
+.PHONY : controllers/sutils.cc.i
+
+controllers/sutils.s: controllers/sutils.cc.s
+
+.PHONY : controllers/sutils.s
+
+# target to generate assembly for a file
+controllers/sutils.cc.s:
+	$(MAKE) -f CMakeFiles/PyEmbedd.dir/build.make CMakeFiles/PyEmbedd.dir/controllers/sutils.cc.s
+.PHONY : controllers/sutils.cc.s
+
 controllers/uploads.o: controllers/uploads.cc.o
 
 .PHONY : controllers/uploads.o
@@ -875,6 +902,9 @@ help:
 	@echo "... controllers/profile.o"
 	@echo "... controllers/profile.i"
 	@echo "... controllers/profile.s"
+	@echo "... controllers/sutils.o"
+	@echo "... controllers/sutils.i"
+	@echo "... controllers/sutils.s"
 	@echo "... controllers/uploads.o"
 	@echo "... controllers/uploads.i"
 	@echo "... controllers/uploads.s"

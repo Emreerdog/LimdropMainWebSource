@@ -7,7 +7,7 @@
 
 
 
-void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback)
+void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string adrIndex, std::string contactName)
 {
 	Json::Value responseJson;
 	if (req->getHeader("fromProxy") != "true") {
@@ -22,13 +22,15 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 	if(req->getHeader("isLogged") == "true"){
 		std::string id = req->getHeader("id");
 		auto clientPtr = drogon::app().getDbClient();
-		auto totalQuery1 = "SELECT basketitem, addresses FROM accounts WHERE id=" + id;
+		auto totalQuery1 = "SELECT basketitem, addresses, name, surname FROM accounts WHERE id=" + id;
 		auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
 		auto result1 = f1.get();
 		
 		Json::Value addressJson;
 		std::string basket;
 		std::string addressString;
+		std::string name;
+		std::string surname;
 		for(auto row : result1){
 			basket = row["basketitem"].as<std::string>();
 			addressString = row["addresses"].as<std::string>();
@@ -48,6 +50,9 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 				callback(resp);
 				return;
 			}
+			name = row["name"].as<std::string>();
+			surname = row["surname"].as<std::string>();
+
 		}
 		if(basket == ""){
 			responseJson["feedback"] = "Sepette hiç ürün yok";
@@ -99,8 +104,11 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 			for(auto row : result3){
 				isbuyable = row["isbuyable"].as<bool>();
 				if(!isbuyable){
+					// TODO
+					// Remove the product from basket
 					responseJson["feedback"] = "Product is not buyable";
 					responseJson["actionStatus"] = "false";
+					responseJson["productId"] = productID;
 					auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 					callback(resp);
 					return;
@@ -109,10 +117,11 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 				customerCount++;
 				maximumproductCount = row["maximumproductcount"].as<unsigned int>();
 				
-				if(customerCount >= maximumproductCount ){
+				if(customerCount > maximumproductCount ){
 					// Out of stock
-					responseJson["feedback"] = "OOS";
+					responseJson["feedback"] = "Product is out of stock";
 					responseJson["actionStatus"] = "false";
+					responseJson["productId"] = productID;
 					auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 					callback(resp);
 					return;
@@ -131,8 +140,6 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 			buyers[sizeOfBuyersJson]["id"] = id;
 			buyerJsonString = buyers.toStyledString();
 			_buyerJsonString.push_back(buyerJsonString);
-			std::string totalQuery4 = "UPDATE products SET buyers='" + buyerJsonString + "', customercount = customercount + 1 WHERE id=" + productID;
-			auto f4 = clientPtr->execSqlAsyncFuture(totalQuery4);
 		}
 
 		std::vector<std::pair<std::string, std::string>> payment_card = {
@@ -163,10 +170,10 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 
 		std::vector<std::pair<std::string, std::string>> address = {
     		std::make_pair("contactName", "Jane Doe"),
-    		std::make_pair("city", "Istanbul"),
+    		std::make_pair("city", addressJson["addresses"][adrIndex]["Sehir"].asCString()),
     		std::make_pair("country", "Turkey"),
-    		std::make_pair("address", "Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1"),
-    		std::make_pair("zipCode", "34732")
+    		std::make_pair("address", addressJson["addresses"][adrIndex]["acikAdres"].asCString()),
+    		std::make_pair("zipCode", addressJson["addresses"][adrIndex]["postaKodu"].asCString())
     		};
 
 
@@ -232,16 +239,6 @@ void payment::payit(const HttpRequestPtr& req,std::function<void (const HttpResp
 	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 	callback(resp);
 	return;
-}
-
-void payment::paymentpage(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback)
-{
-	auto sessionPtr = req->session();
-	if(sessionPtr->find("isLoggedIn")){
-	
-	}
-	auto resp = HttpResponse::newRedirectionResponse("/");
-	callback(resp);
 }
 
 void payment::paymenthistory(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback)

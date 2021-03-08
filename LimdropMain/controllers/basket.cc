@@ -34,8 +34,26 @@ void basket::showBasket(const HttpRequestPtr& req,std::function<void (const Http
 			// std::cout << row["basketitem"].as<std::string>() << std::endl;	
 			std::stringstream basketString(returnedResult);
 			basketString >> responseJson;
+
 		}
-			
+		unsigned int basketSize = responseJson["myBasket"].size();
+		bool itemRemoved = false;
+		for(basketSize; basketSize > 0; basketSize--){
+			// Check if items in the basket are still buyable
+			// If not remove them from the basket
+			std::string tempProductId = responseJson["myBasket"][basketSize - 1]["id"].asString();
+			std::string itemCheckQuery = "SELECT id FROM products WHERE id=" + tempProductId + " AND isbuyable=true";
+			auto tempResult = clientPtr->execSqlAsyncFuture(itemCheckQuery);
+			if(tempResult.get().size() == 0){
+				itemRemoved = true;
+				Json::Value *removedPart = new Json::Value;
+				responseJson["myBasket"].removeIndex(basketSize - 1, removedPart);
+				delete removedPart;
+			}
+		}
+		if(itemRemoved){
+			clientPtr->execSqlAsyncFuture("UPDATE accounts SET basketitem='" + responseJson.toStyledString() + "' WHERE id=" + id);
+		}
 		responseJson["actionStatus"] = "true";
 		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 		callback(resp);
@@ -59,7 +77,7 @@ void basket::addBasketItem(const HttpRequestPtr& req,std::function<void (const H
 	if(req->getHeader("isLogged") == "true"){
 		auto clientPtr = drogon::app().getDbClient();
 		std::string id = req->getHeader("id");
-		std::string totalQuery1 = "SELECT id, details FROM products WHERE id=" + itemId;
+		std::string totalQuery1 = "SELECT id, details FROM products WHERE id=" + itemId + " AND isbuyable=true;";
 		auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
 		auto result1 = f1.get();
 		if(result1.size() == 0){

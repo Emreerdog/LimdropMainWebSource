@@ -352,6 +352,7 @@ CMakeFiles/PyEmbedd.dir/controllers/product.cc.o
  /home/eremmustaf/LimdropMain/LimdropMainWebSource/LimdropMain/controllers/limjson.h
  /home/eremmustaf/LimdropMain/LimdropMainWebSource/LimdropMain/controllers/product.cc
  /home/eremmustaf/LimdropMain/LimdropMainWebSource/LimdropMain/controllers/product.h
+ /home/eremmustaf/LimdropMain/LimdropMainWebSource/LimdropMain/controllers/sutils.h
  /usr/include/jsoncpp/json/allocator.h
  /usr/include/jsoncpp/json/autolink.h
  /usr/include/jsoncpp/json/config.h
@@ -366,6 +367,9 @@ CMakeFiles/PyEmbedd.dir/controllers/profile.cc.o
  ../limutils/PatternFiller.h
  /home/eremmustaf/LimdropMain/LimdropMainWebSource/LimdropMain/controllers/profile.cc
  /home/eremmustaf/LimdropMain/LimdropMainWebSource/LimdropMain/controllers/profile.h
+CMakeFiles/PyEmbedd.dir/controllers/sutils.cc.o
+ /home/eremmustaf/LimdropMain/LimdropMainWebSource/LimdropMain/controllers/sutils.cc
+ /home/eremmustaf/LimdropMain/LimdropMainWebSource/LimdropMain/controllers/sutils.h
 CMakeFiles/PyEmbedd.dir/controllers/uploads.cc.o
  ../limutils/PatternFiller.h
  /home/eremmustaf/LimdropMain/LimdropMainWebSource/LimdropMain/controllers/limjson.h

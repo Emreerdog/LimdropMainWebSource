@@ -1,5 +1,6 @@
 #include "product.h"
 #include "limjson.h"
+#include "sutils.h"
 
 bool product::checkIfProductExists(std::string itemId){
 	auto clientPtr = drogon::app().getDbClient();
@@ -35,8 +36,7 @@ void product::details(const HttpRequestPtr& req,std::function<void (const HttpRe
 		}
 	}
 	auto clientPtr = drogon::app().getDbClient();
-	std::string totalQuery1 = "SELECT id, isbuyable, customercount, price, isverified, details FROM products WHERE id=" + itemId + "";
-	std::cout << totalQuery1 << std::endl;
+	std::string totalQuery1 = "SELECT id, isbuyable, customercount, price, isverified, details FROM products WHERE id=" + itemId + " AND isverified=TRUE";
 	auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
 	auto result1 = f1.get();
 	if(result1.size() == 0){
@@ -49,61 +49,65 @@ void product::details(const HttpRequestPtr& req,std::function<void (const HttpRe
 	}
 
 	std::string detailsJSON;
+	bool currentBuyableStatus;
 	for(auto row : result1){
 		std::stringstream sDescription(row["details"].as<std::string>());
 		sDescription >> responseJson;
 		responseJson["id"] = itemId;
-		responseJson["isbuyable"] = row["isbuyable"].as<std::string>();
 		responseJson["customercount"] = row["customercount"].as<std::string>();
 		responseJson["price"] = row["price"].as<std::string>();
 		responseJson["isverified"] = row["isverified"].as<std::string>();
-
+		currentBuyableStatus = row["isbuyable"].as<bool>();
 	}
+	Json::Value serverTime = sutils::getSVTime();
+	const char* currentDate = serverTime["date"].asCString();
+	const char* currentTime = serverTime["time"].asCString();
+	if(currentBuyableStatus){
+		const char* productDate = responseJson["outOfDate"].asCString();
+		const char* productTime = responseJson["outOfDateTime"].asCString();
+		int comparisonResult = strcmp(currentDate, productDate);
+		switch(comparisonResult){
+			case 1:{
+				// TODO
+				// Refund the difference between bought price and current price
+				// Add the product to the old products database
+				std::string updateBuyableQuery = "UPDATE products SET isbuyable=false WHERE id=" + itemId;
+				clientPtr->execSqlAsyncFuture(updateBuyableQuery);
+				responseJson["isbuyable"] = "false";
+				break;
+			}
+			
+			case -1:{
+				responseJson["isbuyable"] = "true";
+				break;
+			}
+			
+			case 0:{
+				if(strcmp(currentTime, productTime) == 0 || strcmp(currentTime, productTime) == 1){
+					// TODO
+					// Refund the difference between bought price and current price
+					// Add the product to the old products database
+					std::string updateBuyableQuery = "UPDATE products SET isbuyable=false WHERE id=" + itemId;
+					clientPtr->execSqlAsyncFuture(updateBuyableQuery);
+					responseJson["isbuyable"] = "false";
+				}
+				else{
+					responseJson["isbuyable"] = "true";
+				}
+				break;
+			}
+		}
+	}
+	else{
+		// Do nothing
+	}
+	responseJson["serverDate"] = currentDate;
+	responseJson["serverTime"] = currentTime;
 	responseJson["actionStatus"] = "true";
 	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 	callback(resp);
 }
 
-void product::makeFeatured(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string itemId){
-	Json::Value responseJson;
-	if (req->getHeader("fromProxy") != "true") {
-		responseJson["feedback"] = "Illegal request has been sent";
-		responseJson["actionStatus"] = "false";
-		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
-		callback(resp);
-		return;
-	}
-
-	std::stringstream ss(itemId);
-	int checkIfNum = 0;
-	ss >> checkIfNum;
-	if(checkIfNum == 0){
-		responseJson["feedback"] = "Ürün numarası 0 olamaz";
-		responseJson["actionStatus"] = "false";
-		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
-		callback(resp);
-		return;
-	}
-
-	if(!checkIfProductExists(itemId)){
-		responseJson["feedback"] = "Böyle bir ürün yok";
-		responseJson["actionStatus"] = "false";
-		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
-		callback(resp);
-		return;
-	}
-
-	auto clientPtr = drogon::app().getDbClient();
-	std::string totalQuery1 = "UPDATE products SET isfeatured = TRUE WHERE id=" + itemId;
-	auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
-	responseJson["id"] = itemId;
-	responseJson["feedback"] = "Ürün öne çıkanlara eklendi";
-	responseJson["actionStatus"] = "true";
-	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
-	callback(resp);
-	return;
-
-}
 void product::featuredList(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback){
 	Json::Value responseJson;
 	if (req->getHeader("fromProxy") != "true") {
@@ -116,11 +120,10 @@ void product::featuredList(const HttpRequestPtr& req,std::function<void (const H
 
 	auto clientPtr = drogon::app().getDbClient();
 	std::string totalQuery1 = "SELECT id, details FROM products WHERE isfeatured=TRUE";
-	std::cout << totalQuery1 << std::endl;
 	auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
 	auto result1 = f1.get();
 	if(result1.size() == 0){
-		std::string totalQuery2 = "SELECT id, details FROM products ORDER BY random() LIMIT 3";
+		std::string totalQuery2 = "SELECT id, details FROM products WHERE isverified=TRUE AND isbuyable=TRUE ORDER BY random() LIMIT 3";
 		auto f2 = clientPtr->execSqlAsyncFuture(totalQuery2);
 		result1 = f2.get();
 	}
@@ -138,45 +141,7 @@ void product::featuredList(const HttpRequestPtr& req,std::function<void (const H
 	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 	callback(resp);
 }
-void product::removeFeatured(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string itemId){
-	Json::Value responseJson;
-	if (req->getHeader("fromProxy") != "true") {
-		responseJson["feedback"] = "Illegal request has been sent";
-		responseJson["actionStatus"] = "false";
-		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
-		callback(resp);
-		return;
-	}
 
-	std::stringstream ss(itemId);
-	int checkIfNum = 0;
-	ss >> checkIfNum;
-	if(checkIfNum == 0){
-		responseJson["feedback"] = "Ürün numarası 0 olamaz";
-		responseJson["actionStatus"] = "false";
-		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
-		callback(resp);
-		return;
-	}
-
-	if(!checkIfProductExists(itemId)){
-		responseJson["feedback"] = "Böyle bir ürün yok";
-		responseJson["actionStatus"] = "false";
-		auto resp = HttpResponse::newHttpJsonResponse(responseJson);
-		callback(resp);
-		return;
-	}
-
-	auto clientPtr = drogon::app().getDbClient();
-	std::string totalQuery1 = "UPDATE products SET isfeatured = FALSE WHERE id=" + itemId;
-	auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
-	responseJson["id"] = itemId;
-	responseJson["feedback"] = "Ürün öne çıkanlardan kaldırıldı";
-	responseJson["actionStatus"] = "true";
-	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
-	callback(resp);
-	return;
-}
 void product::getAllOnCategory(const HttpRequestPtr& req,std::function<void (const HttpResponsePtr &)> &&callback, std::string category){
 	Json::Value responseJson;
 	if (req->getHeader("fromProxy") != "true") {
@@ -188,7 +153,7 @@ void product::getAllOnCategory(const HttpRequestPtr& req,std::function<void (con
 	}
 
 	auto clientPtr = drogon::app().getDbClient();
-	std::string totalQuery1 = "SELECT id, details FROM products WHERE type='" + category + "'";
+	std::string totalQuery1 = "SELECT id, details FROM products WHERE type='" + category + "' AND isverified=TRUE AND isbuyable=TRUE";
 	auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
 	auto result1 = f1.get();
 	if(result1.size() == 0){
@@ -209,7 +174,12 @@ void product::getAllOnCategory(const HttpRequestPtr& req,std::function<void (con
 		responseJson["productJson"][i]["id"] = row["id"].as<std::string>();
 		i++;
 	}
+	Json::Value serverTime = sutils::getSVTime();
+	const char* currentDate = serverTime["date"].asCString();
+	const char* currentTime = serverTime["time"].asCString();
 	responseJson["actionStatus"] = "true";
+	responseJson["serverDate"] = currentDate;
+	responseJson["serverTime"] = currentTime;
 	auto resp = HttpResponse::newHttpJsonResponse(responseJson);
 	callback(resp);
 	return;
@@ -225,7 +195,7 @@ void product::getAllCategories(const HttpRequestPtr& req,std::function<void (con
 	}
 
 	auto clientPtr = drogon::app().getDbClient();
-	std::string totalQuery1 = "SELECT DISTINCT type FROM products";
+	std::string totalQuery1 = "SELECT DISTINCT type FROM products WHERE isverified='TRUE' AND isbuyable=TRUE";
 	auto f1 = clientPtr->execSqlAsyncFuture(totalQuery1);
 	auto result1 = f1.get();
 	int i = 0;
